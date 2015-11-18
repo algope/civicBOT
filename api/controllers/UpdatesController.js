@@ -33,7 +33,7 @@ module.exports = {
 
     if(update.message.photo){
       sails.log.info("Photo content: ", update.message.photo);
-      telegram.sendMessage(userId, "Foto Recibida").then(
+      telegram.sendMessage(userId, "Foto Recibida", true, null, keyboards.createKeyboard()).then(
         function(response) {
 
         }, function(error) {

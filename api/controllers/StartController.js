@@ -7,11 +7,6 @@
 
 module.exports = {
 
-  setBotToken: function(req, res){
-    global.TelegramToken = req.param('token');
-    res.json(200, {msg: "ok"});
-  },
-
   setWebHook: function(req, res){
     var webHookUrl = req.param('url');
     sails.log(webHookUrl);
@@ -32,17 +27,6 @@ module.exports = {
     );
   }
 
-/*
-  sendMessage: function(req, res){
-    telegram.sendMessage("108416823", "Esto es una prueba").then(
-      function(response) {
-        res.json(response);
-      }, function(error) {
-        sails.log.error("Failed", error);
-      }
-    )
-  }
- */
 };
 
 

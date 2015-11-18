@@ -30,7 +30,7 @@ module.exports.getMe = function () {
 };
 */
 
-module.exports.sendMessage = function(chat_id, text, parse_mode, disable_web_page_preview, reply_to_message_id, reply_markup) {
+module.exports.sendMessage = function(chat_id, text, disable_web_page_preview, reply_to_message_id, reply_markup) {
   var options = {
     host: sails.config.telegram.url,
     path: "/bot"+TelegramToken + '/sendMessage',
@@ -43,7 +43,6 @@ module.exports.sendMessage = function(chat_id, text, parse_mode, disable_web_pag
   var post_data = JSON.stringify({
     chat_id: chat_id,
     text: text,
-    parse_mode: parse_mode,
     disable_web_page_preview: disable_web_page_preview,
     reply_to_message_id: reply_to_message_id,
     reply_markup: reply_markup
