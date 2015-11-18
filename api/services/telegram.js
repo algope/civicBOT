@@ -33,7 +33,7 @@ module.exports.getMe = function () {
 module.exports.sendMessage = function(chat_id, text, disable_web_page_preview, reply_to_message_id, reply_markup) {
   var options = {
     host: sails.config.telegram.url,
-    path: "/bot"+TelegramToken + '/sendMessage',
+    path: "/bot"+sails.config.telegram.token + '/sendMessage',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ module.exports.setWebHook = function(url){
     var formData = {
       url: url
     };
-    request.post({url: 'https://'+sails.config.telegram.url+'/bot'+TelegramToken+'/setWebHook', formData: formData}, function(err, httpResponse, body) {
+    request.post({url: 'https://'+sails.config.telegram.url+'/bot'+sails.config.telegram.token+'/setWebHook', formData: formData}, function(err, httpResponse, body) {
       if (err) {
         reject(err);
       }
