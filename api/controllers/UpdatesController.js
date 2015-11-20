@@ -33,7 +33,7 @@ module.exports = {
 
     if(update.message.photo){
       sails.log.info("Photo content: ", update.message.photo);
-      telegram.sendMessage(userId, "Foto Recibida", true, null, keyboards.createKeyboard()).then(
+      telegram.sendMessage(userId, "Ahora clasifica la foto...", true, null, keyboards.createKeyboard()).then(
         function(response) {
 
         }, function(error) {
@@ -43,7 +43,7 @@ module.exports = {
     }
 
     else{
-      telegram.sendMessage(userId, "Comando no reconocido").then(
+      telegram.sendMessage(userId, "¡Gracias!").then(
         function(response) {
 
         }, function(error) {
