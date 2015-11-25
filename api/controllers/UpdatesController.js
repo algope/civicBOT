@@ -31,11 +31,11 @@ module.exports = {
         } else if (update.message.photo) {
             sails.log.info("Photo content: ", update.message.photo);
             telegram.sendMessage(userId, "Ahora clasifica la foto...\n"+
-                "Si la información está relacionada con:\n"+
-                "Reducción de las desigualdades y la exclusión social, pulsa A\n"+
-                "Transparencia, participación ciudadanía o rendición de cuentas, pulsa B\n"+
-                "Acceso y permanencia en el sistema educativo o con el Tercer Sector, pulsa C\n"+
-                "Campañas de comunicación institucionales o con medios de comunicación, pulsa D\n", "", true, null, null).then(
+                "Si la información está relacionada con:\n\n"+
+                "Reducción de las desigualdades y la exclusión social, pulsa A\n\n"+
+                "Transparencia, participación ciudadanía o rendición de cuentas, pulsa B\n\n"+
+                "Acceso y permanencia en el sistema educativo o con el Tercer Sector, pulsa C\n\n"+
+                "Campañas de comunicación institucionales o con medios de comunicación, pulsa D", "", true, null, null).then(
                 function (response) {
                     sails.log.debug("Message Sent", response);
                 }, function (error) {
