@@ -53,7 +53,7 @@ module.exports = {
                         break;
                 }
             }
-            else{
+            else if(command.commandId==0){
                 telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                     function (response) {
                         sails.log.debug("Message Sent", response);
