@@ -25,7 +25,7 @@ module.exports = {
                         sails.log.error("Failed", error);
                     }
                 );
-            }else if (command.commandType==2) {
+            }else if(command.commandType==2) {
                 telegram.sendMessage(userId, "¡Gracias!").then(
                     function (response) {
                         sails.log.debug("Message Sent", response);

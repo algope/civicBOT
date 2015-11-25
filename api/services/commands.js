@@ -51,7 +51,7 @@ module.exports.processIt = function (text) {
 
 function strip(text) {
     var regex = /(\/[a-zA-Z]+)/;
-    var regex2 = /([A-Z])/;
+    var regex2 = /([A-Z]{1})/;
     var array = text.split(" ");
     sails.log.debug("Array splited: ", array);
     sails.log.debug("Array[0]", array[0]);
