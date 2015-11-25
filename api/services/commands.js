@@ -33,7 +33,7 @@ function strip(text) {
     var array = text.split(" ");
     sails.log.debug("Array splited: ", array);
     sails.log.debug("Array[0]", array[0]);
-    var matching = array[0].match(regex;
+    var matching = array[0].match(regex);
     if (matching) {
         sails.log.debug("RETURN REGEX: ", matching[0]);
         return matching[0];
