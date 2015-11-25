@@ -66,7 +66,7 @@ module.exports = {
                 "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n"+
                 "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n"+
                 "Reducción de las desigualdades y la exclusión social,\n ->pulsa C\n\n"+
-                "Transparencia, participación ciudadanía o rendición de cuentas,,\n ->pulsa D", "", true, null, null).then(
+                "Transparencia, participación ciudadanía o rendición de cuentas,,\n ->pulsa D", "", true, null, keyboard.createKeyboard()).then(
                 function (response) {
                     sails.log.debug("Message Sent", response);
                 }, function (error) {
