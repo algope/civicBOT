@@ -10,7 +10,7 @@
 module.exports.processIt = function (text) {
     var id = 0;
     var result = strip(text);
-    sails.log.debug("Stripped command: ", command);
+    sails.log.debug("Stripped command: ", result);
     if (result.type == 1) {
         switch (result.command) {
             case "/start":
