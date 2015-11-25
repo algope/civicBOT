@@ -11,7 +11,7 @@ module.exports = {
         var update = req.body;
         var userId = update.message.from.id;
         var userName = update.message.from.first_name;
-        if (update.message.text) {
+        if (update.message.text){
             var text = update.message.text;
 
             sails.log.debug("Message: ", update.message.text);
@@ -52,6 +52,15 @@ module.exports = {
                         );
                         break;
                 }
+            }
+            else{
+                telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                    function (response) {
+                        sails.log.debug("Message Sent", response);
+                    }, function (error) {
+                        sails.log.error("Failed", error);
+                    }
+                );
             }
 
         } else if (update.message.photo) {
