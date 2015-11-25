@@ -23,7 +23,7 @@ module.exports.processIt = function (text) {
                 id = 0;
         }
         sails.log.debug("Command ID:", id);
-        return id;
+        return {commandType: 1, commandId: id};
     }
     else if(result.type == 2){
         switch (result.command) {
@@ -43,7 +43,7 @@ module.exports.processIt = function (text) {
                 id = 0;
         }
         sails.log.debug("Command ID:", id);
-        return id;
+        return {commandType: 2, commandId: id};
     }
     else return false;
 
