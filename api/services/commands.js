@@ -5,7 +5,7 @@
  * @help        :: See https://github.com/
  */
 
-var Regex = require("regex");
+//var Regex = require('regex');
 
 module.exports.processIt = function (text) {
     var id = 0;
@@ -16,7 +16,7 @@ module.exports.processIt = function (text) {
             case "/start":
                 id = 1;
                 break;
-            case "/echo":
+            case "/ayuda":
                 id = 2;
                 break;
             default:
@@ -29,13 +29,14 @@ module.exports.processIt = function (text) {
 };
 
 function strip(text) {
-    var regex = new Regex(/(\/[a-zA-Z]+)/);
+    var regex = /(\/[a-zA-Z])/;
     var array = text.split(" ");
     sails.log.debug("Array splited: ", array);
     sails.log.debug("Array[0]", array[0]);
-    if (regex.test(array[0])) {
-        sails.log.debug("RETURN REGEX: ", array[0]);
-        return array[0];
+    var matching = array[0].match(regex;
+    if (matching) {
+        sails.log.debug("RETURN REGEX: ", matching[0]);
+        return matching[0];
     }
     else return false;
 
