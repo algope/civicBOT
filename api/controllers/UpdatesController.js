@@ -36,21 +36,21 @@ module.exports = {
                     sails.log.error("Failed", error);
                 }
             ).then(
-                telegram.sendMessage(userId, "Si la información está relacionada con: ", "", true, null, keyboards.createKeyboard()).then(
+                telegram.sendMessage(userId, "Si la información está relacionada con: ", "", true, null, null).then(
                     function (response) {
                     }, function (error) {
                         sails.log.error("Failed", error);
                     }
                 )
             ).then(
-                telegram.sendMessage(userId, "Campañas de comunicación institucionales o con medios de comunicación, pulsa A", "", true, null, keyboards.createKeyboard()).then(
+                telegram.sendMessage(userId, "Campañas de comunicación institucionales o con medios de comunicación, pulsa A", "", true, null, null).then(
                     function (response) {
                     }, function (error) {
                         sails.log.error("Failed", error);
                     }
                 )
             ).then(
-                telegram.sendMessage(userId, "Acceso y permanencia en el sistema educativo o con el Tercer Sector, pulsa B", "", true, null, keyboards.createKeyboard()).then(
+                telegram.sendMessage(userId, "Acceso y permanencia en el sistema educativo o con el Tercer Sector, pulsa B", "", true, null, null).then(
                     function (response) {
                     }, function (error) {
                         sails.log.error("Failed", error);
@@ -58,7 +58,7 @@ module.exports = {
                 )
 
             ).then(
-                telegram.sendMessage(userId, "Reducción de las desigualdades y la exclusión social, pulsa C", "", true, null, keyboards.createKeyboard()).then(
+                telegram.sendMessage(userId, "Reducción de las desigualdades y la exclusión social, pulsa C", "", true, null, null).then(
                     function (response) {
                     }, function (error) {
                         sails.log.error("Failed", error);
