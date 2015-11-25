@@ -32,18 +32,18 @@ module.exports = {
             sails.log.info("Photo content: ", update.message.photo);
             telegram.sendMessage(userId, "Ahora clasifica la foto...", "", true, null, null).then(
                 function (response) {
-
+                    sails.log.debug("Message Sent", response);
                 }, function (error) {
                     sails.log.error("Failed", error);
                 }
             ).then(
-                telegram.sendMessage(userId, "Si la información está relacionada con:\n" +
-                    "Campañas de comunicación institucionales o con medios de comunicación, pulsa\n" +
-                    "Acceso y permanencia en el sistema educativo o con el Tercer Sector, pulsa B\n" +
-                    "Reducción de las desigualdades y la exclusión social, pulsa C\n" +
-                    "Transparencia, participación ciudadanía o rendición de cuentas, pulsa D","", true, null, keyboards.createKeyboard()).then(
+                telegram.sendMessage(userId, "Si la información está relacionada con:\n"+
+                    "Reducción de las desigualdades y la exclusión social, pulsa A\n"+
+                    "Transparencia, participación ciudadanía o rendición de cuentas, pulsa B\n"+
+                    "Acceso y permanencia en el sistema educativo o con el Tercer Sector, pulsa C\n"+
+                    "Campañas de comunicación institucionales o con medios de comunicación, pulsa D\n","", true, null, keyboards.createKeyboard()).then(
                     function (response) {
-
+                        sails.log.debug("Message Sent", response);
                     }, function (error) {
                         sails.log.error("Failed", error);
                     }
