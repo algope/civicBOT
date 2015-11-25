@@ -19,9 +19,9 @@ module.exports = {
             sails.log.debug("Command: ", command);
 
             if (command) {
-                telegram.sendMessage(userId, "Comando procesado correctamente, commandID: " + command).then(
+                telegram.sendMessage(userId, "¡Gracias!").then(
                     function (response) {
-
+                        sails.log.debug("Message Sent", response);
                     }, function (error) {
                         sails.log.error("Failed", error);
                     }
