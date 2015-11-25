@@ -36,17 +36,18 @@ module.exports = {
                 }, function (error) {
                     sails.log.error("Failed", error);
                 }
-            );
-            telegram.sendMessage(userId, "Si la información está relacionada con:\
-          Campañas de comunicación institucionales o con medios de comunicación, pulsa A.\
-          Acceso y permanencia en el sistema educativo o con el Tercer Sector, pulsa B.\
-          Reducción de las desigualdades y la exclusión social, pulsa C.\
-          Transparencia, participación ciudadanía o rendición de cuentas, pulsa D.", true, null, keyboards.createKeyboard()).then(
-                function (response) {
+            ).then(
+                telegram.sendMessage(userId, "Si la información está relacionada con:" +
+                    "```Campañas de comunicación institucionales o con medios de comunicación, *pulsa A*.``" +
+                    "```Acceso y permanencia en el sistema educativo o con el Tercer Sector, *pulsa B*.``" +
+                    "```Reducción de las desigualdades y la exclusión social, *pulsa C*.``" +
+                    "```Transparencia, participación ciudadanía o rendición de cuentas, *pulsa D*.```","Markdown", true, null, keyboards.createKeyboard()).then(
+                    function (response) {
 
-                }, function (error) {
-                    sails.log.error("Failed", error);
-                }
+                    }, function (error) {
+                        sails.log.error("Failed", error);
+                    }
+                )
             );
         } else {
             telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
