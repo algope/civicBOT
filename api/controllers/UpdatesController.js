@@ -17,7 +17,7 @@ module.exports = {
             sails.log.debug("Message: ", update.message.text);
             var command = commands.processIt(text);
             sails.log.debug("Command: ", command);
-            if(command.commandId==0){
+            if(command.commandId==0 || !command){
                 telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                     function (response) {
                         sails.log.debug("Message Sent", response);
@@ -33,8 +33,7 @@ module.exports = {
                         sails.log.error("Failed", error);
                     }
                 );
-            }
-            else if(command.commandType==1){
+            }else if(command.commandType==1){
                 switch(command.commandId){
                     case 1:
                         telegram.sendMessage(userId, "¡Bienvenidx!, para empezar envía una foto").then(
