@@ -39,6 +39,9 @@ module.exports.processIt = function (text) {
             case "D":
                 id = 4;
                 break;
+            case "E":
+                id = 5;
+                break;
             default:
                 id = 0;
         }
