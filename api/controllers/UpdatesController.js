@@ -30,7 +30,7 @@ module.exports = {
 
         } else if (update.message.photo) {
             sails.log.info("Photo content: ", update.message.photo);
-            telegram.sendMessage(userId, "Ahora clasifica la foto...", null,true, null, null).then(
+            telegram.sendMessage(userId, "Ahora clasifica la foto...", "",true, null, null).then(
                 function (response) {
 
                 }, function (error) {
