@@ -17,8 +17,15 @@ module.exports = {
             sails.log.debug("Message: ", update.message.text);
             var command = commands.processIt(text);
             sails.log.debug("Command: ", command);
-
-            if (command.commandType==2) {
+            if(command.commandId==0){
+                telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                    function (response) {
+                        sails.log.debug("Message Sent", response);
+                    }, function (error) {
+                        sails.log.error("Failed", error);
+                    }
+                );
+            }else if (command.commandType==2) {
                 telegram.sendMessage(userId, "¡Gracias!").then(
                     function (response) {
                         sails.log.debug("Message Sent", response);
@@ -52,15 +59,6 @@ module.exports = {
                         );
                         break;
                 }
-            }
-            else if(command.commandId==0){
-                telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
-                    function (response) {
-                        sails.log.debug("Message Sent", response);
-                    }, function (error) {
-                        sails.log.error("Failed", error);
-                    }
-                );
             }
 
         } else if (update.message.photo) {
