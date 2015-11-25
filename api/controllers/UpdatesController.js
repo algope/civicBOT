@@ -36,7 +36,7 @@ module.exports = {
                         "```Campañas de comunicación institucionales o con medios de comunicación, *pulsa A*.``" +
                         "```Acceso y permanencia en el sistema educativo o con el Tercer Sector, *pulsa B*.``" +
                         "```Reducción de las desigualdades y la exclusión social, *pulsa C*.``" +
-                        "```Transparencia, participación ciudadanía o rendición de cuentas, *pulsa D*.```","Markdown", true, null, keyboards.createKeyboard()).then(
+                        "```Transparencia, participación ciudadanía o rendición de cuentas, *pulsa D*.```","", true, null, keyboards.createKeyboard()).then(
                         function (response) {
 
                         }, function (error) {
