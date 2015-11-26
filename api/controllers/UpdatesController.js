@@ -26,7 +26,7 @@ module.exports = {
                     }
                 );
             }else if(command.commandType==2) {
-                telegram.sendMessage(userId, "ÂMuchas gracias!").then(
+                telegram.sendMessage(userId, "Â¡Muchas gracias!").then(
                     function (response) {
                         sails.log.debug("Message Sent", response);
                     }, function (error) {
