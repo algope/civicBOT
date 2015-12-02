@@ -14,7 +14,7 @@ module.exports = {
 
         Updates.create(req.body).exec(function (err, newUpdate) {
             if (err) {
-                sails.log.error("Database error: ", error);
+                sails.log.error("Database error: ", err);
             }
             if (newUpdate) {
                 sails.log.debug("New update entry into DB");
