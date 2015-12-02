@@ -45,8 +45,25 @@ module.exports.connections = {
     host: 'telegrambot.cjvmqttzw4z4.eu-central-1.rds.amazonaws.com',
     user: 'testing',
     password: 'qwerty1357',
-    database: 'telegrambot'
+    database: 'civicBOT'
   },
+
+
+    /***************************************************************************
+     *                                                                          *
+     * MySQL is the world's most popular relational database.                   *
+     * http://en.wikipedia.org/wiki/MySQL                                       *
+     *                                                                          *
+     * Run: npm install sails-mysql                                             *
+     *                                                                          *
+     ***************************************************************************/
+    localMySQL: {
+        adapter: 'sails-mysql',
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'civicBOT'
+    },
 
   /***************************************************************************
   *                                                                          *
@@ -60,9 +77,9 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    // user: 'username',
-    // password: 'password',
-    // database: 'your_mongo_db_name_here'
+    user: 'username',
+    password: 'password',
+    database: 'your_mongo_db_name_here'
   },
 
   /***************************************************************************

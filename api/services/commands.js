@@ -25,7 +25,7 @@ module.exports.processIt = function (text) {
         sails.log.debug("Command ID:", id);
         return {commandType: 1, commandId: id};
     }
-    else if(result.type == 2){
+    else if (result.type == 2) {
         switch (result.command) {
             case "A":
                 id = 1;
@@ -63,7 +63,7 @@ function strip(text) {
     if (matching) {
         sails.log.debug("Returning RegEx: ", matching[0]);
         return {command: matching[0], type: 1};
-    }else if(matching2){
+    } else if (matching2) {
         return {command: matching2[0], type: 2};
     }
     else return false;

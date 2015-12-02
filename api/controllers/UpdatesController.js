@@ -11,13 +11,23 @@ module.exports = {
         var update = req.body;
         var userId = update.message.from.id;
         var userName = update.message.from.first_name;
-        if (update.message.text){
+
+        Updates.create(req.body).exec(function (err, newUpdate) {
+            if (err) {
+                sails.log.error("Database error");
+            }
+            if (newUpdate) {
+                sails.log.debug("New update entry into DB");
+            }
+        });
+
+        if (update.message.text) {
             var text = update.message.text;
 
             sails.log.debug("Message: ", update.message.text);
             var command = commands.processIt(text);
             sails.log.debug("Command: ", command);
-            if(command.commandId==0 || !command){
+            if (command.commandId == 0 || !command) {
                 telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                     function (response) {
                         sails.log.debug("Message Sent", response);
@@ -25,7 +35,7 @@ module.exports = {
                         sails.log.error("Failed", error);
                     }
                 );
-            }else if(command.commandType==2) {
+            } else if (command.commandType == 2) {
                 telegram.sendMessage(userId, "¡Muchas gracias!").then(
                     function (response) {
                         sails.log.debug("Message Sent", response);
@@ -33,8 +43,8 @@ module.exports = {
                         sails.log.error("Failed", error);
                     }
                 );
-            }else if(command.commandType==1){
-                switch(command.commandId){
+            } else if (command.commandType == 1) {
+                switch (command.commandId) {
                     case 1:
                         telegram.sendMessage(userId, "¡Bienvenidx!, para empezar envía una foto").then(
                             function (response) {
@@ -45,10 +55,10 @@ module.exports = {
                         );
                         break;
                     case 2:
-                        telegram.sendMessage(userId, "Si la información está relacionada con:\n\n"+
-                            "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n"+
-                            "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n"+
-                            "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n"+
+                        telegram.sendMessage(userId, "Si la información está relacionada con:\n\n" +
+                            "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n" +
+                            "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n" +
+                            "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n" +
                             "Otros temas,\n ->pulsa D", "", true, null, null).then(
                             function (response) {
                                 sails.log.debug("Message Sent", response);
@@ -62,10 +72,10 @@ module.exports = {
 
         } else if (update.message.photo) {
             sails.log.info("Photo content: ", update.message.photo);
-            telegram.sendMessage(userId, "Si la información está relacionada con:\n\n"+
-                "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n"+
-                "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n"+
-                "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n"+
+            telegram.sendMessage(userId, "Si la información está relacionada con:\n\n" +
+                "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n" +
+                "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n" +
+                "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n" +
                 "Otros temas,\n ->pulsa D", "", true, null, keyboards.createKeyboard()).then(
                 function (response) {
                     sails.log.debug("Message Sent", response);
