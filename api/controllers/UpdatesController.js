@@ -26,12 +26,8 @@ module.exports = {
             }
         });
 
-
-
-
-
         if (update.message.text) {
-            stagePersistence.createOrFind({user_id:userId}, {user_id:userId, stage:1}).then(
+            stages.findOrCreateEntry({user_id:userId}, {user_id:userId, stage:1}).then(
                 function (user){
                     if(user.stage == 1){
                         sails.log.error("HOLIIIIIIIIII, el usuario se encuentra en STAGE 1");
