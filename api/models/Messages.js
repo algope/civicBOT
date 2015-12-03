@@ -8,56 +8,33 @@
 module.exports = {
 
     attributes: {
-        message_id: {
+        message_id:{
             type: 'integer',
             primaryKey: true,
             unique: true
         },
-        from: {
+        from:{
             model: 'users'
         },
         date: {
             type: 'integer'
         },
-        chat: {
+        chat:{
             model: 'chats'
         },
-        forward_from: {
-            model: 'users'
-        },
-        forward_date: {
-            type: 'integer'
-        },
-        reply_to_message: {
-            model: 'messages'
-        },
-        text: {
+        text:{
             type: 'string'
         },
-        photo: {
+        photo:{
             type: 'array'
         },
-        caption: {
+        caption:{
             type: 'string'
         },
-        new_chat_participant: {
-            model: 'users'
-        },
-        left_chat_participant: {
-            model: 'users'
-        },
-        new_chat_title: {
-            type: 'string'
-        },
-        delete_chat_photo: {
-            type: 'boolean'
-        },
-        group_chat_created: {
-            type: 'boolean'
-        },
-        update_id:{
+        update:{
             model: 'updates'
         }
+
     }
 };
 

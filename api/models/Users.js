@@ -21,6 +21,10 @@ module.exports = {
         },
         username: {
             type: 'string'
+        },
+        messages:{
+            collection: 'messages',
+            via: 'from'
         }
     }
 };
