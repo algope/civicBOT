@@ -21,6 +21,7 @@ module.exports = {
             if (err) {
                 sails.log.error("Database error: ", err);
             }
+
             if (newUpdate) {
                 sails.log.debug("New update entry into DB");
             }

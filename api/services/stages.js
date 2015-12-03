@@ -9,7 +9,7 @@ module.exports.findOrCreateEntry = function (find, create) {
             if (err) {
                 reject(err)
             }
-            if (newUpdate) {
+            if (data) {
                resolve(data)
             }
         });
