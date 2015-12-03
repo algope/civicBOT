@@ -23,9 +23,8 @@ module.exports = {
 
         if (update.message.text) {
             var text = update.message.text;
-
-            sails.log.debug("Message: ", update.message.text);
             var command = commands.processIt(text);
+            sails.log.debug("Message: ", update.message.text);
             sails.log.debug("Command: ", command);
             if (command.commandId == 0 || !command) {
                 telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
@@ -46,7 +45,8 @@ module.exports = {
             } else if (command.commandType == 1) {
                 switch (command.commandId) {
                     case 1:
-                        telegram.sendMessage(userId, "¡Bienvenidx!, para empezar envía una foto").then(
+                        telegram.sendMessage(userId, "Hola "+userName+", encantado de conocerte!\n" +
+                            " Mi nombre es civicBOT y te ayudaré a enviar y clasificar la información sobre la actuación de los partidos políticos.").then(
                             function (response) {
                                 sails.log.debug("Message Sent", response);
                             }, function (error) {

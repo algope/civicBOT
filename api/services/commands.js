@@ -19,6 +19,12 @@ module.exports.processIt = function (text) {
             case "/ayuda":
                 id = 2;
                 break;
+            case "/sugerencias":
+                id = 3;
+                break;
+            case "/enviar_info":
+                id = 4;
+                break;
             default:
                 id = 0;
         }
@@ -39,13 +45,10 @@ module.exports.processIt = function (text) {
             case "D":
                 id = 4;
                 break;
-            case "E":
-                id = 5;
-                break;
             default:
                 id = 0;
         }
-        sails.log.debug("Command ID:", id);
+        sails.log.debug("Clasification:", id);
         return {commandType: 2, commandId: id};
     }
     else return false;
