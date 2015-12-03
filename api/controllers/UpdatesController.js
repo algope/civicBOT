@@ -44,9 +44,10 @@ module.exports = {
                 );
             } else if (command.commandType == 1) {
                 switch (command.commandId) {
-                    case 1:
+                    case 1: //start
                         telegram.sendMessage(userId, "Hola "+userName+", encantado de conocerte!\n" +
-                            " Mi nombre es civicBOT y te ayudaré a enviar y clasificar la información sobre la actuación de los partidos políticos.").then(
+                            "Mi nombre es civicBOT y te ayudaré a enviar y clasificar la información sobre la actuación de los partidos políticos.\n" +
+                            "Para empezar a enviar información, escribe: /enviar_info ").then(
                             function (response) {
                                 sails.log.debug("Message Sent", response);
                             }, function (error) {
@@ -54,12 +55,30 @@ module.exports = {
                             }
                         );
                         break;
-                    case 2:
+                    case 2: //ayuda
                         telegram.sendMessage(userId, "Si la información está relacionada con:\n\n" +
                             "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n" +
                             "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n" +
                             "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n" +
                             "Otros temas,\n ->pulsa D", "", true, null, null).then(
+                            function (response) {
+                                sails.log.debug("Message Sent", response);
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                        break;
+                    case 3: //sugerencias
+                        telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n" , "", true, null, null).then(
+                            function (response) {
+                                sails.log.debug("Message Sent", response);
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                        break;
+                    case 4: //enviar_info
+                        telegram.sendMessage(userId, "Selecciona el tipo de información que quieres hacernos llegar:\n\n" , "", true, null, keyboards.createKeyboard(2)).then(
                             function (response) {
                                 sails.log.debug("Message Sent", response);
                             }, function (error) {
@@ -76,7 +95,7 @@ module.exports = {
                 "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n" +
                 "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n" +
                 "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n" +
-                "Otros temas,\n ->pulsa D", "", true, null, keyboards.createKeyboard()).then(
+                "Otros temas,\n ->pulsa D", "", true, null, keyboards.createKeyboard(1)).then(
                 function (response) {
                     sails.log.debug("Message Sent", response);
                 }, function (error) {
