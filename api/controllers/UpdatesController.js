@@ -11,8 +11,13 @@ module.exports = {
         var update = req.body;
         var userId = update.message.from.id;
         var userName = update.message.from.first_name;
+        var messageId = update.message.message_id;
+        var photo = null;
+        var message = "";
+        var classification = "";
+        var isAPhoto = false;
 
-        Updates.create(req.body).exec(function (err, newUpdate) {
+        Updates.create(req.body, function (err, newUpdate) {
             if (err) {
                 sails.log.error("Database error: ", err);
             }
@@ -21,7 +26,21 @@ module.exports = {
             }
         });
 
+
+
+
+
         if (update.message.text) {
+            stagePersistence.findOrCreate({user_id:userId}, {user_id:userId, stage:1}).then(
+                function (user){
+                    if(user.stage == 1){
+                        sails.log.error("HOLIIIIIIIIII, el usuario se encuentra en STAGE 1");
+                    }
+
+                }
+            );
+
+
             var text = update.message.text;
             var command = commands.processIt(text);
             sails.log.debug("Message: ", update.message.text);

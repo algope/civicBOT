@@ -18,7 +18,7 @@ module.exports.createKeyboard = function (type) {
             keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: false};
             break;
         case 2:
-            buttons = [['\xF0\x9F\x93\x84'+"\nTEXTO", '\xF0\x9F\x93\xB7'+"\nIMÁGEN"]];
+            buttons = [["TEXTO", "IMAGEN"]];
             keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: false};
             break;
 
