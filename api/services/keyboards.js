@@ -8,8 +8,8 @@
 
 module.exports.createKeyboard = function () {
     //TODO: HARDCODED
-    var buttons = [["A", "B", "C", "D"],[]];
-    var keyboard = {keyboard: buttons, resize_keyboard: false, one_time_keyboard: true, selective: false};
+    var buttons = [["A", "B", "C", "D"]];
+    var keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: false};
     return keyboard;
 
 };
