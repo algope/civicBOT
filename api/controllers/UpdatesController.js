@@ -383,18 +383,19 @@ module.exports = {
                                     "Mi nombre es civicBOT y te ayudaré a enviar y clasificar la información sobre la actuación de los partidos políticos.\n" +
                                     "Para empezar a enviar información, escribe: /enviar_info ").then(
                                     function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
                                         
                                     }, function (error) {
                                         sails.log.error("Failed", error);
                                     }
                                 );
-                                stages.updateStage({user_id: userId}, {stage: 1}).then(
-                                    function (response) {
-                                        sails.log.debug("Updated Stage", response);
-                                    }, function (error) {
-                                        sails.log.error("FAILED updating stage", error);
-                                    }
-                                );
+
 
                                 break;
                             case 2: //ayuda
@@ -413,32 +414,33 @@ module.exports = {
                             case 3: //sugerencias
                                 telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "", true, null, null).then(
                                     function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 10}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
                                         
                                     }, function (error) {
                                         sails.log.error("Failed", error);
                                     }
                                 );
-                                stages.updateStage({user_id: userId}, {stage: 10}).then(
-                                    function (response) {
-                                        sails.log.debug("Updated Stage", response);
-                                    }, function (error) {
-                                        sails.log.error("FAILED updating stage", error);
-                                    }
-                                );
+
                                 break;
                             case 4: //enviar_info
                                 telegram.sendMessage(userId, "Selecciona el tipo de información que quieres hacernos llegar:\n\n", "", true, null, keyboards.createKeyboard(2)).then(
                                     function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 2}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
                                         
                                     }, function (error) {
                                         sails.log.error("Failed", error);
-                                    }
-                                );
-                                stages.updateStage({user_id: userId}, {stage: 2}).then(
-                                    function (response) {
-                                        sails.log.debug("Updated Stage", response);
-                                    }, function (error) {
-                                        sails.log.error("FAILED updating stage", error);
                                     }
                                 );
                                 break;
@@ -446,6 +448,50 @@ module.exports = {
                     }else if (command.commandType == 2) {
                         telegram.sendMessage(userId, "¡Muchas gracias!").then(
                             function (response) {
+                                UserMedia.destroy({user_id:userId}, function (err, destroyed){
+                                    if(err){
+                                        sails.log.error("Error destroying temp db");
+                                    }
+                                    if(destroyed){
+                                        if(destroyed.photo){
+                                            PhotoLabel.create({photo: destroyed.photo, label: command.commandId, message:update.message.message_id}, function (err, ok){
+                                                if(err){
+                                                    sails.log.error("ERROR labeling image");
+                                                }
+                                                if(ok){
+                                                    sails.log.error("PHOTOLABEEEEEEEEEEEEL:   ",ok);
+                                                    stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                                        function (response) {
+                                                            sails.log.debug("Updated Stage", response);
+                                                        }, function (error) {
+                                                            sails.log.error("FAILED updating stage", error);
+                                                        }
+                                                    );
+                                                }
+                                            })
+
+                                        }else if(destroyed.text){
+                                            TextLabel.create({text: destroyed.text, label: command.commandId, message:update.message.message_id}, function (err, ok){
+                                                if(err){
+                                                    sails.log.error("ERROR labeling image");
+                                                }
+                                                if(ok){
+                                                    sails.log.error("TEXTLABEEEEEEELLLLLLL:   ",ok);
+                                                    stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                                        function (response) {
+                                                            sails.log.debug("Updated Stage", response);
+                                                        }, function (error) {
+                                                            sails.log.error("FAILED updating stage", error);
+                                                        }
+                                                    );
+                                                }
+                                            })
+
+                                        }
+                                    }
+                                });
+
+
                                 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -454,42 +500,7 @@ module.exports = {
                         //STORE THE IMAGE
 
                         //DESTROY TEMP RECORD
-                        UserMedia.destroy({user_id:userId}, function (err, destroyed){
-                            if(err){
-                                sails.log.error("Error destroying temp db");
-                            }
-                            if(destroyed){
-                                if(destroyed.photo){
-                                    PhotoLabel.create({photo: destroyed.photo, label: command.commandId, message:update.message.message_id}, function (err, ok){
-                                        if(err){
-                                            sails.log.error("ERROR labeling image");
-                                        }
-                                        if(ok){
-                                            sails.log.error("PHOTOLABEEEEEEEEEEEEL:   ",ok)
-                                        }
-                                    })
 
-                                }else if(destroyed.text){
-                                    TextLabel.create({text: destroyed.text, label: command.commandId, message:update.message.message_id}, function (err, ok){
-                                        if(err){
-                                            sails.log.error("ERROR labeling image");
-                                        }
-                                        if(ok){
-                                            sails.log.error("TEXTLABEEEEEEELLLLLLL:   ",ok)
-                                        }
-                                    })
-
-                                }
-                            }
-                        });
-
-                        stages.updateStage({user_id: userId}, {stage: 1}).then(
-                            function (response) {
-                                sails.log.debug("Updated Stage", response);
-                            }, function (error) {
-                                sails.log.error("FAILED updating stage", error);
-                            }
-                        );
                     }
                     else {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
