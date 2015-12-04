@@ -448,6 +448,7 @@ module.exports = {
                     }else if (command.commandType == 2) {
                         telegram.sendMessage(userId, "¡Muchas gracias!").then(
                             function (response) {
+                                sails.log.error("ESTAMOS CLASIFICANDO Y GUARDANDO LA FOTO EN LA CLASIFICACION!")
                                 UserMedia.destroy({user_id:userId}, function (err, destroyed){
                                     if(err){
                                         sails.log.error("Error destroying temp db");
