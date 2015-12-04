@@ -449,14 +449,14 @@ module.exports = {
                         telegram.sendMessage(userId, "¡Muchas gracias!").then(
                             function (response) {
 
-                                UserMedia.destroy({user_id:userId}, function (err, destroyed){
+                                UserMedia.findOne({user_id:userId}, function (err, found){
                                     if(err){
                                         sails.log.error("Error destroying temp db");
                                     }
-                                    if(destroyed){
-                                        sails.log.error("ESTO CONTIENE DESTROYED", destroyed);
-                                        if(destroyed.photo){
-                                            PhotoLabel.create({photo: destroyed.photo, label: command.commandId, message:update.message.message_id}, function (err, ok){
+                                    if(found){
+                                        sails.log.error("ESTO CONTIENE FOUND", found);
+                                        if(found.photo){
+                                            PhotoLabel.create({photo: found.photo, label: command.commandId, message:update.message.message_id}, function (err, ok){
                                                 if(err){
                                                     sails.log.error("ERROR labeling image");
                                                 }
@@ -465,6 +465,7 @@ module.exports = {
                                                     stages.updateStage({user_id: userId}, {stage: 1}).then(
                                                         function (response) {
                                                             sails.log.debug("Updated Stage", response);
+                                                            UserMedia.destroy({user_id:userId});
                                                         }, function (error) {
                                                             sails.log.error("FAILED updating stage", error);
                                                         }
@@ -472,8 +473,8 @@ module.exports = {
                                                 }
                                             })
 
-                                        }else if(destroyed.text){
-                                            TextLabel.create({text: destroyed.text, label: command.commandId, message:update.message.message_id}, function (err, ok){
+                                        }else if(found.text){
+                                            TextLabel.create({text: found.text, label: command.commandId, message:update.message.message_id}, function (err, ok){
                                                 if(err){
                                                     sails.log.error("ERROR labeling image");
                                                 }
@@ -482,6 +483,7 @@ module.exports = {
                                                     stages.updateStage({user_id: userId}, {stage: 1}).then(
                                                         function (response) {
                                                             sails.log.debug("Updated Stage", response);
+                                                            UserMedia.destroy({user_id:userId});
                                                         }, function (error) {
                                                             sails.log.error("FAILED updating stage", error);
                                                         }
