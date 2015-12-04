@@ -26,7 +26,18 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+
+  //Modificado
+  //'*': true,
+  //StartController: {
+  //  '*': 'isAuthenticated',
+  //    setWebHook: true
+  //},
+  //UpdatesController:{
+  //  '*': 'isAuthenticated',
+  //    update: true
+ // }
+
 
   /***************************************************************************
   *                                                                          *

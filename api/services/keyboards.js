@@ -6,10 +6,22 @@
  */
 
 
-module.exports.createKeyboard = function () {
+module.exports.createKeyboard = function (type) {
     //TODO: HARDCODED
-    var buttons = [["A", "B"], ["C", "D"]];
-    var keyboard = {keyboard: buttons, resize_keyboard: false, one_time_keyboard: true, selective: false};
-    return keyboard;
+    var keyboard = "";
+    var buttons = null;
 
+
+    switch (type){
+        case 1:
+            buttons = [["A", "B", "C", "D"]];
+            keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: false};
+            break;
+        case 2:
+            buttons = [["TEXTO", "IMAGEN"]];
+            keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: false};
+            break;
+
+    }
+    return keyboard;
 };

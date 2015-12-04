@@ -1,5 +1,5 @@
 /**
- * Hola.js
+ * Photo_Label.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,17 +8,20 @@
 module.exports = {
 
     attributes: {
-        user_id: {
+        id: {
             type: 'integer',
             primaryKey: true,
             unique: true,
             autoIncrement: true
         },
-
-        username: {
-            type: 'string',
-            required: true,
-            unique: true
+        photo: {
+            type: 'array'
+        },
+        label: {
+            type: 'string'
+        },
+        message: {
+            type: 'string'
         }
 
     }

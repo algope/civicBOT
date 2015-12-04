@@ -27,6 +27,10 @@ module.exports = {
         },
         last_name: {
             type: 'string'
+        },
+        messages:{
+            collection: 'messages',
+            via: 'chat'
         }
 
     }
