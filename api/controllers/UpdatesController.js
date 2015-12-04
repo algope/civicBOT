@@ -34,6 +34,7 @@ module.exports = {
 
         stages.findOrCreateEntry({user_id: userId}, {user_id: userId, stage: 1}).then(
             function (user) {
+                sails.log.error("VAMOS A VER QUE TIENE LA VARIABLE USER DE BASE DE DATOS: ", user);
                 if (user.stage == 1) { //Initial stage
                     if (command.commandId == 0 || !command) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
