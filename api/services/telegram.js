@@ -83,3 +83,36 @@ module.exports.setWebHook = function (url) {
     })
 };
 
+module.exports.getFile = function (file_id){
+  return new Promise (function (resolve, reject){
+      var formData = {
+          file_id: file_id
+      };
+      request.post({
+          url: 'https://' + sails.config.telegram.url + '/bot' + sails.config.telegram.token + '/getFile',
+          formData: formData
+      }, function (err, httpResponse, body) {
+          if (err) {
+              reject(err);
+          }
+          resolve(JSON.parse(body))
+      });
+  })
+};
+
+module.exports.downloadFile = function (file_path) {
+        var options={
+            host: "api.telegram.org",
+            path: "/file/bot"+sails.config.telegram.token + '/file_path'
+        };
+    return new Promise(function(resolve, reject){
+        https.get(options, function(res){
+            var json = "";
+            res.on('data', function(chunk){
+                json += chunk;
+            });
+            res.on('end', function() {
+                resolve(JSON.parse(json));
+            });
+        });
+    })};
