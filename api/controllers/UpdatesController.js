@@ -316,7 +316,7 @@ module.exports = {
 
                         UserMedia.create({user_id:userId, photo: update.message.photo}, function(err, newUpdate){
                             if(err){
-                                sails.log.error("Error updating USERMEDIA");
+                                sails.log.error("Error updating USERMEDIA", err);
                             }
 
                         });
