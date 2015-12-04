@@ -91,7 +91,7 @@ module.exports = {
                                 );
                                 stages.updateStage({user_id: userId}, {stage: 2}).then(
                                     function (response) {
-                                        sails.log.debug("Updated Stage", response);
+                                        
                                     }, function (error) {
                                         sails.log.error("FAILED updating stage", error);
                                     }
