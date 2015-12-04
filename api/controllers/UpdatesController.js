@@ -463,8 +463,10 @@ module.exports = {
                                                     sails.log.error("PHOTOLABEEEEEEEEEEEEL:   ",ok);
                                                     stages.updateStage({user_id: userId}, {stage: 1}).then(
                                                         function (response) {
-                                                            sails.log.debug("Updated Stage");
-                                                            UserMedia.destroy({user_id:userId});
+                                                            sails.log.debug("DESTROYING MEDIA PICTURE");
+                                                            UserMedia.destroy({user_id:userId}, function (ko, ok){
+                                                                if(ko) sails.log.error("ERRRO DESTROYING MEDIA PIC". ko);
+                                                            });
                                                         }, function (error) {
                                                             sails.log.error("FAILED updating stage", error);
                                                         }
@@ -480,8 +482,10 @@ module.exports = {
                                                 if(ok){
                                                     stages.updateStage({user_id: userId}, {stage: 1}).then(
                                                         function (response) {
-                                                            sails.log.debug("Updated Stage");
-                                                            UserMedia.destroy({user_id:userId});
+                                                            sails.log.debug("DESTROYING MEDIA TEXT");
+                                                            UserMedia.destroy({user_id:userId}, function(ko, ok){
+                                                                if(ko) sails.log.error("ERRRO DESTROYING MEDIA TEXT". ko);
+                                                            });
                                                         }, function (error) {
                                                             sails.log.error("FAILED updating stage", error);
                                                         }
