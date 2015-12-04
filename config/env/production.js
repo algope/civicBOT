@@ -18,7 +18,7 @@ module.exports = {
    ***************************************************************************/
 
   models: {
-     connection: 'productionMySQL',
+     connection: 'testingMySQL',
       migrate: 'safe'
    },
 

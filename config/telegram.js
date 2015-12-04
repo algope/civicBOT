@@ -15,7 +15,7 @@ module.exports.telegram = {
   url: 'api.telegram.org',
 
   //WARNING: This token must not be discovered in production environments.
-  token: '173495687:AAFVVTAyeS9Sq3Y1bzZ_EwR5il0YuBDF8_I'
+  token: ''
 
 
 };

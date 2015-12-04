@@ -42,18 +42,10 @@ module.exports.connections = {
   ***************************************************************************/
   testingMySQL: {
     adapter: 'sails-mysql',
-    host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
+    host: '',
     user: 'root',
-    password: 'qwerty1357',
-    database: 'civicbot'
-  },
-
-  productionMySQL: {
-    adapter: 'sails-mysql',
-    host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
-    user: 'production',
-    password: '9za6410YYY',
-    database: 'civicbotProduction'
+    password: '',
+    database: ''
   },
 
 
