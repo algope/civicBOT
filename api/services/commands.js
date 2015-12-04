@@ -78,6 +78,7 @@ function strip(text) {
     sails.log.debug("Array[0]", array[0]);
     var matching = array[0].match(regex);
     var matching2 = array[0].match(regex2);
+    var matching3 = array[0].match(regex3);
     if (matching) {
         sails.log.debug("Returning RegEx: ", matching[0]);
         return {command: matching[0], type: 1};
