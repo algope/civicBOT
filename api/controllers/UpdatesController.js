@@ -22,11 +22,7 @@ module.exports = {
         var classification = "";
         var isAPhoto = false;
 
-        mixpanel.track("Update", {
-            distinct_id: update.update_id,
-            from: userId,
-            user_id: userAlias
-        });
+
 
 
 
@@ -37,6 +33,11 @@ module.exports = {
 
             if (newUpdate) {
                 sails.log.debug("New update entry into DB");
+                mixpanel.track("Update", {
+                    distinct_id: update.update_id,
+                    from: userId,
+                    user_id: userAlias
+                });
             }
         });
 
