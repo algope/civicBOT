@@ -226,7 +226,7 @@ module.exports = {
 
                 } else if (user.stage == 3) { //Data type selected
 
-                    if (command.commandId == 0 || !command) {
+                    if (command.commandId == 0 || !command || !update.message.photo) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
                                 
