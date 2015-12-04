@@ -11,7 +11,7 @@ module.exports.processIt = function (text) {
     var id = 0;
     var result = strip(text);
     sails.log.debug("Stripped command: ", result);
-    if (result.type == 1) {
+    if (result.type == 1) { //Main commands
         switch (result.command) {
             case "/start":
                 id = 1;
@@ -31,7 +31,7 @@ module.exports.processIt = function (text) {
         sails.log.debug("Command ID:", id);
         return {commandType: 1, commandId: id};
     }
-    else if (result.type == 2) {
+    else if (result.type == 2) { //Classification
         switch (result.command) {
             case "A":
                 id = 1;
@@ -50,14 +50,29 @@ module.exports.processIt = function (text) {
         }
         sails.log.debug("Clasification:", id);
         return {commandType: 2, commandId: id};
-    }
-    else return false;
+    } else if (result.type == 3) { //Information type
+
+        switch (result.command) {
+            case "TEXTO":
+                id = 1;
+                break;
+            case "IMAGEN":
+                id = 2;
+                break;
+            default:
+                id = 0;
+        }
+        sails.log.debug("Clasification:", id);
+        return {commandType: 3, commandId: id};
+
+    } else return false;
 
 };
 
 function strip(text) {
     var regex = /(\/[a-z\_A-Z]+)/;
     var regex2 = /\b([A-Z]{1}\b)/;
+    var regex3 = /((TEXTO)|(IMAGEN)+)/;
     var array = text.split(" ");
     sails.log.debug("Array splited: ", array);
     sails.log.debug("Array[0]", array[0]);
@@ -68,6 +83,8 @@ function strip(text) {
         return {command: matching[0], type: 1};
     } else if (matching2) {
         return {command: matching2[0], type: 2};
+    } else if (matching3) {
+        return {command: matching3[0], type: 3};
     }
     else return false;
 
