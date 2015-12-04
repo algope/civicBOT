@@ -10,25 +10,6 @@ var https = require('https');
 var FormData = require('form-data');
 var request = require('request');
 
-/*
- module.exports.getMe = function () {
- var options={
- host: sails.config.telegram.url,
- path: "/bot"+TelegramToken + '/getMe'
- };
- return new Promise(function(resolve, reject){
- https.get(options, function(res){
- var json = "";
- res.on('data', function(chunk){
- json += chunk;
- });
- res.on('end', function() {
- resolve(JSON.parse(json));
- });
- });
- })
- };
- */
 
 module.exports.sendMessage = function (chat_id, text, parse_mode, disable_web_page_preview, reply_to_message_id, reply_markup) {
     var options = {
@@ -83,36 +64,37 @@ module.exports.setWebHook = function (url) {
     })
 };
 
-module.exports.getFile = function (file_id){
-  return new Promise (function (resolve, reject){
-      var formData = {
-          file_id: file_id
-      };
-      request.post({
-          url: 'https://' + sails.config.telegram.url + '/bot' + sails.config.telegram.token + '/getFile',
-          formData: formData
-      }, function (err, httpResponse, body) {
-          if (err) {
-              reject(err);
-          }
-          resolve(JSON.parse(body))
-      });
-  })
+module.exports.getFile = function (file_id) {
+    return new Promise(function (resolve, reject) {
+        var formData = {
+            file_id: file_id
+        };
+        request.post({
+            url: 'https://' + sails.config.telegram.url + '/bot' + sails.config.telegram.token + '/getFile',
+            formData: formData
+        }, function (err, httpResponse, body) {
+            if (err) {
+                reject(err);
+            }
+            resolve(JSON.parse(body))
+        });
+    })
 };
 
 module.exports.downloadFile = function (file_path) {
-        var options={
-            host: "api.telegram.org",
-            path: "/file/bot"+sails.config.telegram.token + '/file_path'
-        };
-    return new Promise(function(resolve, reject){
-        https.get(options, function(res){
+    var options = {
+        host: "api.telegram.org",
+        path: "/file/bot" + sails.config.telegram.token + '/file_path'
+    };
+    return new Promise(function (resolve, reject) {
+        https.get(options, function (res) {
             var json = "";
-            res.on('data', function(chunk){
+            res.on('data', function (chunk) {
                 json += chunk;
             });
-            res.on('end', function() {
+            res.on('end', function () {
                 resolve(JSON.parse(json));
             });
         });
-    })};
+    })
+};

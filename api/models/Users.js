@@ -22,7 +22,7 @@ module.exports = {
         username: {
             type: 'string'
         },
-        messages:{
+        messages: {
             collection: 'messages',
             via: 'from'
         }

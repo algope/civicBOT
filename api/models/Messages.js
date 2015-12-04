@@ -8,30 +8,30 @@
 module.exports = {
 
     attributes: {
-        message_id:{
+        message_id: {
             type: 'integer',
             primaryKey: true,
             unique: true
         },
-        from:{
+        from: {
             model: 'users'
         },
         date: {
             type: 'integer'
         },
-        chat:{
+        chat: {
             model: 'chats'
         },
-        text:{
+        text: {
             type: 'string'
         },
-        photo:{
+        photo: {
             type: 'array'
         },
-        caption:{
+        caption: {
             type: 'string'
         },
-        update:{
+        update: {
             model: 'updates'
         }
 
