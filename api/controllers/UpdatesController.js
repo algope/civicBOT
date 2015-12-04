@@ -605,7 +605,7 @@ module.exports = {
                 } else if (user.stage == 10) { //FeedBack
 
                     if (update.message.photo || command.commandId == 0) {
-                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado? 222222").then(
                             function (response) {
                                 mixpanel.track("Error", {
                                     distinct_id: update.update_id,
@@ -707,7 +707,7 @@ module.exports = {
                         );
 
                     } else {
-                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado? 111111111").then(
                             function (response) {
                                 mixpanel.track("Error", {
                                     distinct_id: update.update_id,
