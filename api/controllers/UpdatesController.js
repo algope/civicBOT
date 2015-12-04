@@ -51,8 +51,7 @@ module.exports = {
 
         stages.findOrCreateEntry({user_id: userId}, {user_id: userId, stage: 1}).then(
             function (user) {
-                mixpanel.identify(userId);
-                mixpanel.people.set({
+                mixpanel.people.set(userId,{
                     "$first_name": userName,
                     "$last_name": userLast,
                     "user_name": userAlias,
