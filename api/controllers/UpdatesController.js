@@ -5,17 +5,30 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var Mixpanel = require('mixpanel');
+var mixpanel = Mixpanel.init('6fd9434dba686db2d1ab66b4462a3a67');
+
 module.exports = {
 
     update: function (req, res) {
         var update = req.body;
         var userId = update.message.from.id;
         var userName = update.message.from.first_name;
+        var userLast = update.message.from.last_name;
+        var userAlias = update.message.from.username;
         var messageId = update.message.message_id;
         var photo = null;
         var message = "";
         var classification = "";
         var isAPhoto = false;
+
+        mixpanel.track("Update", {
+            distinct_id: update.update_id,
+            from: userId,
+            user_id: userAlias
+        });
+
+
 
         Updates.create(req.body, function (err, newUpdate) {
             if (err) {
@@ -37,6 +50,13 @@ module.exports = {
 
         stages.findOrCreateEntry({user_id: userId}, {user_id: userId, stage: 1}).then(
             function (user) {
+                mixpanel.identify(userId);
+                mixpanel.people.set({
+                    "$first_name": userName,
+                    "$last_name": userLast,
+                    "user_name": userAlias,
+                    "$created": user.createdAt
+                });
 
                 if (user.stage == 1) { //Initial stage
 
