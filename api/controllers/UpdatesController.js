@@ -27,16 +27,20 @@ module.exports = {
             }
         });
 
-        var text = update.message.text;
-        var command = commands.processIt(text);
+        if(update.message.text){
+            var text = update.message.text;
+            var command = commands.processIt(text);
+        } else command = false;
+
         sails.log.debug("Message: ", update.message.text);
         sails.log.debug("Command: ", command);
 
         stages.findOrCreateEntry({user_id: userId}, {user_id: userId, stage: 1}).then(
             function (user) {
-                sails.log.error("VAMOS A VER QUE TIENE LA VARIABLE USER DE BASE DE DATOS: ", user);
+
                 if (user.stage == 1) { //Initial stage
-                    if (command.commandId == 0 || !command) {
+
+                    if (update.message.photo || command.commandId == 0 || !command) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
                                 sails.log.debug("Message Sent", response);
@@ -106,7 +110,7 @@ module.exports = {
 
                 } else if (user.stage == 2) { //Command /enviar_info executed
 
-                    if (command.commandId == 0 || !command) {
+                    if (update.message.photo || command.commandId == 0 || !command) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
                                 sails.log.debug("Message Sent", response);
@@ -308,6 +312,13 @@ module.exports = {
                                 sails.log.error("Failed", error);
                             }
                         );
+                        stages.updateStage({user_id: userId}, {stage: 4}).then(
+                            function (response) {
+                                sails.log.debug("Updated Stage", response);
+                            }, function (error) {
+                                sails.log.error("FAILED updating stage", error);
+                            }
+                        );
                     } else {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
@@ -319,8 +330,108 @@ module.exports = {
                     }
 
                 } else if (user.stage == 4) { //Data recieved, not labeled
+                    if (update.message.photo || command.commandId == 0 || !command) {
+                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                            function (response) {
+                                sails.log.debug("Message Sent", response);
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                    } else if (command.commandType == 1) {
+                        switch (command.commandId) {
+                            case 1: //start
+                                telegram.sendMessage(userId, "Hola " + userName + ", encantado de conocerte!\n" +
+                                    "Mi nombre es civicBOT y te ayudaré a enviar y clasificar la información sobre la actuación de los partidos políticos.\n" +
+                                    "Para empezar a enviar información, escribe: /enviar_info ").then(
+                                    function (response) {
+                                        sails.log.debug("Message Sent", response);
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+                                stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                    function (response) {
+                                        sails.log.debug("Updated Stage", response);
+                                    }, function (error) {
+                                        sails.log.error("FAILED updating stage", error);
+                                    }
+                                );
 
-                } else if (user.stage == 5) { //
+                                break;
+                            case 2: //ayuda
+                                telegram.sendMessage(userId, "Si la información está relacionada con:\n\n" +
+                                    "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n" +
+                                    "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n" +
+                                    "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n" +
+                                    "Otros temas,\n ->pulsa D", "", true, null, keyboards.createKeyboard(1)).then(
+                                    function (response) {
+                                        sails.log.debug("Message Sent", response);
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+                                break;
+                            case 3: //sugerencias
+                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "", true, null, null).then(
+                                    function (response) {
+                                        sails.log.debug("Message Sent", response);
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+                                stages.updateStage({user_id: userId}, {stage: 10}).then(
+                                    function (response) {
+                                        sails.log.debug("Updated Stage", response);
+                                    }, function (error) {
+                                        sails.log.error("FAILED updating stage", error);
+                                    }
+                                );
+                                break;
+                            case 4: //enviar_info
+                                telegram.sendMessage(userId, "Selecciona el tipo de información que quieres hacernos llegar:\n\n", "", true, null, keyboards.createKeyboard(2)).then(
+                                    function (response) {
+                                        sails.log.debug("Message Sent", response);
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+                                stages.updateStage({user_id: userId}, {stage: 2}).then(
+                                    function (response) {
+                                        sails.log.debug("Updated Stage", response);
+                                    }, function (error) {
+                                        sails.log.error("FAILED updating stage", error);
+                                    }
+                                );
+                                break;
+                        }
+                    }else if (command.commandType == 3) {
+                        telegram.sendMessage(userId, "¡Muchas gracias!").then(
+                            function (response) {
+                                sails.log.debug("Message Sent", response);
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                        stages.updateStage({user_id: userId}, {stage: 1}).then(
+                            function (response) {
+                                sails.log.debug("Updated Stage", response);
+                            }, function (error) {
+                                sails.log.error("FAILED updating stage", error);
+                            }
+                        );
+                    }
+                    else {
+                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                            function (response) {
+                                sails.log.debug("Message Sent", response);
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                    }
+
+                } else if (user.stage == 10) { //
 
                 }
 
