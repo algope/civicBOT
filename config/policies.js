@@ -26,6 +26,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
+
   //Modificado
   //'*': true,
   //StartController: {
@@ -36,6 +37,7 @@ module.exports.policies = {
   //  '*': 'isAuthenticated',
   //    update: true
  // }
+
 
   /***************************************************************************
   *                                                                          *
