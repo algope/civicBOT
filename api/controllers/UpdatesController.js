@@ -6,7 +6,7 @@
  */
 
 var Mixpanel = require('mixpanel');
-var mixpanel = Mixpanel.init('3386fca1c2c5187f9bb742afc6344129');
+var mixpanel = Mixpanel.init('2ac0d6d54c481e7dea88d065874c806f');
 
 module.exports = {
 
@@ -21,9 +21,6 @@ module.exports = {
         var message = "";
         var classification = "";
         var isAPhoto = false;
-
-
-
 
 
         Updates.create(req.body, function (err, newUpdate) {
@@ -53,13 +50,13 @@ module.exports = {
 
         stages.findOrCreateEntry({user_id: userId}, {user_id: userId, stage: 1}).then(
             function (user) {
-                mixpanel.people.set(userId,{
+                mixpanel.people.set(userId, {
                     "$first_name": userName,
                     "$last_name": userLast,
                     "user_name": userAlias,
                     "$created": user.createdAt,
                     "stage": user.stage,
-                    "contributions":1
+                    "contributions": 1
                 });
 
                 if (user.stage == 1) { //Initial stage
@@ -96,7 +93,7 @@ module.exports = {
                             case 2: //ayuda
                                 telegram.sendMessage(userId, "Para enviar información, escribe: /enviar_info\n\n" +
                                     "Para volver a empezar, escribe /start\n\n" +
-                                    "Para enviarnos una sugerencia sobre civicBOT, escribe /sugerencia", "",true, null, {hide_keyboard: true}).then(
+                                    "Para enviarnos una sugerencia sobre civicBOT, escribe /sugerencia", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
 
                                     }, function (error) {
@@ -105,7 +102,7 @@ module.exports = {
                                 );
                                 break;
                             case 3: //sugerencias
-                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
                                         stages.updateStage({user_id: userId}, {stage: 10}).then(
                                             function (response) {
@@ -198,7 +195,7 @@ module.exports = {
                                 break;
                             case 2: //ayuda
                                 telegram.sendMessage(userId, "Ahora dinos qué tipo de información quieres hacernos llegar: TEXTO o IMAGEN.\n\n" +
-                                    "Para volver a empezar, escribe /start", "",true, null, {hide_keyboard: true}).then(
+                                    "Para volver a empezar, escribe /start", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
 
                                     }, function (error) {
@@ -207,7 +204,7 @@ module.exports = {
                                 );
                                 break;
                             case 3: //sugerencias
-                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
                                         stages.updateStage({user_id: userId}, {stage: 10}).then(
                                             function (response) {
@@ -243,7 +240,7 @@ module.exports = {
                     } else if (command.commandType == 3) {
                         switch (command.commandId) {
                             case 1: //TEXTO
-                                telegram.sendMessage(userId, "Ahora escribe el texto que quieras enviarnos:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                telegram.sendMessage(userId, "Ahora escribe el texto que quieras enviarnos:\n\n", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
                                         stages.updateStage({user_id: userId}, {stage: 3, data_type_selected: 1}).then(
                                             function (response) {
@@ -260,7 +257,7 @@ module.exports = {
 
                                 break;
                             case 2: //IMAGEN
-                                telegram.sendMessage(userId, "Ahora envía la imagen:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                telegram.sendMessage(userId, "Ahora envía la imagen:\n\n", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
                                         stages.updateStage({user_id: userId}, {stage: 3, data_type_selected: 2}).then(
                                             function (response) {
@@ -324,7 +321,7 @@ module.exports = {
                             case 2: //ayuda
                                 telegram.sendMessage(userId, "Ahora envía la información del tipo que has seleccionado anteriormente.\n\n" +
                                     "Para volver a seleccionar un tipo de información distinto, escribe /enviar_info \n\n" +
-                                    "Para volver a empezar, escribe /start", "",true, null, {hide_keyboard: true}).then(
+                                    "Para volver a empezar, escribe /start", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
 
                                     }, function (error) {
@@ -333,7 +330,7 @@ module.exports = {
                                 );
                                 break;
                             case 3: //sugerencias
-                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
                                         stages.updateStage({user_id: userId}, {stage: 10}).then(
                                             function (response) {
@@ -374,11 +371,14 @@ module.exports = {
                             "Transparencia, participación o rendición de cuentas,\n ->pulsa C\n\n" +
                             "Otros temas,\n ->pulsa D", "", true, null, keyboards.createKeyboard(1)).then(
                             function (response) {
-                                UserMedia.create({user_id: userId, photo: update.message.photo}, function (err, newUpdate) {
+                                UserMedia.create({
+                                    user_id: userId,
+                                    photo: update.message.photo
+                                }, function (err, newUpdate) {
                                     if (err) {
                                         sails.log.error("Error updating USERMEDIA", err);
                                     }
-                                    if (newUpdate){
+                                    if (newUpdate) {
                                         stages.updateStage({user_id: userId}, {stage: 4}).then(
                                             function (response) {
                                                 sails.log.debug("Updated Stage", response);
@@ -408,7 +408,7 @@ module.exports = {
                                     if (err) {
                                         sails.log.error("Error updating USERMEDIA");
                                     }
-                                    if(newUpdate){
+                                    if (newUpdate) {
                                         stages.updateStage({user_id: userId}, {stage: 4}).then(
                                             function (response) {
                                                 sails.log.debug("Updated Stage", response);
@@ -499,7 +499,7 @@ module.exports = {
                                 );
                                 break;
                             case 3: //sugerencias
-                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
                                         stages.updateStage({user_id: userId}, {stage: 10}).then(
                                             function (response) {
@@ -533,7 +533,7 @@ module.exports = {
                                 break;
                         }
                     } else if (command.commandType == 2) {
-                        telegram.sendMessage(userId, "¡Muchas gracias!", "",true, null, {hide_keyboard: true}).then(
+                        telegram.sendMessage(userId, "¡Muchas gracias!", "", true, null, {hide_keyboard: true}).then(
                             function (response) {
 
                                 UserMedia.findOne({user_id: userId}, function (err, found) {
@@ -669,7 +669,7 @@ module.exports = {
                                 );
                                 break;
                             case 3: //sugerencias
-                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "", true, null, {hide_keyboard: true}).then(
                                     function (response) {
                                         stages.updateStage({user_id: userId}, {stage: 10}).then(
                                             function (response) {
@@ -703,11 +703,11 @@ module.exports = {
                                 break;
                         }
                     } else if (update.message.text) {
-                        telegram.sendMessage(userId, "¡Muchas gracias!", "",true, null, {hide_keyboard: true}).then(
+                        telegram.sendMessage(userId, "¡Muchas gracias!", "", true, null, {hide_keyboard: true}).then(
                             function (response) {
-                                Feedbacks.create({user_id:userId, text:update.message.text}, function (ko, ok){
-                                    if(ko) sails.log.error("FAILED adding feedback", error);
-                                    if(ok){
+                                Feedbacks.create({user_id: userId, text: update.message.text}, function (ko, ok) {
+                                    if (ko) sails.log.error("FAILED adding feedback", error);
+                                    if (ok) {
                                         mixpanel.track("Feedback", {
                                             distinct_id: update.update_id,
                                             from: userId,
@@ -740,7 +740,6 @@ module.exports = {
                             }
                         );
                     }
-
 
 
                 }
