@@ -1,24 +1,24 @@
 module.exports = {
 
-    attributes:{
-        file_id:{
+    attributes: {
+        file_id: {
             type: 'string',
             primaryKey: true,
             unique: true
         },
-        duration:{
+        duration: {
             type: 'Integer'
         },
-        performer:{
+        performer: {
             type: 'String' //optional
         },
-        tittle:{
+        tittle: {
             type: 'String' //optional
         },
-        mime_type:{
+        mime_type: {
             type: 'String'  //optional
         },
-        file_size:{
+        file_size: {
             type: 'Integer' // optional
         }
     }

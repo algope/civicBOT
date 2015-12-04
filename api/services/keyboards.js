@@ -12,14 +12,14 @@ module.exports.createKeyboard = function (type) {
     var buttons = null;
 
 
-    switch (type){
+    switch (type) {
         case 1:
             buttons = [["A", "B", "C", "D"]];
-            keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: false};
+            keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: true};
             break;
         case 2:
             buttons = [["TEXTO", "IMAGEN"]];
-            keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: false};
+            keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: true};
             break;
 
     }

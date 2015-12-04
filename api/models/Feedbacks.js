@@ -11,15 +11,12 @@ module.exports = {
         id: {
             type: 'integer',
             unique: true,
+            primaryKey: true,
             autoIncrement: true
         },
         user_id: {
             type: 'integer',
-            primaryKey: true,
             unique: true
-        },
-        photo: {
-            type: 'array'
         },
         text: {
             type: 'string'

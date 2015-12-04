@@ -1,18 +1,18 @@
 module.exports = {
 
     attributes: {
-        file_id:{
+        file_id: {
             type: 'string',
             primaryKey: true,
             unique: true
         },
-        width:{
+        width: {
             type: 'integer'
         },
-        height:{
+        height: {
             type: 'integer'
         },
-        file_size:{
+        file_size: {
             type: 'integer'
         }
     }
