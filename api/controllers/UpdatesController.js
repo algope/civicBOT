@@ -36,7 +36,9 @@ module.exports = {
                 mixpanel.track("Update", {
                     distinct_id: update.update_id,
                     from: userId,
-                    user_id: userAlias
+                    user_id: userAlias,
+                    text: update.message.text,
+                    photo: update.message.photo
                 });
             }
         });
@@ -55,7 +57,9 @@ module.exports = {
                     "$first_name": userName,
                     "$last_name": userLast,
                     "user_name": userAlias,
-                    "$created": user.createdAt
+                    "$created": user.createdAt,
+                    "stage": user.stage,
+                    "contributions":1
                 });
 
                 if (user.stage == 1) { //Initial stage
@@ -63,6 +67,14 @@ module.exports = {
                     if (update.message.photo || command.commandId == 0 || !command) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -121,6 +133,14 @@ module.exports = {
                     } else {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -133,6 +153,14 @@ module.exports = {
                     if (update.message.photo || command.commandId == 0 || !command) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -245,6 +273,14 @@ module.exports = {
                     else {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -378,6 +414,14 @@ module.exports = {
                     else {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -389,6 +433,14 @@ module.exports = {
                     if (update.message.photo || command.commandId == 0 || !command) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -482,12 +534,11 @@ module.exports = {
                                                     sails.log.error("ERROR labeling image");
                                                 }
                                                 if (ok) {
-                                                    sails.log.error("PHOTOLABEEEEEEEEEEEEL:   ", ok);
                                                     stages.updateStage({user_id: userId}, {stage: 1}).then(
                                                         function (response) {
-                                                            sails.log.debug("DESTROYING MEDIA PICTURE");
                                                             UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                                                if (ko) sails.log.error("ERRRO DESTROYING MEDIA PIC".ko);
+                                                                if (ko) sails.log.error("ERRROR DESTROYING MEDIA PIC".ko);
+                                                                if (ok) mixpanel.people.increment(userId, "contributions");
                                                             });
                                                         }, function (error) {
                                                             sails.log.error("FAILED updating stage", error);
@@ -536,6 +587,14 @@ module.exports = {
                     else {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
 
                             }, function (error) {
                                 sails.log.error("Failed", error);
@@ -544,6 +603,133 @@ module.exports = {
                     }
 
                 } else if (user.stage == 10) { //FeedBack
+
+                    if (update.message.photo || command.commandId == 0 || !command) {
+                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                            function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
+
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                    } else if (command.commandType == 1) {
+                        switch (command.commandId) {
+                            case 1: //start
+                                telegram.sendMessage(userId, "Hola " + userName + ", encantado de conocerte!\n" +
+                                    "Mi nombre es civicBOT y te ayudaré a enviar y clasificar la información sobre la actuación de los partidos políticos.\n" +
+                                    "Para empezar a enviar información, escribe: /enviar_info ").then(
+                                    function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
+
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+
+
+                                break;
+                            case 2: //ayuda
+                                telegram.sendMessage(userId, "Envíanos tus sugerencias:\n\n", true, null, {hide_keyboard: true}).then(
+                                    function (response) {
+
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+                                break;
+                            case 3: //sugerencias
+                                telegram.sendMessage(userId, "Escribe la sugerencia que nos quieras hacer llegar:\n\n", "",true, null, {hide_keyboard: true}).then(
+                                    function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 10}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
+
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+
+                                break;
+                            case 4: //enviar_info
+                                telegram.sendMessage(userId, "Selecciona el tipo de información que quieres hacernos llegar:\n\n", "", true, null, keyboards.createKeyboard(2)).then(
+                                    function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 2}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
+
+                                    }, function (error) {
+                                        sails.log.error("Failed", error);
+                                    }
+                                );
+                                break;
+                        }
+                    } else if (update.message.text) {
+                        telegram.sendMessage(userId, "¡Muchas gracias!", "",true, null, {hide_keyboard: true}).then(
+                            function (response) {
+                                Feedbacks.create({user_id:userId, text:update.message.text}, function (ko, ok){
+                                    if(ko) sails.log.error("FAILED adding feedback", error);
+                                    if(ok){
+                                        mixpanel.track("Feedback", {
+                                            distinct_id: update.update_id,
+                                            from: userId,
+                                            user_id: userAlias,
+                                            text: update.message.text,
+                                        });
+
+                                    }
+                                })
+
+
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                        //STORE THE IMAGE
+
+                        //DESTROY TEMP RECORD
+
+                    }
+                    else {
+                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
+                            function (response) {
+                                mixpanel.track("Error", {
+                                    distinct_id: update.update_id,
+                                    from: userId,
+                                    user_id: userAlias,
+                                    text: update.message.text,
+                                    photo: update.message.photo,
+                                    user_stage: user.stage
+                                });
+
+                            }, function (error) {
+                                sails.log.error("Failed", error);
+                            }
+                        );
+                    }
+
+
 
                 }
 
