@@ -374,6 +374,7 @@ module.exports = {
          }
          })
          */
+        res.json(200);
 
     }
 };
