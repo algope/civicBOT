@@ -443,7 +443,7 @@ module.exports = {
                                 );
                                 break;
                         }
-                    }else if (command.commandType == 3) {
+                    }else if (command.commandType == 2) {
                         telegram.sendMessage(userId, "¡Muchas gracias!").then(
                             function (response) {
                                 

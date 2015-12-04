@@ -10,7 +10,6 @@ module.exports = {
     attributes: {
         id: {
             type: 'integer',
-            primaryKey: true,
             unique: true,
             autoIncrement: true
         },
