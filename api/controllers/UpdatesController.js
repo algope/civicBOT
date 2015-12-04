@@ -454,7 +454,6 @@ module.exports = {
                                         sails.log.error("Error destroying temp db");
                                     }
                                     if(found){
-                                        sails.log.error("ESTO CONTIENE FOUND", found);
                                         if(found.photo){
                                             PhotoLabel.create({photo: found.photo, label: command.commandId, message:update.message.message_id}, function (err, ok){
                                                 if(err){
@@ -464,7 +463,7 @@ module.exports = {
                                                     sails.log.error("PHOTOLABEEEEEEEEEEEEL:   ",ok);
                                                     stages.updateStage({user_id: userId}, {stage: 1}).then(
                                                         function (response) {
-                                                            sails.log.debug("Updated Stage", response);
+                                                            sails.log.debug("Updated Stage");
                                                             UserMedia.destroy({user_id:userId});
                                                         }, function (error) {
                                                             sails.log.error("FAILED updating stage", error);
@@ -479,10 +478,9 @@ module.exports = {
                                                     sails.log.error("ERROR labeling image");
                                                 }
                                                 if(ok){
-                                                    sails.log.error("TEXTLABEEEEEEELLLLLLL:   ",ok);
                                                     stages.updateStage({user_id: userId}, {stage: 1}).then(
                                                         function (response) {
-                                                            sails.log.debug("Updated Stage", response);
+                                                            sails.log.debug("Updated Stage");
                                                             UserMedia.destroy({user_id:userId});
                                                         }, function (error) {
                                                             sails.log.error("FAILED updating stage", error);
