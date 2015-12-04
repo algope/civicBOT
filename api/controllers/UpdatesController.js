@@ -444,7 +444,7 @@ module.exports = {
                                 break;
                         }
                     } else if (command.commandType == 2) {
-                        telegram.sendMessage(userId, "¡Muchas gracias!").then(
+                        telegram.sendMessage(userId, "¡Muchas gracias!", "",true, null, {hide_keyboard: true}).then(
                             function (response) {
 
                                 UserMedia.findOne({user_id: userId}, function (err, found) {
