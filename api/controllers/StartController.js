@@ -9,6 +9,9 @@ module.exports = {
 
     setWebHook: function (req, res) {
         var webHookUrl = req.param('url');
+        //Modificado
+        req.session.authenticated  = true;
+        //this
         sails.log(webHookUrl);
         telegram.setWebHook(webHookUrl).then(
             function (response) {
