@@ -6,7 +6,7 @@
  */
 
 var Mixpanel = require('mixpanel');
-var mixpanel = Mixpanel.init('6fd9434dba686db2d1ab66b4462a3a67');
+var mixpanel = Mixpanel.init('3386fca1c2c5187f9bb742afc6344129');
 
 module.exports = {
 
