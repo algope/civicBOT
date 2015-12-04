@@ -604,7 +604,7 @@ module.exports = {
 
                 } else if (user.stage == 10) { //FeedBack
 
-                    if (update.message.photo || command.commandId == 0 || !command) {
+                    if (update.message.photo || command.commandId == 0) {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
                                 mixpanel.track("Error", {
@@ -620,7 +620,7 @@ module.exports = {
                                 sails.log.error("Failed", error);
                             }
                         );
-                    } else if (command.commandType == 1) {
+                    } else if (command && command.commandType == 1) {
                         switch (command.commandId) {
                             case 1: //start
                                 telegram.sendMessage(userId, "Hola " + userName + ", encantado de conocerte!\n" +
@@ -701,17 +701,12 @@ module.exports = {
                                     }
                                 })
 
-
                             }, function (error) {
                                 sails.log.error("Failed", error);
                             }
                         );
-                        //STORE THE IMAGE
 
-                        //DESTROY TEMP RECORD
-
-                    }
-                    else {
+                    } else {
                         telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
                             function (response) {
                                 mixpanel.track("Error", {
