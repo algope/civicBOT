@@ -464,12 +464,18 @@ module.exports = {
                                         if(err){
                                             sails.log.error("ERROR labeling image");
                                         }
+                                        if(ok){
+                                            sails.log.error("PHOTOLABEEEEEEEEEEEEL:   ",ok)
+                                        }
                                     })
 
                                 }else if(destroyed.text){
                                     TextLabel.create({text: destroyed.text, label: command.commandId, message:update.message.message_id}, function (err, ok){
                                         if(err){
                                             sails.log.error("ERROR labeling image");
+                                        }
+                                        if(ok){
+                                            sails.log.error("TEXTLABEEEEEEELLLLLLL:   ",ok)
                                         }
                                     })
 
