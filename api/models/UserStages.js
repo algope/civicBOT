@@ -20,6 +20,9 @@ module.exports = {
         },
         stage: {
             type: 'string'
+        },
+        data_type_selected: {
+            type: 'string'
         }
     }
 };

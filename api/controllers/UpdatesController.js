@@ -187,6 +187,13 @@ module.exports = {
                             case 1: //TEXTO
                                 telegram.sendMessage(userId, "Ahora escribe el texto que quieras enviarnos:\n\n", "", true, null, null).then(
                                     function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 3, data_type_selected: 1}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
                                         
                                     }, function (error) {
                                         sails.log.error("Failed", error);
@@ -197,6 +204,13 @@ module.exports = {
                             case 2: //IMAGEN
                                 telegram.sendMessage(userId, "Ahora envía la imagen:\n\n", "", true, null, null).then(
                                     function (response) {
+                                        stages.updateStage({user_id: userId}, {stage: 3, data_type_selected: 2}).then(
+                                            function (response) {
+                                                sails.log.debug("Updated Stage", response);
+                                            }, function (error) {
+                                                sails.log.error("FAILED updating stage", error);
+                                            }
+                                        );
                                         
                                     }, function (error) {
                                         sails.log.error("Failed", error);
@@ -205,13 +219,7 @@ module.exports = {
                                 break;
 
                         }
-                        stages.updateStage({user_id: userId}, {stage: 3}).then(
-                            function (response) {
-                                sails.log.debug("Updated Stage", response);
-                            }, function (error) {
-                                sails.log.error("FAILED updating stage", error);
-                            }
-                        );
+
 
                     }
                     else {
@@ -225,16 +233,6 @@ module.exports = {
                     }
 
                 } else if (user.stage == 3) { //Data type selected
-                    /*
-                    if (command.commandId == 0 || !command || !update.message.photo) {
-                        telegram.sendMessage(userId, "Ups, eso no me lo esperaba... ¿Te has equivocado?").then(
-                            function (response) {
-                                
-                            }, function (error) {
-                                sails.log.error("Failed", error);
-                            }
-                        );
-                    } else */
 
                     if (command && command.commandType == 1) {
                         switch (command.commandId) {
@@ -301,7 +299,7 @@ module.exports = {
                                 );
                                 break;
                         }
-                    } else if (update.message.photo) {
+                    } else if (update.message.photo && user.data_type_selected == 2) {
                         telegram.sendMessage(userId, "Si la información está relacionada con:\n\n" +
                             "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n" +
                             "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n" +
@@ -328,7 +326,7 @@ module.exports = {
                                 sails.log.error("FAILED updating stage", error);
                             }
                         );
-                    }else if (update.message.text) {
+                    }else if (update.message.text && user.data_type_selected == 1) {
                         telegram.sendMessage(userId, "Si la información está relacionada con:\n\n" +
                             "Campañas de comunicación institucionales o con medios de comunicación,\n ->pulsa A\n\n" +
                             "Acceso y permanencia en el sistema educativo o con el Tercer Sector,\n ->pulsa B\n\n" +
