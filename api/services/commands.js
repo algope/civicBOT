@@ -10,7 +10,6 @@
 module.exports.processIt = function (text) {
     var id = 0;
     var result = strip(text);
-    sails.log.debug("Stripped command: ", result);
     if (result.type == 1) { //Main commands
         switch (result.command) {
             case "/start":
@@ -28,7 +27,6 @@ module.exports.processIt = function (text) {
             default:
                 id = 0;
         }
-        sails.log.debug("Command ID:", id);
         return {commandType: 1, commandId: id};
     }
     else if (result.type == 2) { //Classification
@@ -48,7 +46,6 @@ module.exports.processIt = function (text) {
             default:
                 id = 0;
         }
-        sails.log.debug("Clasification:", id);
         return {commandType: 2, commandId: id};
     } else if (result.type == 3) { //Information type
 
@@ -62,7 +59,6 @@ module.exports.processIt = function (text) {
             default:
                 id = 0;
         }
-        sails.log.debug("Clasification:", id);
         return {commandType: 3, commandId: id};
 
     } else return false;
