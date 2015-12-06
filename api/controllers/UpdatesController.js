@@ -61,11 +61,11 @@ module.exports = {
                 if (user.stage == 1) { //Initial stage
 
                     if (update.message.photo || command.commandId == 0 || !command) {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
                     } else if (command.commandType == 1) {
-                        answers.answeringCommandsS1(command, userName)
+                        answers.answeringCommandsS1(command, userId, userName)
                     } else {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
                     }
 
                     /**
@@ -74,15 +74,15 @@ module.exports = {
                 } else if (user.stage == 2) { //Command /enviar_info executed
 
                     if (update.message.photo || command.commandId == 0 || !command) {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
                     } else if (command.commandType == 1) {
-                        answers.answeringCommandsS2(command, userName);
+                        answers.answeringCommandsS2(command, userId, userName);
 
                     } else if (command.commandType == 3) {
-                        answers.answeringTextOrImage(command);
+                        answers.answeringTextOrImage(command, userId);
                     }
                     else {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
                     }
 
                     /**
@@ -94,100 +94,31 @@ module.exports = {
                         answers.answeringCommandsS3(command, userName);
 
                     } else if (update.message.photo && user.data_type_selected == 2) {
-                        telegram.sendMessage(userId, strings.getLabeling, "", true, null, keyboards.createKeyboard(1)).then(
-                            function (response) {
-                                UserMedia.create({
-                                    user_id: userId,
-                                    photo: update.message.photo
-                                }, function (err, newUpdate) {
-                                    if (newUpdate) {
-                                        stages.updateStage({user_id: userId}, {stage: 4});
-                                    }
-
-                                });
-                            }
-                        );
-
+                        answers.answeringLabelingS3(1, userId);
 
                     } else if (update.message.text && user.data_type_selected == 1) {
-                        telegram.sendMessage(userId, strings.getLabeling, "", true, null, keyboards.createKeyboard(1)).then(
-                            function (response) {
-                                UserMedia.create({user_id: userId, text: text}, function (err, newUpdate) {
-                                    if (newUpdate) {
-                                        stages.updateStage({user_id: userId}, {stage: 4});
-                                    }
-
-                                });
-                            }
-                        );
-
+                        answers.answeringLabelingS3(2, userId);
                     }
-
                     else {
-                        answers.answeringError();
-
+                        answers.answeringError(userId, update, userAlias, user);
                     }
+
 
                     /**
                      * STAGE 4
                      */
                 } else if (user.stage == 4) { //Data recieved, not labeled
                     if (update.message.photo || command.commandId == 0 || !command) {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
+
                     } else if (command.commandType == 1) {
                         answers.answeringCommandsS4(command, userName);
 
                     } else if (command.commandType == 2) {
-                        telegram.sendMessage(userId, strings.getThanks, "", true, null, {hide_keyboard: true}).then(
-                            function (response) {
-                                UserMedia.findOne({user_id: userId}, function (err, found) {
-                                    if (found) {
-                                        if (found.photo) {
-                                            PhotoLabel.create({
-                                                photo: found.photo,
-                                                label: command.commandId,
-                                                message: update.message.message_id
-                                            }, function (err, ok) {
-                                                if (ok) {
-                                                    stages.updateStage({user_id: userId}, {stage: 1}).then(
-                                                        function (response) {
-                                                            UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                                                if (ok) mixpanel.people.increment(userId, "contributions");
-                                                            });
-                                                        }
-                                                    );
-                                                }
-                                            })
-
-                                        } else if (found.text) {
-                                            TextLabel.create({
-                                                text: found.text,
-                                                label: command.commandId,
-                                                message: update.message.message_id
-                                            }, function (err, ok) {
-                                                if (err) {
-                                                    sails.log.error("ERROR labeling image");
-                                                }
-                                                if (ok) {
-                                                    stages.updateStage({user_id: userId}, {stage: 1}).then(
-                                                        function (response) {
-                                                            UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                                                if (ok) mixpanel.people.increment(userId, "contributions");
-                                                            });
-                                                        }
-                                                    );
-                                                }
-                                            })
-
-                                        }
-                                    }
-                                });
-                            }
-                        );
-
+                        answers.answeringThanksS4(userId, found, command, update);
                     }
                     else {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
                     }
 
                     /**
@@ -196,29 +127,14 @@ module.exports = {
                 } else if (user.stage == 10) { //FeedBack
 
                     if (update.message.photo || command.commandId == 0) {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
                     } else if (command && command.commandType == 1) {
                         answers.answeringCommandsS10(command, userName);
                     } else if (update.message.text) {
-                        telegram.sendMessage(userId, strings.getThanks, "", true, null, {hide_keyboard: true}).then(
-                            function (response) {
-                                Feedbacks.create({user_id: userId, text: update.message.text}, function (ko, ok) {
-                                    if (ok) {
-                                        mixpanel.track("Feedback", {
-                                            distinct_id: update.update_id,
-                                            from: userId,
-                                            user_id: userAlias,
-                                            text: update.message.text
-                                        });
-                                    }
-                                })
-                            }
-                        );
-
+                        answers.answeringThanksS10(userId, update, userAlias);
                     } else {
-                        answers.answeringError();
+                        answers.answeringError(userId, update, userAlias, user);
                     }
-
                 }
             }
         );
