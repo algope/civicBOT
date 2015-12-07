@@ -17,11 +17,15 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
-  // models: {
-  //   connection: 'someMongodbServer'
-  // }
+   models: {
+     connection: 'testingMySQL',
+     migrate: 'alter'
+   },
 
-  port: 8080
+  telegram: {
+    token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
+  },
 
+  port: 80
 
 };

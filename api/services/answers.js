@@ -239,7 +239,15 @@ module.exports.answeringThanksS4 = function(userId, found, command, update){
                                 stages.updateStage({user_id: userId}, {stage: 1}).then(
                                     function (response) {
                                         UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                            if (ok) mixpanel.people.increment(userId, "contributions");
+                                            if (ok){
+                                                mixpanel.people.increment(userId, "contributions");
+                                                mixpanel.track("Contribution", {
+                                                    distinct_id: update.update_id,
+                                                    from: userId,
+                                                    photo: update.message.photo
+                                                });
+
+                                            }
                                         });
                                     }
                                 );
@@ -259,7 +267,15 @@ module.exports.answeringThanksS4 = function(userId, found, command, update){
                                 stages.updateStage({user_id: userId}, {stage: 1}).then(
                                     function (response) {
                                         UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                            if (ok) mixpanel.people.increment(userId, "contributions");
+                                            if (ok) {
+                                                mixpanel.people.increment(userId, "contributions");
+                                                mixpanel.track("Contribution", {
+                                                    distinct_id: update.update_id,
+                                                    from: userId,
+                                                    text: update.message.text
+                                                });
+
+                                            }
                                         });
                                     }
                                 );

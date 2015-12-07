@@ -51,7 +51,7 @@ module.exports = {
                     "user_name": userAlias,
                     "$created": user.createdAt,
                     "stage": user.stage,
-                    "contributions": 1
+                    "contributions": 0
                 });
 
 
@@ -77,11 +77,9 @@ module.exports = {
                         answers.answeringError(userId, update, userAlias, user);
                     } else if (command.commandType == 1) {
                         answers.answeringCommandsS2(command, userId, userName);
-
                     } else if (command.commandType == 3) {
                         answers.answeringTextOrImage(command, userId);
-                    }
-                    else {
+                    } else {
                         answers.answeringError(userId, update, userAlias, user);
                     }
 
@@ -92,14 +90,11 @@ module.exports = {
 
                     if (command && command.commandType == 1) {
                         answers.answeringCommandsS3(command, userName);
-
                     } else if (update.message.photo && user.data_type_selected == 2) {
                         answers.answeringLabelingS3(1, userId);
-
                     } else if (update.message.text && user.data_type_selected == 1) {
                         answers.answeringLabelingS3(2, userId);
-                    }
-                    else {
+                    } else {
                         answers.answeringError(userId, update, userAlias, user);
                     }
 
@@ -110,14 +105,11 @@ module.exports = {
                 } else if (user.stage == 4) { //Data recieved, not labeled
                     if (update.message.photo || command.commandId == 0 || !command) {
                         answers.answeringError(userId, update, userAlias, user);
-
                     } else if (command.commandType == 1) {
                         answers.answeringCommandsS4(command, userName);
-
                     } else if (command.commandType == 2) {
                         answers.answeringThanksS4(userId, found, command, update);
-                    }
-                    else {
+                    } else {
                         answers.answeringError(userId, update, userAlias, user);
                     }
 
