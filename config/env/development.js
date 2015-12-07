@@ -12,20 +12,24 @@
 
 module.exports = {
 
-  /***************************************************************************
-   * Set the default database connection for models in the development       *
-   * environment (see config/connections.js and config/models.js )           *
-   ***************************************************************************/
+    /***************************************************************************
+     * Set the default database connection for models in the development       *
+     * environment (see config/connections.js and config/models.js )           *
+     ***************************************************************************/
 
-   models: {
-     connection: 'testingMySQL',
-     migrate: 'alter'
-   },
+    models: {
+        connection: 'testingMySQL',
+        migrate: 'alter'
+    },
 
-  telegram: {
-    token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
-  },
+    mixpanel: {
+        token: '3386fca1c2c5187f9bb742afc6344129'
+    },
 
-  port: 80
+    telegram: {
+        token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
+    },
+
+    port: 80
 
 };

@@ -6,7 +6,7 @@
  */
 
 var Mixpanel = require('mixpanel');
-//var mixpanel = Mixpanel.init('');
+var mixpanel = Mixpanel.init(sails.config.mixpanel.token);
 
 module.exports = {
 
