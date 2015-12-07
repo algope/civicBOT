@@ -56,7 +56,7 @@ module.exports = {
 
 
                 /**
-                 * STAGE 1
+                 * STAGE 1 > First stage, no commands executed.
                  */
                 if (user.stage == 1) { //Initial stage
 
@@ -69,9 +69,9 @@ module.exports = {
                     }
 
                     /**
-                     * STAGE 2
+                     * STAGE 2 > Second stage, command /enviar_info executed
                      */
-                } else if (user.stage == 2) { //Command /enviar_info executed
+                } else if (user.stage == 2) { //Command /enviar_info
 
                     if (update.message.photo || command.commandId == 0 || !command) {
                         answers.answeringError(userId, update, userAlias, user);
@@ -84,7 +84,7 @@ module.exports = {
                     }
 
                     /**
-                     * STAGE 3
+                     * STAGE 3 > Third stage, the user had selected datatype
                      */
                 } else if (user.stage == 3) { //Data type selected
 
@@ -100,7 +100,7 @@ module.exports = {
 
 
                     /**
-                     * STAGE 4
+                     * STAGE 4 > Forth stage, the bot had recieved the media
                      */
                 } else if (user.stage == 4) { //Data recieved, not labeled
                     if (update.message.photo || command.commandId == 0 || !command) {
@@ -114,7 +114,7 @@ module.exports = {
                     }
 
                     /**
-                     * STAGE 10
+                     * STAGE 10 > Tenth stage (no regular), FeedBack Stage
                      */
                 } else if (user.stage == 10) { //FeedBack
 
