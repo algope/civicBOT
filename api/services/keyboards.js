@@ -14,7 +14,7 @@ module.exports.createKeyboard = function (type) {
 
     switch (type) {
         case 1:
-            buttons = [["A", "B", "C", "D"]];
+            buttons = [["A", "B", "C", "D"],["E", "F", "G", "H"]];
             keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: true};
             break;
         case 2:
