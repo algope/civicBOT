@@ -1,7 +1,14 @@
 {
-  "name": "hello-world-bot",
-  "private": true,
-  "version": "0.0.0",
+  "name": "civicBOT",
+  "author": {
+	"name": "Alejandro González",
+	"email": "alejandro.gon.per@gmail.com",
+	"url": "http://github.com/algope"
+  },
+
+  "private": false,
+  "version": "1.0.0",
+  "license": "MIT",
   "description": "a Sails application",
   "keywords": [],
   "engines": {
@@ -41,7 +48,5 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/alejandro/hello-world-bot.git"
-  },
-  "author": "alejandro",
-  "license": ""
+  }
 }
