@@ -1,8 +1,10 @@
 /**
- * Keyboard Telegram API Services
+ * Telegram Keyboard Services
  *
- * @description :: Telegram API Services for Sails
- * @help        :: See https://github.com/
+ * @description :: Server-side logic for managing Telegram's BOT Updates
+ * @author      :: Alejandro González - algope@github
+ * @licence     :: The MIT License (MIT)
+ *
  */
 
 
@@ -14,7 +16,7 @@ module.exports.createKeyboard = function (type) {
 
     switch (type) {
         case 1:
-            buttons = [["A", "B", "C", "D"],["E", "F", "G", "H"]];
+            buttons = [["A", "B", "C", "D"], ["E", "F", "G", "H"]];
             keyboard = {keyboard: buttons, resize_keyboard: true, one_time_keyboard: true, selective: true};
             break;
         case 2:

@@ -12,10 +12,10 @@
 
 module.exports.telegram = {
 
-  url: 'api.telegram.org',
+    url: 'api.telegram.org',
 
-  //WARNING: This token must not be discovered in production environments.
-  token: ''
+    //WARNING: This token must not be discovered in production environments.
+    token: ''
 
 
 };

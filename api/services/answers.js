@@ -1,8 +1,16 @@
+/**
+ * Answering Services
+ *
+ * @description :: Server-side logic for managing Telegram's BOT Updates
+ * @author      :: Alejandro González - algope@github
+ * @licence     :: The MIT License (MIT)
+ *
+ */
 
 var Mixpanel = require('mixpanel');
 //var mixpanel = Mixpanel.init('');
 
-module.exports.answeringCommandsS1 = function(command, userId, userName){
+module.exports.answeringCommandsS1 = function (command, userId, userName) {
     switch (command.commandId) {
         case 1: //start
             telegram.sendMessage(userId, strings.getWelcome(userName));
@@ -29,7 +37,7 @@ module.exports.answeringCommandsS1 = function(command, userId, userName){
 
 };
 
-module.exports.answeringCommandsS2 = function (command, userId, userName){
+module.exports.answeringCommandsS2 = function (command, userId, userName) {
     switch (command.commandId) {
         case 1: //start
             telegram.sendMessage(userId, strings.getWelcome(userName)).then(
@@ -61,7 +69,7 @@ module.exports.answeringCommandsS2 = function (command, userId, userName){
 
 };
 
-module.exports.answeringCommandsS3 = function (command, userName){
+module.exports.answeringCommandsS3 = function (command, userName) {
     switch (command.commandId) {
         case 1: //start
             telegram.sendMessage(userId, strings.getWelcome(userName)).then(
@@ -91,7 +99,7 @@ module.exports.answeringCommandsS3 = function (command, userName){
     }
 };
 
-module.exports.answeringCommandsS4 = function (command, userId, userName){
+module.exports.answeringCommandsS4 = function (command, userId, userName) {
     switch (command.commandId) {
         case 1: //start
             telegram.sendMessage(userId, strings.getWelcome(userName)).then(
@@ -121,7 +129,7 @@ module.exports.answeringCommandsS4 = function (command, userId, userName){
     }
 };
 
-module.exports.answeringCommandsS10 = function (command, userName){
+module.exports.answeringCommandsS10 = function (command, userName) {
     switch (command.commandId) {
         case 1: //start
             telegram.sendMessage(userId, strings.getWelcome).then(
@@ -152,7 +160,7 @@ module.exports.answeringCommandsS10 = function (command, userName){
     }
 };
 
-module.exports.answeringTextOrImage = function(command, userId){
+module.exports.answeringTextOrImage = function (command, userId) {
     switch (command.commandId) {
         case 1: //TEXTO
             telegram.sendMessage(userId, strings.getTextSelected, "", true, null, {hide_keyboard: true}).then(
@@ -175,7 +183,7 @@ module.exports.answeringTextOrImage = function(command, userId){
     }
 };
 
-module.exports.answeringError = function(userId, update, userAlias, user){
+module.exports.answeringError = function (userId, update, userAlias, user) {
     telegram.sendMessage(userId, strings.getError).then(
         function (response) {
             mixpanel.track("Error", {
@@ -191,8 +199,8 @@ module.exports.answeringError = function(userId, update, userAlias, user){
     );
 };
 
-module.exports.answeringLabelingS3 = function(type, userId){
-    switch (type){
+module.exports.answeringLabelingS3 = function (type, userId) {
+    switch (type) {
         case 1:
             telegram.sendMessage(userId, strings.getLabeling, "", true, null, keyboards.createKeyboard(1)).then(
                 function (response) {
@@ -224,7 +232,7 @@ module.exports.answeringLabelingS3 = function(type, userId){
 
 };
 
-module.exports.answeringThanksS4 = function(userId, found, command, update){
+module.exports.answeringThanksS4 = function (userId, found, command, update) {
     telegram.sendMessage(userId, strings.getThanks, "", true, null, {hide_keyboard: true}).then(
         function (response) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
@@ -239,7 +247,7 @@ module.exports.answeringThanksS4 = function(userId, found, command, update){
                                 stages.updateStage({user_id: userId}, {stage: 1}).then(
                                     function (response) {
                                         UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                            if (ok){
+                                            if (ok) {
                                                 mixpanel.people.increment(userId, "contributions");
                                                 mixpanel.track("Contribution", {
                                                     distinct_id: update.update_id,
@@ -289,7 +297,7 @@ module.exports.answeringThanksS4 = function(userId, found, command, update){
     );
 };
 
-module.exports.answeringThanksS10 = function(userId, update, userAlias){
+module.exports.answeringThanksS10 = function (userId, update, userAlias) {
     telegram.sendMessage(userId, strings.getThanks, "", true, null, {hide_keyboard: true}).then(
         function (response) {
             Feedbacks.create({user_id: userId, text: update.message.text}, function (ko, ok) {

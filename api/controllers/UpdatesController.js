@@ -1,8 +1,11 @@
 /**
  * UpdatesController
  *
- * @description :: Server-side logic for managing Telegram Updates
+ * @description :: Server-side logic for managing Telegram's BOT Updates
+ * @author      :: Alejandro González - algope@github
+ * @licence     :: The MIT License (MIT)
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
+ *
  */
 
 var Mixpanel = require('mixpanel');
@@ -130,7 +133,7 @@ module.exports = {
                 }
             }
         );
-        res.json(200);
+        res.ok();
     }
 };
 
