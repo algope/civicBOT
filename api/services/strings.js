@@ -1,3 +1,12 @@
+/**
+ * Common String Services
+ *
+ * @description :: Server-side logic for managing Telegram's BOT Updates
+ * @author      :: Alejandro González - algope@github
+ * @licence     :: The MIT License (MIT)
+ *
+ */
+
 module.exports.getError =
     "Ups, eso no me lo esperaba... ¿Te has equivocado?";
 

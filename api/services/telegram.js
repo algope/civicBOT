@@ -1,8 +1,10 @@
 /**
  * Telegram API Services
  *
- * @description :: Telegram API Services for Sails
- * @help        :: See https://github.com/
+ * @description :: Server-side logic for managing Telegram's BOT Updates
+ * @author      :: Alejandro González - algope@github
+ * @licence     :: The MIT License (MIT)
+ *
  */
 
 var querystring = require('querystring');

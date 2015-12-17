@@ -1,3 +1,14 @@
+/**
+ * Audios Model
+ *
+ * @description :: Modeling audios table
+ * @author      :: Alejandro González
+ * @licence     :: The MIT License (MIT)
+ *
+ */
+
+
+
 module.exports = {
 
     attributes: {

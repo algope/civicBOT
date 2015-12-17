@@ -1,3 +1,12 @@
+/**
+ * Files Model
+ *
+ * @description :: Modeling files table
+ * @author      :: Alejandro González
+ * @licence     :: The MIT License (MIT)
+ *
+ */
+
 module.exports = {
 
     attributes: {
