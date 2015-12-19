@@ -14,6 +14,7 @@ module.exports.getStatistics = function(cat){
     return new Promise(function (resolve, reject) {
         PhotoLabel.count({label: cat}).exec(function (error, countPhoto) {
             if (countPhoto){
+                sails.log.debug("Count PHOTO >>>>");
                 sum = sum + countPhoto;
             }
             else if(error){
@@ -24,6 +25,7 @@ module.exports.getStatistics = function(cat){
         }).then(
             TextLabel.count({label: cat}).exec(function (error, countText) {
                 if (countText) {
+                    sails.log.debug("Count TEXT >>>>");
                     sum = sum + countText;
                     resolve(sum);
                 }else if(error){
