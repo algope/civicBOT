@@ -44,14 +44,14 @@ module.exports.getImageSelected =
 
 module.exports.getLabeling =
     "Si la información está relacionada con:\n\n" +
-    "Cultura,\n ->pulsa A\n\n" +
-    "Economía,\n ->pulsa B\n\n" +
-    "Educación,\n ->pulsa C\n\n" +
-    "Medio Ambiente,\n ->pulsa D\n\n" +
-    "Medios de Comunicación,\n ->pulsa E\n\n" +
-    "Política,\n ->pulsa F\n\n" +
-    "Sanidad,\n ->pulsa G\n\n" +
-    "Otros temas,\n ->pulsa H";
+    "Cultura -> pulsa A\n\n" +
+    "Economía -> pulsa B\n\n" +
+    "Educación -> pulsa C\n\n" +
+    "Medio Ambiente -> pulsa D\n\n" +
+    "Medios de Comunicación -> pulsa E\n\n" +
+    "Política -> pulsa F\n\n" +
+    "Sanidad -> pulsa G\n\n" +
+    "Otros temas -> pulsa H";
 
 module.exports.getThanks =
     "¡Muchas gracias!";

@@ -54,7 +54,7 @@ module.exports.answeringCommandsS1 = function (command, userId, userName) {
                             statistics.getStatistics('C').then(
                                 function(sumC){
                                     var statC=sumC;
-                                    statisctics.getStatistics('D').then(
+                                    statistics.getStatistics('D').then(
                                         function(sumD){
                                             var statD=sumD;
                                             statistics.getStatistics('E').then(
