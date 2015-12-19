@@ -34,6 +34,8 @@ module.exports.getStatistics = function(cat){
 
 
             })
+
         );
+        resolve(sum);
     });
 };
