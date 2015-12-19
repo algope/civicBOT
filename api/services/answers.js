@@ -8,7 +8,7 @@
  */
 
 var Mixpanel = require('mixpanel');
-//var mixpanel = Mixpanel.init('');
+var mixpanel = Mixpanel.init(sails.config.mixpanel.token);
 
 module.exports.answeringCommandsS1 = function (command, userId, userName) {
     switch (command.commandId) {
@@ -33,6 +33,67 @@ module.exports.answeringCommandsS1 = function (command, userId, userName) {
                 }
             );
             break;
+        case 5: //acerca_de
+            telegram.sendMessage(userId, strings.getAcercaDe, "", true, null, {hide_keyboard: true});
+            break;
+        case 6: //cancelar
+            telegram.sendMessage(userId, strings.getCancelar, "", true, null, {hide_keyboard: true}).then(
+                function (response) {
+                    stages.updateStage({user_id: userId}, {stage: 1});
+
+                }
+            );
+            break;
+        case 7: //resultados
+            statistics.getStatistics('A').then(
+                function(sumA){
+                    var statA=sumA;
+                    statistics.getStatistics('B').then(
+                        function(sumB){
+                            var statB=sumB;
+                            statistics.getStatistics('C').then(
+                                function(sumC){
+                                    var statC=sumC;
+                                    statisctics.getStatistics('D').then(
+                                        function(sumD){
+                                            var statD=sumD;
+                                            statistics.getStatistics('E').then(
+                                                function(sumE){
+                                                    var statE=sumE;
+                                                    statistics.getStatistics('F').then(
+                                                        function(sumF){
+                                                            var statF=sumF;
+                                                            statistics.getStatistics('G').then(
+                                                                function(sumG){
+                                                                    var statG=sumG;
+                                                                    statistics.getStatistics('H').then(
+                                                                        function(sumH){
+                                                                            var statH=sumH;
+                                                                            telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});
+
+
+                                                                        }
+
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            );
+            break;
+
+
+
+
     }
 
 };
@@ -65,6 +126,63 @@ module.exports.answeringCommandsS2 = function (command, userId, userName) {
                 }
             );
             break;
+        case 5: //acerca_de
+            telegram.sendMessage(userId, strings.getAcercaDe, "", true, null, {hide_keyboard: true});
+            break;
+        case 6: //cancelar
+            telegram.sendMessage(userId, strings.getCancelar, "", true, null, {hide_keyboard: true}).then(
+                function (response) {
+                    stages.updateStage({user_id: userId}, {stage: 1});
+
+                }
+            );
+            break;
+        case 7: //resultados
+            statistics.getStatistics('A').then(
+                function(sumA){
+                    var statA=sumA;
+                    statistics.getStatistics('B').then(
+                        function(sumB){
+                            var statB=sumB;
+                            statistics.getStatistics('C').then(
+                                function(sumC){
+                                    var statC=sumC;
+                                    statisctics.getStatistics('D').then(
+                                        function(sumD){
+                                            var statD=sumD;
+                                            statistics.getStatistics('E').then(
+                                                function(sumE){
+                                                    var statE=sumE;
+                                                    statistics.getStatistics('F').then(
+                                                        function(sumF){
+                                                            var statF=sumF;
+                                                            statistics.getStatistics('G').then(
+                                                                function(sumG){
+                                                                    var statG=sumG;
+                                                                    statistics.getStatistics('H').then(
+                                                                        function(sumH){
+                                                                            var statH=sumH;
+                                                                            telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});
+
+
+                                                                        }
+
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            );
+            break;
     }
 
 };
@@ -94,7 +212,63 @@ module.exports.answeringCommandsS3 = function (command, userName) {
                     stages.updateStage({user_id: userId}, {stage: 2});
                 }
             );
+            break;
+        case 5: //acerca_de
+            telegram.sendMessage(userId, strings.getAcercaDe, "", true, null, {hide_keyboard: true});
+            break;
+        case 6: //cancelar
+            telegram.sendMessage(userId, strings.getCancelar, "", true, null, {hide_keyboard: true}).then(
+                function (response) {
+                    stages.updateStage({user_id: userId}, {stage: 1});
 
+                }
+            );
+            break;
+        case 7: //resultados
+            statistics.getStatistics('A').then(
+                function(sumA){
+                    var statA=sumA;
+                    statistics.getStatistics('B').then(
+                        function(sumB){
+                            var statB=sumB;
+                            statistics.getStatistics('C').then(
+                                function(sumC){
+                                    var statC=sumC;
+                                    statisctics.getStatistics('D').then(
+                                        function(sumD){
+                                            var statD=sumD;
+                                            statistics.getStatistics('E').then(
+                                                function(sumE){
+                                                    var statE=sumE;
+                                                    statistics.getStatistics('F').then(
+                                                        function(sumF){
+                                                            var statF=sumF;
+                                                            statistics.getStatistics('G').then(
+                                                                function(sumG){
+                                                                    var statG=sumG;
+                                                                    statistics.getStatistics('H').then(
+                                                                        function(sumH){
+                                                                            var statH=sumH;
+                                                                            telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});
+
+
+                                                                        }
+
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            );
             break;
     }
 };
@@ -126,6 +300,63 @@ module.exports.answeringCommandsS4 = function (command, userId, userName) {
                 }
             );
             break;
+        case 5: //acerca_de
+            telegram.sendMessage(userId, strings.getAcercaDe, "", true, null, {hide_keyboard: true});
+            break;
+        case 6: //cancelar
+            telegram.sendMessage(userId, strings.getCancelar, "", true, null, {hide_keyboard: true}).then(
+                function (response) {
+                    stages.updateStage({user_id: userId}, {stage: 1});
+
+                }
+            );
+            break;
+        case 7: //resultados
+            statistics.getStatistics('A').then(
+                function(sumA){
+                    var statA=sumA;
+                    statistics.getStatistics('B').then(
+                        function(sumB){
+                            var statB=sumB;
+                            statistics.getStatistics('C').then(
+                                function(sumC){
+                                    var statC=sumC;
+                                    statisctics.getStatistics('D').then(
+                                        function(sumD){
+                                            var statD=sumD;
+                                            statistics.getStatistics('E').then(
+                                                function(sumE){
+                                                    var statE=sumE;
+                                                    statistics.getStatistics('F').then(
+                                                        function(sumF){
+                                                            var statF=sumF;
+                                                            statistics.getStatistics('G').then(
+                                                                function(sumG){
+                                                                    var statG=sumG;
+                                                                    statistics.getStatistics('H').then(
+                                                                        function(sumH){
+                                                                            var statH=sumH;
+                                                                            telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});
+
+
+                                                                        }
+
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            )
+            break;
     }
 };
 
@@ -156,6 +387,63 @@ module.exports.answeringCommandsS10 = function (command, userName) {
                     stages.updateStage({user_id: userId}, {stage: 2})
                 }
             );
+            break;
+        case 5: //acerca_de
+            telegram.sendMessage(userId, strings.getAcercaDe, "", true, null, {hide_keyboard: true});
+            break;
+        case 6: //cancelar
+            telegram.sendMessage(userId, strings.getCancelar, "", true, null, {hide_keyboard: true}).then(
+                function (response) {
+                    stages.updateStage({user_id: userId}, {stage: 1});
+
+                }
+            );
+            break;
+        case 7: //resultados
+            statistics.getStatistics('A').then(
+                function(sumA){
+                    var statA=sumA;
+                    statistics.getStatistics('B').then(
+                        function(sumB){
+                            var statB=sumB;
+                            statistics.getStatistics('C').then(
+                                function(sumC){
+                                    var statC=sumC;
+                                    statisctics.getStatistics('D').then(
+                                        function(sumD){
+                                            var statD=sumD;
+                                            statistics.getStatistics('E').then(
+                                                function(sumE){
+                                                    var statE=sumE;
+                                                    statistics.getStatistics('F').then(
+                                                        function(sumF){
+                                                            var statF=sumF;
+                                                            statistics.getStatistics('G').then(
+                                                                function(sumG){
+                                                                    var statG=sumG;
+                                                                    statistics.getStatistics('H').then(
+                                                                        function(sumH){
+                                                                            var statH=sumH;
+                                                                            telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});
+
+
+                                                                        }
+
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            )
             break;
     }
 };

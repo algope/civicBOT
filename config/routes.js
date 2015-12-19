@@ -36,7 +36,7 @@ module.exports.routes = {
     view: 'homepage'
   },
   '/consola':{
-    view: 'login/login'
+    view: 'login'
   }
 
     /***************************************************************************
