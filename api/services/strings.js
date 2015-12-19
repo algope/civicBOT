@@ -44,14 +44,14 @@ module.exports.getImageSelected =
 
 module.exports.getLabeling =
     "Si la información está relacionada con:\n\n" +
-    "Cultura ----------------> pulsa A\n" +
-    "Economía ---------------> pulsa B\n" +
-    "Educación --------------> pulsa C\n" +
-    "Medio Ambiente ---------> pulsa D\n" +
+    "Cultura -----------------> pulsa A\n" +
+    "Economía ----------------> pulsa B\n" +
+    "Educación ----------------> pulsa C\n" +
+    "Medio Ambiente ----------> pulsa D\n" +
     "Medios de Comunicación -> pulsa E\n" +
-    "Política ---------------> pulsa F\n" +
-    "Sanidad ----------------> pulsa G\n" +
-    "Otros temas ------------> pulsa H";
+    "Política ------------------> pulsa F\n" +
+    "Sanidad ------------------> pulsa G\n" +
+    "Otros temas --------------> pulsa H";
 
 module.exports.getThanks =
     "¡Muchas gracias!";
@@ -66,13 +66,13 @@ module.exports.getCancelar =
 
 module.exports.getProvStatistics = function(a, b, c, d, e, f, g, h){
     return "Estadísticas provisionales por categoría: \n\n" +
-        "Cultura :::::::::::::::: "+a+" entradas\n" +
-        "Economía ::::::::::::::: "+b+" entradas\n" +
-        "Educación :::::::::::::: "+c+" entradas\n" +
-        "Medio Ambiente ::::::::: "+d+" entradas\n" +
+        "Cultura ::::::::::::::::::: "+a+" entradas\n" +
+        "Economía :::::::::::::::::: "+b+" entradas\n" +
+        "Educación ::::::::::::::::: "+c+" entradas\n" +
+        "Medio Ambiente :::::::::::: "+d+" entradas\n" +
         "Médios de Comunicación : "+e+" entradas\n" +
-        "Política ::::::::::::::: "+f+" entradas\n" +
-        "Sanidad :::::::::::::::: "+g+" entradas\n" +
-        "Otros temas :::::::::::: "+h+" entradas."
+        "Política ::::::::::::::::::::: "+f+" entradas\n" +
+        "Sanidad :::::::::::::::::::::: "+g+" entradas\n" +
+        "Otros temas :::::::::::::::::: "+h+" entradas"
 };
 
