@@ -92,7 +92,7 @@ module.exports = {
                 } else if (user.stage == 3) { //Data type selected
 
                     if (command && command.commandType == 1) {
-                        answers.answeringCommandsS3(command, userName);
+                        answers.answeringCommandsS3(command, userId, userName);
                     } else if (update.message.photo && user.data_type_selected == 2) {
                         answers.answeringLabelingS3(1, update, userId);
                     } else if (update.message.text && user.data_type_selected == 1) {
@@ -106,10 +106,11 @@ module.exports = {
                      * STAGE 4 > Forth stage, the bot had recieved the media
                      */
                 } else if (user.stage == 4) { //Data recieved, not labeled
+                    sails.log.debug("commandID: ", command.commandId);
                     if (update.message.photo || command.commandId == 0 || !command) {
                         answers.answeringError(userId, update, userAlias, user);
                     } else if (command.commandType == 1) {
-                        answers.answeringCommandsS4(command, userName);
+                        answers.answeringCommandsS4(command, userId, userName);
                     } else if (command.commandType == 2) {
                         answers.answeringThanksS4(userId, command, update);
                     } else {

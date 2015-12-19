@@ -187,7 +187,7 @@ module.exports.answeringCommandsS2 = function (command, userId, userName) {
 
 };
 
-module.exports.answeringCommandsS3 = function (command, userName) {
+module.exports.answeringCommandsS3 = function (command, userId, userName) {
     switch (command.commandId) {
         case 1: //start
             telegram.sendMessage(userId, strings.getWelcome(userName)).then(
