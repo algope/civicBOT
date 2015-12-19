@@ -490,9 +490,9 @@ module.exports.answeringError = function (userId, update, userAlias, user) {
 module.exports.answeringLabelingS3 = function (type, userId) {
     switch (type) {
         case 1:
+            sails.log.error("THIS IS STAGE 3, CREATING USERMEDIA");
             telegram.sendMessage(userId, strings.getLabeling, "", true, null, keyboards.createKeyboard(1)).then(
                 function (response) {
-                    sails.log.error("THIS IS STAGE 3, CREATING USERMEDIA");
                     UserMedia.create({
                         user_id: userId,
                         photo: update.message.photo
