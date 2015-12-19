@@ -19,7 +19,9 @@ module.exports.getStatistics = function(cat){
             }
             else if(error){
                 sails.log.error("ERROR COUNT DB STATISTICS: ",error);
-            }
+            }else if(!countPhoto){
+            sails.log.debug("NO COUNT PHOTO");
+        }
 
 
         }).then(
@@ -30,15 +32,14 @@ module.exports.getStatistics = function(cat){
                     resolve(sum);
                 }else if(error){
                     sails.log.error("ERROR COUNT DB STATISTICS: ",error);
+                }else if(!countText){
+                    sails.log.debug("NO COUNT TEXT");
+                    resolve(sum);
                 }
-
 
             })
 
-        ).then( function(){
-                sails.log.debug("RESOLVE COUNT 0");
-                resolve(sum);
-        });
+        );
 
     });
 };
