@@ -71,8 +71,6 @@ module.exports.answeringCommandsS1 = function (command, userId, userName) {
                                                                             var statH=sumH;
                                                                             sails.log.debug("ANSWERING RESULTADOS>>>>>>>>>>>>");
                                                                             telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});
-
-
                                                                         }
 
                                                                     )

@@ -9,7 +9,7 @@
 
 module.exports.getStatistics = function(cat){
 
-    sails.log.debug("GETTING STATISTICS>>>CAS>>>>>>>>");
+    sails.log.debug("GETTING STATISTICS>>>cAT>>>>>>>>",cat);
     return new Promise(function (resolve, reject) {
         var sum=0;
         PhotoLabel.count({label: cat}).exec(function (error, countPhoto) {
@@ -43,7 +43,7 @@ module.exports.getStatistics = function(cat){
                         sails.log.error("ERROR COUNT DB STATISTICS: ",error);
                     }else if(!countText){
                         sails.log.debug("No text nor photo found, resolving");
-                        resolve(sum);
+                        resolve(0);
                     }
 
                 })
