@@ -35,7 +35,10 @@ module.exports.getStatistics = function(cat){
 
             })
 
-        );
-        resolve(sum);
+        ).then( function(){
+                sails.log.debug("RESOLVE COUNT 0");
+                resolve(sum);
+        });
+
     });
 };
