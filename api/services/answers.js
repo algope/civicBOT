@@ -492,6 +492,7 @@ module.exports.answeringLabelingS3 = function (type, userId) {
         case 1:
             telegram.sendMessage(userId, strings.getLabeling, "", true, null, keyboards.createKeyboard(1)).then(
                 function (response) {
+                    sails.log.error("THIS IS STAGE 3, CREATING USERMEDIA");
                     UserMedia.create({
                         user_id: userId,
                         photo: update.message.photo
