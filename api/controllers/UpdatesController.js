@@ -111,7 +111,7 @@ module.exports = {
                     } else if (command.commandType == 1) {
                         answers.answeringCommandsS4(command, userName);
                     } else if (command.commandType == 2) {
-                        answers.answeringThanksS4(userId, found, command, update);
+                        answers.answeringThanksS4(userId, command, update);
                     } else {
                         answers.answeringError(userId, update, userAlias, user);
                     }

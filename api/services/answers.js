@@ -355,7 +355,7 @@ module.exports.answeringCommandsS4 = function (command, userId, userName) {
                         }
                     )
                 }
-            )
+            );
             break;
     }
 };
@@ -508,7 +508,7 @@ module.exports.answeringLabelingS3 = function (type, update, userId) {
         case 2:
             telegram.sendMessage(userId, strings.getLabeling, "", true, null, keyboards.createKeyboard(1)).then(
                 function (response) {
-                    UserMedia.create({user_id: userId, text: text}, function (err, newUpdate) {
+                    UserMedia.create({user_id: userId, text: update.message.text}, function (err, newUpdate) {
                         if (newUpdate) {
                             stages.updateStage({user_id: userId}, {stage: 4});
                         }
@@ -521,7 +521,7 @@ module.exports.answeringLabelingS3 = function (type, update, userId) {
 
 };
 
-module.exports.answeringThanksS4 = function (userId, found, command, update) {
+module.exports.answeringThanksS4 = function (userId, command, update) {
     telegram.sendMessage(userId, strings.getThanks, "", true, null, {hide_keyboard: true}).then(
         function (response) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
