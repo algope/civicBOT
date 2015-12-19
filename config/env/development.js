@@ -30,6 +30,9 @@ module.exports = {
         token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
     },
 
-    port: 80
+    port: 80,
 
+    orm: {
+        _hookTimeout: 30000
+    }
 };
