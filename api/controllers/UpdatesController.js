@@ -94,9 +94,9 @@ module.exports = {
                     if (command && command.commandType == 1) {
                         answers.answeringCommandsS3(command, userName);
                     } else if (update.message.photo && user.data_type_selected == 2) {
-                        answers.answeringLabelingS3(1, userId);
+                        answers.answeringLabelingS3(1, update, userId);
                     } else if (update.message.text && user.data_type_selected == 1) {
-                        answers.answeringLabelingS3(2, userId);
+                        answers.answeringLabelingS3(2, update, userId);
                     } else {
                         answers.answeringError(userId, update, userAlias, user);
                     }

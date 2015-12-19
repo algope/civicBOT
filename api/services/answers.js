@@ -487,10 +487,9 @@ module.exports.answeringError = function (userId, update, userAlias, user) {
     );
 };
 
-module.exports.answeringLabelingS3 = function (type, userId) {
+module.exports.answeringLabelingS3 = function (type, update, userId) {
     switch (type) {
         case 1:
-            sails.log.error("THIS IS STAGE 3, CREATING USERMEDIA");
             telegram.sendMessage(userId, strings.getLabeling, "", true, null, keyboards.createKeyboard(1)).then(
                 function (response) {
                     UserMedia.create({
@@ -498,6 +497,7 @@ module.exports.answeringLabelingS3 = function (type, userId) {
                         photo: update.message.photo
                     }, function (err, newUpdate) {
                         if (newUpdate) {
+                            sails.log.error("USERMEDIA CREATED!!!!");
                             stages.updateStage({user_id: userId}, {stage: 4});
                         }
 
