@@ -9,15 +9,27 @@
 
 module.exports.getStatistics = function(cat){
     var sum=0;
+    sails.log.debug("GETTING STATISTICS>>>CAS>>>>>>>>");
 
     return new Promise(function (resolve, reject) {
         PhotoLabel.count({label: cat}).exec(function (error, countPhoto) {
-            sum = sum + countPhoto;
+            if (countPhoto){
+                sum = sum + countPhoto;
+            }
+            else if(error){
+                sails.log.error("ERROR COUNT DB STATISTICS: ",error);
+            }
+
 
         }).then(
             TextLabel.count({label: cat}).exec(function (error, countText) {
-                sum = sum + countText;
-                resolve(sum);
+                if (countText) {
+                    sum = sum + countText;
+                    resolve(sum);
+                }else if(error){
+                    sails.log.error("ERROR COUNT DB STATISTICS: ",error);
+                }
+
 
             })
         );
