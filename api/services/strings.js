@@ -70,7 +70,7 @@ module.exports.getProvStatistics = function(a, b, c, d, e, f, g, h){
         "Economía -----------------> "+b+" entradas\n" +
         "Educación ----------------> "+c+" entradas\n" +
         "Medio Ambiente ----------> "+d+" entradas\n" +
-        "Médios de Comunicación -> "+e+" entradas\n" +
+        "Medios de Comunicación -> "+e+" entradas\n" +
         "Política -------------------> "+f+" entradas\n" +
         "Sanidad ------------------> "+g+" entradas\n" +
         "Otros temas --------------> "+h+" entradas"
