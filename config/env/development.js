@@ -19,7 +19,7 @@ module.exports = {
 
     models: {
         connection: 'testingMySQL',
-        migrate: 'alter'
+        migrate: 'drop'
     },
 
     mixpanel: {
