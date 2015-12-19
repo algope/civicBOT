@@ -16,30 +16,39 @@ module.exports.getStatistics = function(cat){
             if (countPhoto){
                 sails.log.debug("Count PHOTO >>>>");
                 sum = sum + countPhoto;
+                TextLabel.count({label: cat}).exec(function (error, countText) {
+                    if (countText) {
+                        sails.log.debug("Count TEXT >>>>");
+                        sum = sum + countText;
+                        resolve(sum);
+                    }else if(error){
+                        sails.log.error("ERROR COUNT DB STATISTICS: ",error);
+                    }else if(!countText){
+                        sails.log.debug("NO COUNT TEXT");
+                        resolve(sum);
+                    }
+
+                })
             }
             else if(error){
                 sails.log.error("ERROR COUNT DB STATISTICS: ",error);
             }else if(!countPhoto){
-            sails.log.debug("NO COUNT PHOTO");
-        }
+                sails.log.debug("NO COUNT PHOTO");
+                TextLabel.count({label: cat}).exec(function (error, countText) {
+                    if (countText) {
+                        sails.log.debug("Count TEXT >>>>");
+                        sum = sum + countText;
+                        resolve(sum);
+                    }else if(error){
+                        sails.log.error("ERROR COUNT DB STATISTICS: ",error);
+                    }else if(!countText){
+                        sails.log.debug("NO COUNT TEXT");
+                        resolve(sum);
+                    }
 
-
-        }).then(
-            TextLabel.count({label: cat}).exec(function (error, countText) {
-                if (countText) {
-                    sails.log.debug("Count TEXT >>>>");
-                    sum = sum + countText;
-                    resolve(sum);
-                }else if(error){
-                    sails.log.error("ERROR COUNT DB STATISTICS: ",error);
-                }else if(!countText){
-                    sails.log.debug("NO COUNT TEXT");
-                    resolve(sum);
-                }
-
-            })
-
-        );
+                })
+            }
+        })
 
     });
 };
