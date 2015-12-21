@@ -125,7 +125,7 @@ module.exports = {
                     if (update.message.photo || command.commandId == 0) {
                         answers.answeringError(userId, update, userAlias, user);
                     } else if (command && command.commandType == 1) {
-                        answers.answeringCommandsS10(command, userName);
+                        answers.answeringCommandsS10(command, userId ,userName);
                     } else if (update.message.text) {
                         answers.answeringThanksS10(userId, update, userAlias);
                     } else {

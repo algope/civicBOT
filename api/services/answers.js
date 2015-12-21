@@ -358,10 +358,10 @@ module.exports.answeringCommandsS4 = function (command, userId, userName) {
     }
 };
 
-module.exports.answeringCommandsS10 = function (command, userName) {
+module.exports.answeringCommandsS10 = function (command, userId, userName) {
     switch (command.commandId) {
         case 1: //start
-            telegram.sendMessage(userId, strings.getWelcome).then(
+            telegram.sendMessage(userId, strings.getWelcome(userName)).then(
                 function (response) {
                     stages.updateStage({user_id: userId}, {stage: 1});
                 }
