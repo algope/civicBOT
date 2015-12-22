@@ -26,6 +26,15 @@ module.exports.processIt = function (text) {
             case "/enviar_info":
                 id = 4;
                 break;
+            case "/acerca_de":
+                id = 5;
+                break;
+            case "/cancelar":
+                id = 6;
+                break;
+            case "/resultados":
+                id = 7;
+                break;
             default:
                 id = 0;
         }
@@ -44,6 +53,18 @@ module.exports.processIt = function (text) {
                 break;
             case "D":
                 id = "D";
+                break;
+            case "E":
+                id = "E";
+                break;
+            case "F":
+                id = "F";
+                break;
+            case "G":
+                id = "G";
+                break;
+            case "H":
+                id = "H";
                 break;
             default:
                 id = 0;
