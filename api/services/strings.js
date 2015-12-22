@@ -66,13 +66,13 @@ module.exports.getCancelar =
 
 module.exports.getProvStatistics = function(a, b, c, d, e, f, g, h){
     return "Estadísticas provisionales por categoría: \n\n" +
-        "Cultura -------------------> "+a+" entradas\n" +
-        "Economía -----------------> "+b+" entradas\n" +
-        "Educación ----------------> "+c+" entradas\n" +
-        "Medio Ambiente ----------> "+d+" entradas\n" +
-        "Medios de Comunicación -> "+e+" entradas\n" +
-        "Política -------------------> "+f+" entradas\n" +
-        "Sanidad ------------------> "+g+" entradas\n" +
-        "Otros temas --------------> "+h+" entradas"
+        "Cultura ------------------->"+a+" entradas\n" +
+        "Economía ----------------->"+b+" entradas\n" +
+        "Educación ---------------->"+c+" entradas\n" +
+        "Medio Ambiente ---------->"+d+" entradas\n" +
+        "Medios de Comunicación ->"+e+" entradas\n" +
+        "Política ------------------->"+f+" entradas\n" +
+        "Sanidad ------------------>"+g+" entradas\n" +
+        "Otros temas -------------->"+h+" entradas"
 };
 
