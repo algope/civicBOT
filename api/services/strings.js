@@ -14,25 +14,25 @@ module.exports.getError =
 module.exports.getWelcome = function (userName) {
     return "Hola " + userName + ", encantado de conocerte!\n" +
         "Mi nombre es civicBOT y te ayudaré a enviar y clasificar la información sobre la actuación de los partidos políticos.\n" +
-        "Para empezar a enviar información, escribe: /enviar_info ";
+        "Para empezar a enviar información, selecciona el comando: /enviar_info ";
 };
 
-module.exports.getHelp1 = "Para enviar información, escribe: /enviar_info\n\n" +
-    "Para volver a empezar, escribe /cancelar\n\n" +
+module.exports.getHelp1 = "Para enviar información, selecciona el comando: /enviar_info\n\n" +
+    "Para volver a empezar, selecciona el comando: /cancelar\n\n" +
     "Para enviarnos una sugerencia sobre civicBOT, escribe /sugerencias";
 module.exports.getHelp2 =
     "Ahora dinos qué tipo de información quieres hacernos llegar: TEXTO o IMAGEN.\n\n" +
-    "Para volver a empezar, escribe /cancelar";
+    "Para volver a empezar, selecciona el comando: /cancelar";
 module.exports.getHelp3 =
     "Ahora envía la información del tipo que has seleccionado anteriormente.\n\n" +
-    "Para volver a seleccionar un tipo de información distinto, escribe /enviar_info \n\n" +
-    "Para volver a empezar, escribe /cancelar";
+    "Para volver a seleccionar un tipo de información distinto, selecciona el comando: /enviar_info \n\n" +
+    "Para volver a empezar, selecciona el comando: /cancelar";
 
 module.exports.getFeedback =
     "Escribe la sugerencia que nos quieras hacer llegar:\n\n";
 
 module.exports.getInfoSelect =
-    "Selecciona el tipo de información que quieres hacernos llegar:\n\n";
+    "Pulsa el botón del tipo de información que quieres hacernos llegar:\n\n";
 
 
 module.exports.getTextSelected =
