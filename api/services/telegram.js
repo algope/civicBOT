@@ -21,7 +21,6 @@ module.exports.sendMessage = function (chat_id, text, parse_mode, disable_web_pa
             'Content-Type': 'application/json'
         }
     };
-    sails.log.error("OPTIONS: ", options);
     var post_data = JSON.stringify({
         chat_id: chat_id,
         text: text,
@@ -39,7 +38,6 @@ module.exports.sendMessage = function (chat_id, text, parse_mode, disable_web_pa
                 json += chunk;
             });
             res.on('end', function () {
-                sails.log.error("THISSSS::: ",json);
                 resolve(JSON.parse(json))
             });
         });

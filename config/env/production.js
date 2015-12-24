@@ -30,13 +30,13 @@ module.exports = {
 
     telegram: {
         token: '173495687:AAFVVTAyeS9Sq3Y1bzZ_EwR5il0YuBDF8_I'
-    }
+    },
 
     /***************************************************************************
      * Set the log level in production environment to "silent"                 *
      ***************************************************************************/
 
-    //log: {
-      //  level: "silent"
-    //}
+    log: {
+        level: "silent"
+    }
 };
