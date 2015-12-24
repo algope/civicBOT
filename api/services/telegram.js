@@ -21,7 +21,7 @@ module.exports.sendMessage = function (chat_id, text, parse_mode, disable_web_pa
             'Content-Type': 'application/json'
         }
     };
-
+    sails.log.error("OPTIONS: ", options);
     var post_data = JSON.stringify({
         chat_id: chat_id,
         text: text,
@@ -31,7 +31,6 @@ module.exports.sendMessage = function (chat_id, text, parse_mode, disable_web_pa
         reply_markup: reply_markup
     });
 
-    sails.log.error("THISSSS::: ", post_data);
     return new Promise(function (resolve, reject) {
         var postReq = https.request(options, function (res) {
             res.setEncoding('utf8');
