@@ -30,6 +30,8 @@ module.exports.sendMessage = function (chat_id, text, parse_mode, disable_web_pa
         reply_to_message_id: reply_to_message_id,
         reply_markup: reply_markup
     });
+
+    sails.log.error("THISSSS::: ", post_data);
     return new Promise(function (resolve, reject) {
         var postReq = https.request(options, function (res) {
             res.setEncoding('utf8');
