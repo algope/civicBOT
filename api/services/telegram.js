@@ -40,6 +40,7 @@ module.exports.sendMessage = function (chat_id, text, parse_mode, disable_web_pa
                 json += chunk;
             });
             res.on('end', function () {
+                sails.log.error("THISSSS::: ",json);
                 resolve(JSON.parse(json))
             });
         });
