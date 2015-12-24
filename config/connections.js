@@ -40,12 +40,12 @@ module.exports.connections = {
      * Run: npm install sails-mysql                                             *
      *                                                                          *
      ***************************************************************************/
-    testingMySQL: {
+    prodMySQL: {
         adapter: 'sails-mysql',
         host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
-        user: 'test',
-        password: 'testing123',
-        database: 'devCivicBOT'
+        user: 'production',
+        password: '9za6410YYY',
+        database: 'civicbotProduction'
     },
 
 
