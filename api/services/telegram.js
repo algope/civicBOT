@@ -9,7 +9,6 @@
 
 var querystring = require('querystring');
 var https = require('https');
-var FormData = require('form-data');
 var request = require('request');
 
 
