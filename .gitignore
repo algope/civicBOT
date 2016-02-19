@@ -40,7 +40,7 @@
 ################################################
 
 config/local.js
-env/production.js
+config/env/production.js
 
 
 
