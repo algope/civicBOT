@@ -103,7 +103,7 @@ module.exports = {
 
 
                     /**
-                     * STAGE 4 > Forth stage, the bot had recieved the media
+                     * STAGE 4 > Fourth stage, the bot had recieved the media
                      */
                 } else if (user.stage == 4) { //Data recieved, not labeled
                     sails.log.debug("commandID: ", command.commandId);

@@ -42,10 +42,10 @@ module.exports.connections = {
      ***************************************************************************/
     prodMySQL: {
         adapter: 'sails-mysql',
-        host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
-        user: 'production',
-        password: '9za6410YYY',
-        database: 'civicbotProduction'
+        host: '',
+        user: '',
+        password: '', //TODO: Before production
+        database: ''
     },
 
 
@@ -63,6 +63,23 @@ module.exports.connections = {
         user: 'root',
         password: 'root',
         database: 'civicBOT'
+    },
+
+
+    /***************************************************************************
+     *                                                                          *
+     * MySQL is the world's most popular relational database.                   *
+     * http://en.wikipedia.org/wiki/MySQL                                       *
+     *                                                                          *
+     * Run: npm install sails-mysql                                             *
+     *                                                                          *
+     ***************************************************************************/
+    devMySQL: {
+        adapter: 'sails-mysql',
+        host: '',
+        user: '',
+        password: '',
+        database: ''
     },
 
     /***************************************************************************

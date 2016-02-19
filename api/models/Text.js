@@ -1,10 +1,8 @@
 /**
- * TextLabel Model
+ * Text.js
  *
- * @description :: Modeling textlabel table
- * @author      :: Alejandro González
- * @licence     :: The MIT License (MIT)
- *
+ * @description :: TODO: You might write a short summary of how this model works and what it represents here.
+ * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
@@ -22,9 +20,17 @@ module.exports = {
         label: {
             type: 'string'
         },
-        message: {
+        party: {
+            type: 'string'
+        },
+        location: {
+            type: 'string'
+        },
+        media: {
             type: 'string'
         }
 
     }
 };
+
+

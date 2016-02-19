@@ -525,8 +525,9 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
                 if (found) {
                     if (found.photo) {
-                        PhotoLabel.create({
+                        Classify.create({
                             photo: found.photo,
+                            type: 1,
                             label: command.commandId,
                             message: update.message.message_id
                         }, function (err, ok) {
@@ -550,8 +551,9 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
                         })
 
                     } else if (found.text) {
-                        TextLabel.create({
+                        Classify.create({
                             text: found.text,
+                            type: 2,
                             label: command.commandId,
                             message: update.message.message_id
                         }, function (err, ok) {
