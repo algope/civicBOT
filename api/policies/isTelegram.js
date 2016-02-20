@@ -16,7 +16,12 @@ module.exports = function (req, res, next) {
     var regex=/^149\.154\.(1\.([1-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))|(([2-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-3]))\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5])))|254\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-4])))$/
 
     if(!regex.test(ip)){
+        sails.log.debug("THIS IS NOT TELEGRAM");
         return res.forbidden();
     }
-    next();
+    else{
+        sails.log.debug("THIS IS TELEGRAM");
+        next();
+    }
+
 };
