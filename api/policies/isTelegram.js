@@ -11,7 +11,7 @@
 module.exports = function (req, res, next) {
     var host = req.headers.host;
 
-    sails.log.error("TELEGRAM HOST------: "+ req);
+    sails.log.error("TELEGRAM HOST------: "+ req.toString());
 
 
     next();
