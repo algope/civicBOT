@@ -231,7 +231,7 @@ module.exports = {
 
     setToPublish: function (req, res){
 
-    },
+    }
 
 
 
