@@ -49,6 +49,10 @@ module.exports.policies = {
         'getTopCategoryByMonth': true,
         'getTopMediaByMonth': true
 
+    },
+
+    'UpdatesController':{
+        'update': 'isTelegram'
     }
 
 
