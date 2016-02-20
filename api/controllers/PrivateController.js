@@ -139,42 +139,181 @@ module.exports = {
 
     },
 
-    getPartyList: function (req, res){
+    deleteUser: function (req, res) {
+        var token = req.headers.authorization;
+        var user_id_token = jwToken.getUserId(token);
+        //TODO HardCoded!
+        Admin.destroy({user_id: user_id_token}, function (err, userDeleted) {
+            if (err) {
+                sails.log.error("Error deleting a user");
+                res.json(500, {msg: "Error"});
+            }
+            if (!err) {
+                res.json(200, {msg: "User deleted"});
+            }
+
+
+        })
+    },
+
+
+    checkEmail: function (req, res) {
+        var email = req.param('email');
+
+        Admin.findOne({email: email}, function (err, user) {
+            if (err) {
+                return res.json(err.status, {err: err});
+            }
+
+            if (!user) {
+                return res.json(200, {code: 0, msg: 'Email not registered'});
+            }
+            if (user) {
+                return res.json(200, {code: 1, msg: 'Email already exists'})
+            }
+
+        })
+    },
+
+    resetPassword: function (req, res) {
+        var email = req.param('email');
+        var auth = {
+            auth: {
+                api_key: 'key-582904d973f3e3816807f8b49c826abd',
+                domain: ''
+            }
+        };
+
+        Admin.findOne({email: email}, function (err, user) {
+            if (err) {
+                return res.json(err.status, {err: err});
+            }
+
+            if (user) {
+                //var nodemailerMailgun = nodemailer.createTransport(mg(auth));
+                //var template = process.cwd() + '/views/emailTemplates/passwordRecovery/html.ejs';
+
+                var token = jwToken.issue({id: user.user_id});
+
+
+                var host = req.headers.host;
+
+                var emailLink = "http://" + host + "/users/changePassword/?token=" + token;
+                fs.readFile(template, 'utf8', function (err, file) {
+                    if (err) return callback(err);
+
+                    var html = ejs.render(file, {emailLink: emailLink});
+
+                    //nodemailerMailgun.sendMail({
+                      //  from: 'hello@mate.social',
+                        //to: user.email, // An array if you have multiple recipients.
+                        //subject: 'Seems that you forgot something',
+                        //'h:Reply-To': '',
+                        //html: html
+
+                   // }, function (err, info) {
+                     //   if (err) {
+                       //     console.log('Error: ' + err);
+                        //}
+                        //else {
+                            //console.log('Response: ' + info);
+                        //}
+                    //});
+
+
+                });
+            }
+            res.send(200, {msg: "Email sent"});
+
+        })
 
     },
 
-    getLocationList: function (req, res){
+    changePassword: function (req, res) {
+
+        var token = req.param('token');
+        var thisToken = "Bearer " + token;
+
+        var user_id_token = jwToken.getUserId(thisToken);
+
+        Users.findOne({user_id: user_id_token}, function (err, user) {
+            if (err) {
+                return res.json(err.status, {err: err});
+            }
+
+            if (user) {
+                res.view('resetPassword', {token: token});
+            }
+        })
+
+
+    },
+
+    modifyPassword: function (req, res) {
+        var token = req.body.token;
+        var thisToken = "Bearer " + token;
+        var user_id_token = jwToken.getUserId(thisToken);
+        if (req.body.password !== req.body.confirmPassword) {
+            return res.json(401, {err: 'Password doesn\'t match, What a shame!'});
+        }
+        var password = req.body.password;
+
+        jwToken.verify(token, function (err, token) {
+            if (err) return res.json(401, {err: 'Invalid Token!'});
+
+            if (token) {
+                bcrypt.genSalt(10, function (err, salt) {
+                    if (err) return next(err);
+                    bcrypt.hash(password, salt, function (err, hash) {
+                        if (err) sails.log.error("ERROR ecripting password");
+                        Users.update({user_id: user_id_token}, {encryptedPassword: hash}, function (err, updated) {
+                            if (err) sails.log.error("ERROR UPDATING PASSWORD");
+                            res.view('resetPasswordOK');
+                        });
+
+                    })
+                });
+
+            }
+
+        });
+    },
+
+    getPartyList: function (req, res) {
+
+    },
+
+    getLocationList: function (req, res) {
 
     },
 
 
-
-    setParty: function (req, res){
-
-    },
-
-    setMedia: function (req, res){
+    setParty: function (req, res) {
 
     },
 
-    setLocation: function (req, res){
-        var id= req.body.contribId;
+    setMedia: function (req, res) {
+
+    },
+
+    setLocation: function (req, res) {
+        var id = req.body.contribId;
         var location = req.body.locationId;
 
-        if(!id || !location){
+        if (!id || !location) {
             return res.badRequest("Parameters Expected");
         }
-        else{
-            Location.find({id: id}).exec(function (ko, ok){
-                if(ko){
+        else {
+            Location.find({id: id}).exec(function (ko, ok) {
+                if (ko) {
                     res.serverError(ko);
                 }
-                else if(ok){
+                else if (ok) {
                     var name = ok.name;
-                    Classify.update({id:id},{location:name}).exec(function (ko, ok){
-                        if(ko){
+                    Classify.update({id: id}, {location: name}).exec(function (ko, ok) {
+                        if (ko) {
                             res.serverError(ko);
-                        }else if(ok){
+                        } else if (ok) {
                             res.ok(ok);
                         }
 
@@ -187,9 +326,9 @@ module.exports = {
 
     },
 
-    setLabel: function (req, res){
+    setLabel: function (req, res) {
 
     }
-	
+
 };
 
