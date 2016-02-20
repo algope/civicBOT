@@ -11,10 +11,8 @@
 module.exports = function (req, res, next) {
     var host = req.headers.host;
 
-    sails.log.error("TELEGRAM HOST------: "+ host);
+    sails.log.error("TELEGRAM HOST------: "+ req);
 
-    if (host != user_id_token) { //If the user making the request !match, 403
-        return res.forbbiden('You are not authorized to perform this action');
-    }
+
     next();
 };
