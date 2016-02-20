@@ -27,16 +27,29 @@ module.exports.policies = {
      ***************************************************************************/
 
 
-    //Modificado
-    //'*': true,
-    //StartController: {
-    //  '*': 'isAuthenticated',
-    //    setWebHook: true
-    //},
-    //UpdatesController:{
-    //  '*': 'isAuthenticated',
-    //    update: true
-    // }
+    '*': 'isAuthorized', // Everything resctricted here
+    'PrivateController': {
+        'login': true // We dont need authorization here, allowing public access
+    },
+
+    'PublicController':{
+        'getImgByID': true,
+        'getContributionList': true,
+        'getTotalContributions': true,
+        'getTotalActiveUsers': true,
+        'getContribByCategory': true,
+        'getTotalReceivedMsg': true,
+        'getTotalReceviedImg': true,
+        'getTodayContribNum': true,
+        'getTopParties': true,
+        'getTopLocations': true,
+        'getTopMedia': true,
+        'getTopPartiesByMonth': true,
+        'getTopLocationsByMonth': true,
+        'getTopCategoryByMonth': true,
+        'getTopMediaByMonth': true
+
+    }
 
 
     /***************************************************************************
