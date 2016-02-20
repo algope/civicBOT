@@ -9,9 +9,12 @@
  */
 
 module.exports = function (req, res, next) {
-    var host = req.headers.host;
+    var ip = req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
 
-    sails.log.error("TELEGRAM HOST------: "+ req.ip);
+    sails.log.error("TELEGRAM HOST------: "+ ip);
 
 
     next();
