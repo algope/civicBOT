@@ -17,17 +17,28 @@ module.exports = {
      * environment (see config/connections.js and config/models.js )           *
      ***************************************************************************/
 
+    connections: {
+        'defaults': 'devMySQL',
+        devMySQL: {
+            adapter: 'sails-mysql',
+            host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
+            user: 'test',
+            password: 'testing1357',
+            database: 'devCivicBOT'
+        }
+    },
+
     models: {
         connection: 'devMySQL',
         migrate: 'alter'
     },
 
     mixpanel: {
-        token: ''
+        token: '3386fca1c2c5187f9bb742afc6344129'
     },
 
     telegram: {
-        token: ''
+        token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
     },
 
     port: 8080,
@@ -37,6 +48,12 @@ module.exports = {
     },
     pubsub: {
         _hookTimeout: 200000
+    },
+
+    globals:{
+        authentication: {
+            secret: 'kjhasdfkayufgkausgyf78w43ralkfgakuygu7r3akfyg'
+        }
     },
 
     log: {
