@@ -33,10 +33,10 @@ module.exports = {
     port: 8080,
 
     orm: {
-        _hookTimeout: 30000
+        _hookTimeout: 200000
     },
     pubsub: {
-        _hookTimeout: 30000
+        _hookTimeout: 200000
     },
 
     log: {

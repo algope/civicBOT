@@ -15,6 +15,43 @@ var bcrypt = require('bcrypt');
 
 module.exports = {
 
+    create: function (req, res) {
+        var agent = useragent.lookup(req.headers['user-agent']);
+        if (req.body.password !== req.body.confirmPassword) {
+            return res.json(401, {err: 'Password doesn\'t match, What a shame!'});
+        }
+        Admin.create(req.body).exec(function (err, user) {
+            if (err) {
+                return res.json(err.status, {err: err});
+            }
+            // If user created successfuly we return user and token as response
+            if (user) {
+                var generatedToken = jwToken.issue({id: user.user_id});
+                Token.create({
+                    token: generatedToken,
+                    user_id: user.user_id,
+                    isValid: true,
+                    os: agent.os.toString(),
+                    agent: agent.toAgent(),
+                    device: agent.device.toString(),
+                    ip: requestIp.getClientIp(req)
+
+                }, function (err, success) {
+                    if (err) {
+                        sails.log.error("Error updating Token DB entry " + err);
+                    }
+                    if (success) {
+
+                        sails.log.verbose("Token for User ID: " + user.user_id + " Generated");
+                        sails.log.verbose("Issued token for user: " + user.user_id);
+
+                        res.json(200, {user: user, token: generatedToken});
+                    }
+                });
+            }
+        });
+    },
+
     login: function (req, res) {
         var agent = useragent.lookup(req.headers['user-agent']);
         var ip = requestIp.getClientIp(req);
