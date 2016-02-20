@@ -205,7 +205,7 @@ module.exports = {
                     var html = ejs.render(file, {emailLink: emailLink});
 
                     //nodemailerMailgun.sendMail({
-                      //  from: 'hello@mate.social',
+                      //  from: 'hello@hubcivico.org',
                         //to: user.email, // An array if you have multiple recipients.
                         //subject: 'Seems that you forgot something',
                         //'h:Reply-To': '',
