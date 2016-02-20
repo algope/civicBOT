@@ -13,9 +13,10 @@ module.exports = function (req, res, next) {
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
         req.connection.socket.remoteAddress;
+    var regex=/^149\.154\.(1\.([1-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))|(([2-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-3]))\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5])))|254\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-4])))$/
 
-    sails.log.error("TELEGRAM HOST------: "+ ip);
-
-
+    if(!regex.test(ip)){
+        return res.forbidden();
+    }
     next();
 };
