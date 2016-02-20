@@ -60,4 +60,8 @@ module.exports.globals = {
      ****************************************************************************/
 
     // models: true
+
+    authentication: {
+        secret: '4325qwratweaqtfd4ro98w3j8t43tnief8w3756witkray'
+    }
 };

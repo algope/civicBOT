@@ -18,6 +18,12 @@ module.exports = {
         name: {
             type: 'string'
         },
+        plainName:{
+            type: 'string'
+        },
+        cp: {
+            type: 'integer'
+        },
         lat: {
             type: 'double'
         },

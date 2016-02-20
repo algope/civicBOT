@@ -37,6 +37,12 @@ module.exports = {
         },
         media: {
             model: 'media'
+        },
+        edited:{
+            type: 'boolean'
+        },
+        published:{
+            type: 'boolean'
         }
 
     }

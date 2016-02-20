@@ -23,11 +23,11 @@ module.exports = {
     },
 
     mixpanel: {
-        token: '3386fca1c2c5187f9bb742afc6344129'
+        token: ''
     },
 
     telegram: {
-        token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
+        token: ''
     },
 
     port: 8080,
