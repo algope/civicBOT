@@ -224,7 +224,7 @@ module.exports = {
         }
         else {
 
-            Classify.update({id: id}, {party: party}).exec(function (ko, ok) {
+            Classify.update({id: id}, {party: party, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
                 } else if (ok) {
