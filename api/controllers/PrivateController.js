@@ -189,6 +189,16 @@ module.exports = {
     },
 
     getLocationList: function (req, res) {
+        Location.find().exec(function(ko, locations){
+            if(ko){
+                res.serverError(ko);
+            }
+            else if(locations){
+                res.ok(locations);
+            }
+
+        });
+
 
     },
 
