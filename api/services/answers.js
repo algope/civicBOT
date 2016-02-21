@@ -526,7 +526,7 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
                 if (found) {
                     if (found.photo) {
                         var photo_id = util.getMax(found.photo, 'file_size');
-                        sails.log.debout("PHOTO ID:::::::: ", photo_id);
+                        sails.log.debug("PHOTO ID:::::::: ", photo_id);
 
                         telegram.getFile(found.photo).then(function(response){
                             var path = response.result.file_path;
