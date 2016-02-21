@@ -82,6 +82,9 @@ module.exports.getFile = function (file_id) {
                 sails.log.debug(">>>> I'm at getFile ALL GREAT!");
                 resolve(JSON.parse(json));
             });
+            res.on('error', function (){
+                sails.log.error("ERROR ON REQUEST to getFILE TELEGRAM");
+            })
         });
     })
 };
