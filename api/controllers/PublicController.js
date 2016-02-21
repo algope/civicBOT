@@ -33,6 +33,14 @@ module.exports = {
     },
 
     getTotalActiveUsers: function (req, res) {
+        Users.count().exec(function(ko, count){
+            if(ko){
+                res.serverError(ko);
+            }
+            else if(count){
+                res.ok({count: count});
+            }
+        })
 
     },
 
