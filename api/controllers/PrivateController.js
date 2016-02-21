@@ -176,6 +176,15 @@ module.exports = {
     },
 
     getPartyList: function (req, res) {
+        Party.find().exec(function(ko, parties){
+            if(ko){
+                res.serverError(ko);
+            }
+            else if(parties){
+                res.ok(parties);
+            }
+
+        });
 
     },
 
