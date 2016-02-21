@@ -33,7 +33,6 @@ module.exports.policies = {
     },
 
     'PublicController':{
-        'getImgByID': true,
         'getContributionList': true,
         'getTotalContributions': true,
         'getTotalActiveUsers': true,

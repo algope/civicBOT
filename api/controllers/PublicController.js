@@ -6,17 +6,6 @@
  */
 
 module.exports = {
-    getImgByID: function (req, res) {
-        var id=req.param('id');
-        telegram.getFile(id).then(function (response){
-            res.json(200,response);
-        });
-
-
-
-
-
-    },
 
     getContributionList: function (req, res) {
 
