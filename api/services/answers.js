@@ -525,7 +525,8 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
                 if (found) {
                     if (found.photo) {
-                        var photo_id = util.getMax(found.photo, 'file_size');
+                        var max_size_node = util.getMax(found.photo, 'file_size');
+                        var photo_id = max_size_node.file_id;
                         sails.log.debug("PHOTO ID:::::::: ", photo_id);
 
                         telegram.getFile(found.photo).then(function(response){
