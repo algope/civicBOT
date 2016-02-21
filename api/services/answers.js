@@ -525,10 +525,11 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
                 if (found) {
                     if (found.photo) {
-                        sails.log.debug("PHOTO FOUND, going to push to S3");
+                        var photo_id = util.getMax(found.photo, file_size);
+                        sails.log.debout("PHOTO ID:::::::: ", photo_id);
+
                         telegram.getFile(found.photo).then(function(response){
                             var path = response.result.file_path;
-                            sails.log.debug("GOT PATH FROM TELEGRAM ::::::: "+path);
                             telegram.pushToS3(path).then(function(response){
                                 sails.log.debug("PUSHING TO S3 COMPLETED!");
 
@@ -615,3 +616,10 @@ module.exports.answeringThanksS10 = function (userId, update, userAlias) {
         }
     );
 };
+
+var max;
+for (var i=0; i<photoArray.length; i++){
+    if (!max || parseInt(photoArray[i][file_size]) > parseInt(max[file_size])){
+        max = arr[i];
+    }
+}
