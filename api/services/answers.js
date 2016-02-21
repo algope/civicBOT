@@ -527,9 +527,7 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
                     if (found.photo) {
                         var max_size_node = util.getMax(found.photo, 'file_size');
                         var photo_id = max_size_node.file_id;
-                        sails.log.debug("PHOTO ID:::::::: ", photo_id);
-
-                        telegram.getFile(found.photo).then(function(response){
+                        telegram.getFile(photo_id).then(function(response){
                             var path = response.result.file_path;
                             telegram.pushToS3(path).then(function(response){
                                 sails.log.debug("PUSHING TO S3 COMPLETED!");
