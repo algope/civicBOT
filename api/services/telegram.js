@@ -91,9 +91,6 @@ module.exports.pushToS3 = function(path){
     var file = path.split('/');
     var file_name = file[1];
 
-    sails.log.debug("FILE NAME FOR S3 ::::: "+file_name);
-    sails.log.debug("URL FOR STREAM:::: "+url);
-
     return new Promise(function (resolve, reject){
         var StreamingS3 = require('streaming-s3'),
             request = require('request');
@@ -106,9 +103,9 @@ module.exports.pushToS3 = function(path){
                 ContentType: 'image/jpeg'
 
             },function (err, resp, stats) {
-                if (err) return console.log('Upload error: ', err);
-                console.log('Upload stats: ', stats);
-                console.log('Upload successful: ', resp);
+                if (err) reject(err);
+                resolve(file_name);
+
             }
 
         );
