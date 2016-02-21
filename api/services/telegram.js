@@ -71,6 +71,9 @@ module.exports.getFile = function (file_id) {
         host: sails.config.telegram.url,
         path: '/bot' + sails.config.telegram.token + '/getFile?file_id='+file_id
     };
+    sails.log.debug("OPTIONS.host"+options.host);
+    sails.log.debug("OPTIONS.path"+path);
+
     return new Promise(function (resolve, reject) {
         https.get(options, function (res) {
             var json = "";
