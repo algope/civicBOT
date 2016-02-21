@@ -203,24 +203,12 @@ module.exports = {
     },
 
     getContributionList: function (req, res){
-        Classify.find().exec(function(ko, contributions){
+        Classify.find().populate(['label', 'party', 'location', 'media']).exec(function(ko, contributions){
             if(ko){
                 res.serverError(ko);
             }
             else if(contributions){
-                var result = [];
-                for (var i = 0; i < contributions.length; i++) {
-                    result.push({
-                        id: contributions[i].id,
-                        type: contributions[i].type,
-                        img_id: contributions[i].photo,
-                        txt: contributions[i].text,
-                        label: contributions[i].label,
-                        label_id: contributions[i].label_id
-                    }
-                    );
-
-                }
+                res.ok(contributions);
             }
 
         });
@@ -228,6 +216,24 @@ module.exports = {
     },
 
     setParty: function (req, res) {
+        var id = req.body.contribId;
+        var party = req.body.partyId;
+
+        if (!id || !party) {
+            return res.badRequest("Parameters Expected");
+        }
+        else {
+
+            Classify.update({id: id}, {party: party}).exec(function (ko, ok) {
+                if (ko) {
+                    res.serverError(ko);
+                } else if (ok) {
+                    res.ok(ok);
+                }
+
+            });
+
+        }
 
     },
 

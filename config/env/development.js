@@ -30,7 +30,7 @@ module.exports = {
 
     models: {
         connection: 'devMySQL',
-        migrate: 'alter'
+        migrate: 'safe'
     },
 
     mixpanel: {

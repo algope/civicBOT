@@ -16,6 +16,9 @@ module.exports = {
         },
         label:{
             type: 'string'
+        },
+        name:{
+            type: 'string'
         }
 
     }
