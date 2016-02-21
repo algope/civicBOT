@@ -616,10 +616,3 @@ module.exports.answeringThanksS10 = function (userId, update, userAlias) {
         }
     );
 };
-
-var max;
-for (var i=0; i<photoArray.length; i++){
-    if (!max || parseInt(photoArray[i][file_size]) > parseInt(max[file_size])){
-        max = arr[i];
-    }
-}
