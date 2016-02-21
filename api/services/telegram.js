@@ -66,27 +66,21 @@ module.exports.setWebHook = function (url) {
 };
 
 module.exports.getFile = function (file_id) {
-    sails.log.debug(">>>> I'm at getFile");
     var options = {
         host: sails.config.telegram.url,
         path: '/bot' + sails.config.telegram.token + '/getFile?file_id='+file_id
     };
-    sails.log.debug("OPTIONS.host"+options.host);
-    sails.log.debug("OPTIONS.path"+options.path);
 
     return new Promise(function (resolve, reject) {
         https.get(options, function (res) {
             var json = "";
-            sails.log.debug(">>>> I'm at getFile, inside PROMISE");
             res.on('data', function (chunk) {
                 json += chunk;
             });
             res.on('end', function () {
-                sails.log.debug(">>>> I'm at getFile ALL GREAT!");
                 resolve(JSON.parse(json));
             });
             res.on('error', function (){
-                sails.log.error("ERROR ON REQUEST to getFILE TELEGRAM");
             })
         });
     })
@@ -96,19 +90,23 @@ module.exports.pushToS3 = function(path){
     var url = 'api.telegram.org/file/bot' + sails.config.telegram.token + path;
     var file = path.split('/');
     var file_name = file[1];
+
     sails.log.debug("FILE NAME FOR S3 ::::: "+file_name);
+    sails.log.debug("URL FOR STREAM:::: "+url);
+
     return new Promise(function (resolve, reject){
-        var streamingS3 = require('streaming-s3'),
+        var StreamingS3 = require('streaming-s3'),
             request = require('request');
         var rStream = request.get(url);
 
-        var uploader = new streamingS3(rStream, {accessKeyId: sails.config.s3.accessKeyId, secretAccessKey: sails.conf.s3.secretAccessKey},
+        var uploader = new StreamingS3(rStream, {accessKeyId: sails.config.s3.accessKeyId, secretAccessKey: sails.config.s3.secretAccessKey},
             {
                 Bucket: sails.config.s3.bucket,
                 Key: file_name,
                 ContentType: 'image/jpeg'
+
             },function (err, resp, stats) {
-                if (err) return console.log('Upload error: ', e);
+                if (err) return console.log('Upload error: ', err);
                 console.log('Upload stats: ', stats);
                 console.log('Upload successful: ', resp);
             }
