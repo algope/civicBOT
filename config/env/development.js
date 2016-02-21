@@ -42,10 +42,10 @@ module.exports = {
     },
 
     s3:{
-        accessKeyId: '',
-        secretAccessKey: '',
-        bucket: '',
-        cloudFrontUrl: ''
+        accessKeyId: 'AKIAJTAPDHL2Y45ISW7A',
+        secretAccessKey: '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',
+        bucket: 'civicbotcdn',
+        cloudFrontUrl: 'http://d3bjzxyw6dh8fr.cloudfront.net/'
     },
 
     port: 8080,

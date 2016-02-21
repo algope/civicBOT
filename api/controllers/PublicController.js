@@ -8,6 +8,15 @@
 module.exports = {
 
     getContributionList: function (req, res) {
+        Classify.find({published: true}).populate(['label', 'party', 'location', 'media']).exec(function(ko, contributions){
+            if(ko){
+                res.serverError(ko);
+            }
+            else if(contributions){
+                res.ok(contributions);
+            }
+
+        });
 
     },
 
