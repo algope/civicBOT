@@ -202,6 +202,19 @@ module.exports = {
 
     },
 
+    getMediaList: function (req, res) {
+        Media.find().exec(function(ko, media){
+            if(ko){
+                res.serverError(ko);
+            }
+            else if(media){
+                res.ok(media);
+            }
+
+        });
+
+    },
+
     getContributionList: function (req, res){
         Classify.find().populate(['label', 'party', 'location', 'media']).exec(function(ko, contributions){
             if(ko){
@@ -238,6 +251,45 @@ module.exports = {
     },
 
     setMedia: function (req, res) {
+        var id = req.body.contribId;
+        var media = req.body.mediaName;
+        var mediaId = req.body.mediaId;
+
+        if (!id && (!media || !mediaId)) {
+            return res.badRequest("Parameters Expected");
+        }else if (media && mediaId){
+            return res.badRequest("Too Many Parameters");
+        }
+        else {
+            if(mediaId){
+                Classify.update({id: id}, {media: mediaId, edited: 1}).exec(function (ko, ok) {
+                    if (ko) {
+                        res.serverError(ko);
+                    } else if (ok) {
+                        res.ok(ok);
+                    }
+
+                });
+            } else if(media){
+                Media.create({media: media}).exec(function (ko, ok) {
+                    if (ko) {
+                        res.serverError(ko);
+                    } else if (ok) {
+                        Classify.update({id: id}, {media: ok.id, edited: 1}).exec(function (ko, ok) {
+                            if (ko) {
+                                res.serverError(ko);
+                            } else if (ok) {
+                                res.ok(ok);
+                            }
+
+                        });
+                    }
+                });
+            }
+
+
+
+        }
 
     },
 
