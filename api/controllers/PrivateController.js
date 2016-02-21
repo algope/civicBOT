@@ -228,6 +228,19 @@ module.exports = {
 
     },
 
+    getLabelList: function (req, res){
+        Label.find().exec(function(ko, label){
+            if(ko){
+                res.serverError(ko);
+            }
+            else if(label){
+                res.ok(label);
+            }
+
+        });
+
+    },
+
     setParty: function (req, res) {
         var id = req.body.contribId;
         var party = req.body.partyId;
@@ -316,10 +329,48 @@ module.exports = {
     },
 
     setLabel: function (req, res) {
+        var id = req.body.contribId;
+        var label = req.body.labelId;
+
+        if (!id || !label) {
+            return res.badRequest("Parameters Expected");
+        }
+        else {
+
+            Classify.update({id: id}, {label: label, edited: 1}).exec(function (ko, ok) {
+                if (ko) {
+                    res.serverError(ko);
+                } else if (ok) {
+                    res.ok(ok);
+                }
+
+            });
+
+        }
 
     },
 
     setToPublish: function (req, res){
+        var id = req.body.contribId;
+        var publish = req.body.publish;
+
+        if (!id || !publish) {
+            return res.badRequest("Parameters Expected");
+        }else if (publish >1){
+            return res.badRequest("Wrong Parameter Value");
+        }
+        else {
+
+            Classify.update({id: id}, {published: publish, edited: 0}).exec(function (ko, ok) {
+                if (ko) {
+                    res.serverError(ko);
+                } else if (ok) {
+                    res.ok(ok);
+                }
+
+            });
+
+        }
 
     }
 
