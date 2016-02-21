@@ -66,26 +66,52 @@ module.exports.setWebHook = function (url) {
 };
 
 module.exports.getFile = function (file_id) {
+    var options = {
+        host: sails.config.telegram.url,
+        path: '/bot' + sails.config.telegram.token + '/getFile?file_id='+file_id
+    };
     return new Promise(function (resolve, reject) {
-        var formData = {
-            file_id: file_id
-        };
-        request.post({
-            url: 'https://' + sails.config.telegram.url + '/bot' + sails.config.telegram.token + '/getFile',
-            formData: formData
-        }, function (err, httpResponse, body) {
-            if (err) {
-                reject(err);
-            }
-            resolve(JSON.parse(body))
+        https.get(options, function (res) {
+            var json = "";
+            res.on('data', function (chunk) {
+                json += chunk;
+            });
+            res.on('end', function () {
+                resolve(JSON.parse(json));
+            });
         });
+    })
+};
+
+module.exports.pushToS3 = function(path){
+    var url = 'api.telegram.org/file/bot' + sails.config.telegram.token + path;
+    var file = path.split('/');
+    var file_name = file[1];
+    return new Promise(function (resolve, reject){
+        var streamingS3 = require('streaming-s3'),
+            request = require('request');
+        var rStream = request.get(url);
+
+        var uploader = new streamingS3(rStream, {accessKeyId: sails.config.s3.accessKeyId, secretAccessKey: sails.conf.s3.secretAccessKey},
+            {
+                Bucket: sails.config.s3.bucket,
+                Key: file_name,
+                ContentType: 'image/jpeg'
+            },function (err, resp, stats) {
+                if (err) return console.log('Upload error: ', e);
+                console.log('Upload stats: ', stats);
+                console.log('Upload successful: ', resp);
+            }
+
+        );
+
     })
 };
 
 module.exports.downloadFile = function (file_path) {
     var options = {
         host: "api.telegram.org",
-        path: "/file/bot" + sails.config.telegram.token + '/file_path'
+        path: "/file/bot" + sails.config.telegram.token + file_path
     };
     return new Promise(function (resolve, reject) {
         https.get(options, function (res) {

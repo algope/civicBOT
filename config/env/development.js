@@ -41,6 +41,12 @@ module.exports = {
         token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
     },
 
+    s3:{
+        accessKeyId: 'AKIAJTAPDHL2Y45ISW7A ',
+        secretAccessKey: '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',
+        bucket: 'civicbotcdn.s3.amazonaws.com'
+    },
+
     port: 8080,
 
     orm: {

@@ -41,6 +41,8 @@
     "sails": "latest",
     "sails-disk": "latest",
     "sails-mysql": "latest",
+    "skipper-s3": "^0.5.6",
+    "streaming-s3": "^0.4.1",
     "useragent": "latest"
   },
   "scripts": {

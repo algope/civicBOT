@@ -525,33 +525,41 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
                 if (found) {
                     if (found.photo) {
-                        Classify.create({
-                            photo: found.photo,
-                            type: 1,
-                            edited: 0,
-                            published: 0,
-                            label: command.commandId,
-                            message: update.message.message_id
-                        }, function (err, ok) {
-                            if (ok) {
-                                stages.updateStage({user_id: userId}, {stage: 1}).then(
-                                    function (response) {
-                                        UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                            if (ok) {
-                                                mixpanel.people.increment(userId, "contributions");
-                                                mixpanel.track("Contribution", {
-                                                    distinct_id: update.update_id,
-                                                    from: userId,
-                                                    photo: update.message.photo
+                        telegram.getFile(found.photo).then(function(response){
+                            var path = response.result.file_path;
+                            telegram.pushToS3(path).then(function(response){
+                                sails.log.debug("PUSHING TO S3 COMPLETED!");
+
+
+                                Classify.create({
+                                    photo: found.photo,
+                                    type: 1,
+                                    edited: 0,
+                                    published: 0,
+                                    label: command.commandId,
+                                    message: update.message.message_id
+                                }, function (err, ok) {
+                                    if (ok) {
+                                        stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                            function (response) {
+                                                UserMedia.destroy({user_id: userId}, function (ko, ok) {
+                                                    if (ok) {
+                                                        mixpanel.people.increment(userId, "contributions");
+                                                        mixpanel.track("Contribution", {
+                                                            distinct_id: update.update_id,
+                                                            from: userId,
+                                                            photo: update.message.photo
+                                                        });
+
+                                                    }
                                                 });
-
                                             }
-                                        });
+                                        );
                                     }
-                                );
-                            }
-                        })
+                                })
 
+                            })
+                        })
                     } else if (found.text) {
                         Classify.create({
                             text: found.text,
