@@ -525,8 +525,10 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
                 if (found) {
                     if (found.photo) {
+                        sails.log.debug("PHOTO FOUND, going to push to S3");
                         telegram.getFile(found.photo).then(function(response){
                             var path = response.result.file_path;
+                            sails.log.debug("GOT PATH FROM TELEGRAM ::::::: "+path);
                             telegram.pushToS3(path).then(function(response){
                                 sails.log.debug("PUSHING TO S3 COMPLETED!");
 

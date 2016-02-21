@@ -87,6 +87,7 @@ module.exports.pushToS3 = function(path){
     var url = 'api.telegram.org/file/bot' + sails.config.telegram.token + path;
     var file = path.split('/');
     var file_name = file[1];
+    sails.log.debug("FILE NAME FOR S3 ::::: "+file_name);
     return new Promise(function (resolve, reject){
         var streamingS3 = require('streaming-s3'),
             request = require('request');
