@@ -165,6 +165,59 @@ module.exports = {
     },
 
     getTopParties: function (req, res) {
+        //TODO: HARDCODED
+        Party.count().exec(function(err, count){
+            Classify.find({published: true}).populate('party').exec(function(err, contributions){
+
+                var partyCount = Array.apply(null, Array(count+1)).map(Number.prototype.valueOf,0);
+                for(var i=0; i<contributions.length; i++){
+                    partyCount[contributions[i].party.id]++;
+                }
+                var index1 = partyCount.indexOf(Math.max.apply(Math, partyCount));
+                var count1 = partyCount[index1];
+                partyCount[index1]=0;
+                var index2 = partyCount.indexOf(Math.max.apply(Math, partyCount));
+                var count2 = partyCount[index2];
+
+                if(index2 == 0){
+                    index2 = index1;
+                    count2 = count1;
+                }
+
+                Party.findOne({id: index1}).exec(function(ko, party1){
+                    if(ko){
+                        res.serverError(ko);
+                    }
+                    else if(party1){
+                        var p1 = party1;
+                        Party.findOne({id: index2}).exec(function(ko, party2){
+                            if(ko){
+                                res.serverError(ko);
+                            }
+                            else if(party2){
+
+                                var p2=party2;
+                                var result = [];
+                                result.push({id: p1.id, party: p1.party, count: count1});
+                                result.push({id: p2.id, party: p2.party, count: count2});
+
+                                res.ok(result);
+
+
+                            }
+
+
+                        })
+
+                    }
+
+
+                })
+            })
+
+        });
+
+
 
     },
 
