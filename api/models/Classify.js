@@ -24,7 +24,7 @@ module.exports = {
             type: 'string'
         },
         label: {
-            type: 'string'
+            model: 'label'
         },
         message: {
             type: 'string'

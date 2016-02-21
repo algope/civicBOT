@@ -43,28 +43,28 @@ module.exports.processIt = function (text) {
     else if (result.type == 2) { //Classification
         switch (result.command) {
             case "A":
-                id = "A";
+                id = 1;
                 break;
             case "B":
-                id = "B";
+                id = 2;
                 break;
             case "C":
-                id = "C";
+                id = 3;
                 break;
             case "D":
-                id = "D";
+                id = 4;
                 break;
             case "E":
-                id = "E";
+                id = 5;
                 break;
             case "F":
-                id = "F";
+                id = 6;
                 break;
             case "G":
-                id = "G";
+                id = 7;
                 break;
             case "H":
-                id = "H";
+                id = 8;
                 break;
             default:
                 id = 0;

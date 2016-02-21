@@ -528,6 +528,8 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
                         Classify.create({
                             photo: found.photo,
                             type: 1,
+                            edited: 0,
+                            published: 0,
                             label: command.commandId,
                             message: update.message.message_id
                         }, function (err, ok) {
@@ -554,6 +556,8 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
                         Classify.create({
                             text: found.text,
                             type: 2,
+                            edited: 0,
+                            published: 0,
                             label: command.commandId,
                             message: update.message.message_id
                         }, function (err, ok) {
