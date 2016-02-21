@@ -5,6 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var moment = require('moment');
+
 module.exports = {
 
     getContributionList: function (req, res) {
@@ -141,6 +143,24 @@ module.exports = {
     },
 
     getTodayContribNum: function (req, res) {
+        var now = moment();
+        var nowDay = now.date();
+        var nowMonth = now.month()+1;
+        var nowYear = now.year();
+        var future = now.add(1, 'days');
+        var futureDay = future.date();
+        var futureMonth = future.month()+1;
+        var futureYear = now.year();
+        var today = new Date(nowYear+'-'+nowMonth+'-'+nowDay);
+        var tomorrow = new Date (futureYear+'-'+futureMonth+'-'+futureDay);
+
+       Classify.count({createdAt:{'>=': today, '<': tomorrow } }).exec(function(ko, count){
+           if(ko){
+               res.serverError(ko);
+           }
+
+           res.ok({count: count});
+       })
 
     },
 

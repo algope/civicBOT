@@ -33,6 +33,7 @@
     "joi": "latest",
     "jsonwebtoken": "latest",
     "mixpanel": "latest",
+    "moment": "^2.11.2",
     "node-regexp": "latest",
     "rc": "latest",
     "regex": "latest",
