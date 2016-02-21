@@ -8,15 +8,13 @@
  */
 
 module.exports.getStatistics = function(cat){
-
     return new Promise(function (resolve, reject) {
         Classify.count({label: cat}).exec(function (error, sum) {
-            if (sum){
-                resolve(sum);
-            }
-            else if(error){
+            if (error){
                 sails.log.error("DB: Error generating statistics -> ", error);
             }
+            resolve(sum);
+
         })
 
     });

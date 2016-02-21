@@ -398,28 +398,28 @@ module.exports.answeringCommandsS10 = function (command, userId, userName) {
             );
             break;
         case 7: //resultados
-            statistics.getStatistics('A').then(
+            statistics.getStatistics(1).then(
                 function(sumA){
                     var statA=sumA;
-                    statistics.getStatistics('B').then(
+                    statistics.getStatistics(2).then(
                         function(sumB){
                             var statB=sumB;
-                            statistics.getStatistics('C').then(
+                            statistics.getStatistics(3).then(
                                 function(sumC){
                                     var statC=sumC;
-                                    statisctics.getStatistics('D').then(
+                                    statisctics.getStatistics(4).then(
                                         function(sumD){
                                             var statD=sumD;
-                                            statistics.getStatistics('E').then(
+                                            statistics.getStatistics(5).then(
                                                 function(sumE){
                                                     var statE=sumE;
-                                                    statistics.getStatistics('F').then(
+                                                    statistics.getStatistics(6).then(
                                                         function(sumF){
                                                             var statF=sumF;
-                                                            statistics.getStatistics('G').then(
+                                                            statistics.getStatistics(7).then(
                                                                 function(sumG){
                                                                     var statG=sumG;
-                                                                    statistics.getStatistics('H').then(
+                                                                    statistics.getStatistics(8).then(
                                                                         function(sumH){
                                                                             var statH=sumH;
                                                                             telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});

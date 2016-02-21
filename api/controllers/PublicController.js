@@ -25,9 +25,8 @@ module.exports = {
             if(ko){
                 res.serverError(ko);
             }
-            else if(count){
-                res.ok({count: count});
-            }
+            res.ok({count: count});
+
         })
 
     },
@@ -37,22 +36,107 @@ module.exports = {
             if(ko){
                 res.serverError(ko);
             }
-            else if(count){
-                res.ok({count: count});
-            }
+            res.ok({count: count});
+
         })
 
     },
 
     getContribByCategory: function (req, res) {
 
+
+        statistics.getStatistics(1).then(
+            function(sumA){
+                statistics.getStatistics(2).then(
+                    function(sumB){
+                        statistics.getStatistics(3).then(
+                            function(sumC){
+                                statistics.getStatistics(4).then(
+                                    function(sumD){
+                                        statistics.getStatistics(5).then(
+                                            function(sumE){
+                                                statistics.getStatistics(6).then(
+                                                    function(sumF){
+                                                        statistics.getStatistics(7).then(
+                                                            function(sumG){
+                                                                statistics.getStatistics(8).then(
+                                                                    function(sumH){
+                                                                        var response = {
+                                                                            A: {
+                                                                                count: sumA,
+                                                                                cat: "Cultura"
+                                                                            },
+                                                                            B: {
+                                                                                count: sumB,
+                                                                                cat: "Economía"
+                                                                            },
+                                                                            C: {
+                                                                                count: sumC,
+                                                                                cat: "Educación"
+                                                                            },
+                                                                            D: {
+                                                                                count: sumD,
+                                                                                cat: "Medio Ambiente"
+                                                                            },
+                                                                            E: {
+                                                                                count: sumE,
+                                                                                cat: "Medios de Comunicación"
+                                                                            },
+                                                                            F: {
+                                                                                count: sumF,
+                                                                                cat: "Política"
+                                                                            },
+                                                                            G: {
+                                                                                count: sumG,
+                                                                                cat: "Sanidad"
+                                                                            },
+                                                                            H: {
+                                                                                count: sumH,
+                                                                                cat: "Otros Temas"
+                                                                            }
+                                                                        };
+
+                                                                        res.ok(response);
+
+                                                                    }
+
+                                                                )
+                                                            }
+                                                        )
+                                                    }
+                                                )
+                                            }
+                                        )
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+        )
+
     },
 
     getTotalReceivedMsg: function (req, res) {
+        Classify.count({type:2}).exec(function (ko, count){
+            if(ko){
+                res.serverError(ko);
+            }
+            res.ok({count: count});
+
+        })
 
     },
 
     getTotalReceviedImg: function (req, res) {
+        Classify.count({type:1}).exec(function (ko, count){
+            if(ko){
+                res.serverError(ko);
+            }
+            res.ok({count: count});
+
+        })
 
     },
 
