@@ -87,7 +87,7 @@ module.exports.getFile = function (file_id) {
 };
 
 module.exports.pushToS3 = function(path){
-    var url = 'https://api.telegram.org/file/bot' + sails.config.telegram.token + path;
+    var url = 'https://api.telegram.org/file/bot' + sails.config.telegram.token+'/'+ path;
     var file = path.split('/');
     var file_name = file[1];
 
