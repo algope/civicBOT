@@ -36,7 +36,7 @@ module.exports = {
             model: 'location'
         },
         media: {
-            type: 'string'
+            model: 'media'
         },
         edited:{
             type: 'boolean'

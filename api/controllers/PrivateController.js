@@ -301,24 +301,16 @@ module.exports = {
             return res.badRequest("Parameters Expected");
         }
         else {
-            Location.find({id: id}).exec(function (ko, ok) {
+
+            Classify.update({id: id}, {location: location, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
-                }
-                else if (ok) {
-                    var name = ok.name;
-                    Classify.update({id: id}, {location: name}).exec(function (ko, ok) {
-                        if (ko) {
-                            res.serverError(ko);
-                        } else if (ok) {
-                            res.ok(ok);
-                        }
-
-                    });
-
+                } else if (ok) {
+                    res.ok(ok);
                 }
 
-            })
+            });
+
         }
 
     },
