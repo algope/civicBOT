@@ -21,6 +21,14 @@ module.exports = {
     },
 
     getTotalContributions: function (req, res) {
+        Classify.count({published: true}).exec(function(ko, count){
+            if(ko){
+                res.serverError(ko);
+            }
+            else if(count){
+                res.ok({count: count});
+            }
+        })
 
     },
 
