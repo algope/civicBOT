@@ -532,7 +532,6 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
                             telegram.pushToS3(path).then(function(response){
                                 sails.log.debug("PUSHING TO S3 COMPLETED!");
 
-
                                 Classify.create({
                                     photo: found.photo,
                                     type: 1,

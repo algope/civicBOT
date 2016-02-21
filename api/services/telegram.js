@@ -66,6 +66,7 @@ module.exports.setWebHook = function (url) {
 };
 
 module.exports.getFile = function (file_id) {
+    sails.log.debug(">>>> I'm at getFile");
     var options = {
         host: sails.config.telegram.url,
         path: '/bot' + sails.config.telegram.token + '/getFile?file_id='+file_id
@@ -73,10 +74,12 @@ module.exports.getFile = function (file_id) {
     return new Promise(function (resolve, reject) {
         https.get(options, function (res) {
             var json = "";
+            sails.log.debug(">>>> I'm at getFile, inside PROMISE");
             res.on('data', function (chunk) {
                 json += chunk;
             });
             res.on('end', function () {
+                sails.log.debug(">>>> I'm at getFile ALL GREAT!");
                 resolve(JSON.parse(json));
             });
         });
