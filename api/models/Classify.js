@@ -15,7 +15,7 @@ module.exports = {
             autoIncrement: true
         },
         photo: {
-            type: 'array'
+            type: 'string'
         },
         text:{
             type: 'string'
