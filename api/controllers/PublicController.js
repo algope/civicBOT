@@ -236,6 +236,13 @@ module.exports = {
     },
 
     getTopLocations: function (req, res) {
+        TopLocations.find().populate('location').exec(function (ko, ok){
+            if(ko){
+                res.serverError(ko);
+            }else if(ok){
+                res.ok(ok);
+            }
+        });
 
     },
 
