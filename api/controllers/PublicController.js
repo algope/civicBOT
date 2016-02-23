@@ -247,6 +247,13 @@ module.exports = {
     },
 
     getTopMedia: function (req, res) {
+        TopMedia.find().populate('media').exec(function (ko, ok){
+            if(ko){
+                res.serverError(ko);
+            }else if(ok){
+                res.ok(ok);
+            }
+        });
 
     },
 
