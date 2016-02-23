@@ -164,8 +164,20 @@ module.exports = {
 
     },
 
+
     getTopParties: function (req, res) {
-        //TODO: HARDCODED
+        TopParties.find().populate('party').exec(function (ko, ok){
+            if(ko){
+                res.serverError(ko);
+            }else if(ok){
+                res.ok(ok);
+            }
+        });
+
+
+
+        /*
+
         Party.count().exec(function(err, count){
             Classify.find({published: true}).populate('party').exec(function(err, contributions){
 
@@ -217,6 +229,8 @@ module.exports = {
 
         });
 
+        */
+
 
 
     },
@@ -228,6 +242,7 @@ module.exports = {
     getTopMedia: function (req, res) {
 
     },
+
 
     getTopPartiesByMonth: function (req, res) {
         //TODO: HARDCODED

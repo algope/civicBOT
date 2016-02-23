@@ -176,11 +176,11 @@ module.exports = {
     },
 
     getPartyList: function (req, res) {
-        Party.find().exec(function(ko, parties){
-            if(ko){
+        Party.find().exec(function (ko, parties) {
+            if (ko) {
                 res.serverError(ko);
             }
-            else if(parties){
+            else if (parties) {
                 res.ok(parties);
             }
 
@@ -189,11 +189,11 @@ module.exports = {
     },
 
     getLocationList: function (req, res) {
-        Location.find().exec(function(ko, locations){
-            if(ko){
+        Location.find().exec(function (ko, locations) {
+            if (ko) {
                 res.serverError(ko);
             }
-            else if(locations){
+            else if (locations) {
                 res.ok(locations);
             }
 
@@ -203,11 +203,11 @@ module.exports = {
     },
 
     getMediaList: function (req, res) {
-        Media.find().exec(function(ko, media){
-            if(ko){
+        Media.find().exec(function (ko, media) {
+            if (ko) {
                 res.serverError(ko);
             }
-            else if(media){
+            else if (media) {
                 res.ok(media);
             }
 
@@ -215,12 +215,12 @@ module.exports = {
 
     },
 
-    getContributionList: function (req, res){
-        Classify.find().populate(['label', 'party', 'location', 'media']).exec(function(ko, contributions){
-            if(ko){
+    getContributionList: function (req, res) {
+        Classify.find().populate(['label', 'party', 'location', 'media']).exec(function (ko, contributions) {
+            if (ko) {
                 res.serverError(ko);
             }
-            else if(contributions){
+            else if (contributions) {
                 res.ok(contributions);
             }
 
@@ -228,12 +228,12 @@ module.exports = {
 
     },
 
-    getLabelList: function (req, res){
-        Label.find().exec(function(ko, label){
-            if(ko){
+    getLabelList: function (req, res) {
+        Label.find().exec(function (ko, label) {
+            if (ko) {
                 res.serverError(ko);
             }
-            else if(label){
+            else if (label) {
                 res.ok(label);
             }
 
@@ -270,11 +270,11 @@ module.exports = {
 
         if (!id && (!media || !mediaId)) {
             return res.badRequest("Parameters Expected");
-        }else if (media && mediaId){
+        } else if (media && mediaId) {
             return res.badRequest("Too Many Parameters");
         }
         else {
-            if(mediaId){
+            if (mediaId) {
                 Classify.update({id: id}, {media: mediaId, edited: 1}).exec(function (ko, ok) {
                     if (ko) {
                         res.serverError(ko);
@@ -283,7 +283,7 @@ module.exports = {
                     }
 
                 });
-            } else if(media){
+            } else if (media) {
                 Media.create({media: media}).exec(function (ko, ok) {
                     if (ko) {
                         res.serverError(ko);
@@ -299,7 +299,6 @@ module.exports = {
                     }
                 });
             }
-
 
 
         }
@@ -350,28 +349,103 @@ module.exports = {
 
     },
 
-    setToPublish: function (req, res){
+    setToPublish: function (req, res) {
         var id = req.body.contribId;
         var publish = req.body.publish;
-
-        if (!id || !publish) {
+        if (!id || publish == undefined) {
             return res.badRequest("Parameters Expected");
         }else if (publish >1){
             return res.badRequest("Wrong Parameter Value");
         }
         else {
-
-            Classify.update({id: id}, {published: publish, edited: 0}).exec(function (ko, ok) {
-                if (ko) {
-                    res.serverError(ko);
-                } else if (ok) {
-                    res.ok(ok);
-                }
-
-            });
-
+            if (publish == 1) {
+                Classify.find({id: id}).exec(function (ko, ok) {
+                    if (ko) {
+                        res.serverError(ko);
+                    } else if (ok) {
+                        var isPublished = ok[0].published;
+                        if (isPublished == publish) {
+                            res.badRequest("Element Already Published");
+                        }
+                        else {
+                            Classify.update({id: id}, {
+                                published: 1,
+                                edited: 0
+                            }).exec(function (ko, contribution) {
+                                if (ko) {
+                                    res.serverError(contribution);
+                                } else if (contribution) {
+                                    TopLocations.findOrCreate({location: contribution[0].location}, {location: contribution[0].location}).exec(function (ko, topLocation) {
+                                        if (ko) {
+                                            res.serverError(ko);
+                                        } else if (topLocation) {
+                                            topLocation.count++;
+                                            topLocation.save(function () {
+                                                TopMedia.findOrCreate({media: contribution[0].media}, {media: contribution[0].media}).exec(function (ko, topMedia) {
+                                                    if (ko) {
+                                                        res.serverError(ko);
+                                                    } else if (topMedia) {
+                                                        topMedia.count++;
+                                                        topMedia.save(function () {
+                                                            TopParties.findOrCreate({party: contribution[0].party}, {party: contribution[0].party}).exec(function (ko, topParty) {
+                                                                if (ko) {
+                                                                    res.serverError(ko);
+                                                                } else if (topParty) {
+                                                                    topParty.count++;
+                                                                    topParty.save(function () {
+                                                                        res.ok(contribution);
+                                                                    });
+                                                                }
+                                                            });
+                                                        });
+                                                    }
+                                                });
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+            else if (publish == 0) {
+                Classify.update({id: id}, {published: 0, edited: 0}).exec(function (ko, contribution) {
+                    if (ko) {
+                        res.serverError(contribution);
+                    } else if (contribution) {
+                        TopLocations.findOrCreate({location: contribution[0].location}, {location: contribution[0].location}).exec(function (ko, topLocation) {
+                            if (ko) {
+                                res.serverError(ko);
+                            } else if (topLocation) {
+                                topLocation.count--;
+                                topLocation.save(function () {
+                                    TopMedia.findOrCreate({media: contribution[0].media}, {media: contribution[0].media}).exec(function (ko, topMedia) {
+                                        if (ko) {
+                                            res.serverError(ko);
+                                        } else if (topMedia) {
+                                            topMedia.count--;
+                                            topMedia.save(function () {
+                                                TopParties.findOrCreate({party: contribution[0].party}, {party: contribution[0].party}).exec(function (ko, topParty) {
+                                                    if (ko) {
+                                                        res.serverError(ko);
+                                                    } else if (topParty) {
+                                                        topParty.count--;
+                                                        topParty.save(function () {
+                                                            res.ok(contribution);
+                                                        });
+                                                    }
+                                                });
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         }
-
     }
 
 
