@@ -14,7 +14,7 @@
     "node": "5.6.0"
   },
   "dependencies": {
-    "bcrypt": "latest",
+    "bcrypt": "0.8.5",
     "ejs": "latest",
     "form-data": "latest",
     "include-all": "latest",
