@@ -495,7 +495,7 @@ module.exports.answeringLabelingS3 = function (type, update, userId) {
                         photo: update.message.photo
                     }, function (err, newUpdate) {
                         if (newUpdate) {
-                            sails.log.error("USERMEDIA CREATED!!!!");
+                            sails.log.verbose("USERMEDIA CREATED!!!!");
                             stages.updateStage({user_id: userId}, {stage: 4});
                         }
 

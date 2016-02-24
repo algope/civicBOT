@@ -34,6 +34,7 @@
     "jsonwebtoken": "latest",
     "mixpanel": "latest",
     "moment": "^2.11.2",
+    "newrelic": "^1.25.3",
     "node-regexp": "latest",
     "rc": "latest",
     "regex": "latest",
