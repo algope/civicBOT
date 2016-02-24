@@ -17,18 +17,6 @@
     "bcrypt": "latest",
     "ejs": "latest",
     "form-data": "latest",
-    "grunt": "latest",
-    "grunt-contrib-clean": "latest",
-    "grunt-contrib-coffee": "latest",
-    "grunt-contrib-concat": "latest",
-    "grunt-contrib-copy": "latest",
-    "grunt-contrib-cssmin": "latest",
-    "grunt-contrib-jst": "latest",
-    "grunt-contrib-less": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-contrib-watch": "latest",
-    "grunt-sails-linker": "latest",
-    "grunt-sync": "latest",
     "include-all": "latest",
     "joi": "latest",
     "jsonwebtoken": "latest",
@@ -54,6 +42,6 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/alejandro/hello-world-bot.git"
+    "url": "https://github.com/hubcivico/civicBOT.git"
   }
 }
