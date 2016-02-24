@@ -38,7 +38,7 @@ module.exports.policies = {
         'getTotalActiveUsers': true,
         'getContribByCategory': true,
         'getTotalReceivedMsg': true,
-        'getTotalReceviedImg': true,
+        'getTotalReceivedImg': true,
         'getTodayContribNum': true,
         'getTopParties': true,
         'getTopLocations': true,
