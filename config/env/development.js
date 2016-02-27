@@ -33,7 +33,7 @@ module.exports = {
             port: 27017,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
-            database: 'civicbot'
+            database: process.env.DB_NAME
         }
     },
 
