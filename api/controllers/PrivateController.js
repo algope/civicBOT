@@ -448,8 +448,6 @@ module.exports = {
         }
     }
 
-
-
     /*
      resetPassword: function (req, res) {
      var email = req.param('email');
