@@ -45,7 +45,7 @@ module.exports = {
         //    }
         //});
 
-
+        sails.log.debug("IT WAS THE DATABASE!");
         /**
          * Let's look for a previous user, otherwise we create a new one
          */
