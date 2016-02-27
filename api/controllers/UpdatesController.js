@@ -45,7 +45,7 @@ module.exports = {
                 });
             }
         });
-        sails.log.debug("I'M HERE 2");
+        sails.log.debug("I'M HERE 2--");
 
         /**
          * Let's look for a previous user, otherwise we create a new one
