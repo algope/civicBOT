@@ -7,29 +7,53 @@
 
 module.exports = {
 
-  attributes: {
+    attributes: {
 
-    token_id: {
-      type: 'integer',
-      primaryKey: true,
-      unique: true,
-      autoIncrement: true
-    },
+        token_id: {
+            type: 'integer',
+            primaryKey: true,
+            unique: true,
+            autoIncrement: true
+        },
 
-    user_id: {
-      type: 'integer',
-      required: true
-    },
+        user_id: {
+            type: 'integer',
+            required: true
+        },
 
-    token: {type: 'string'},
-    isValid: {type: 'boolean'},
-    os: {type: 'string'},
-    agent: {type: 'string'},
-    device: {type: 'string'},
-    latitude: {type: 'string'},
-    longitude: {type: 'string'},
-    ip: {type: 'string'}
+        token: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        isValid: {
+            type: 'boolean',
+            defaultsTo: false
+        },
+        os: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        agent: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        device: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        latitude: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        longitude: {
+            type: 'string',
+            defaultsTo: ''
+        },
+        ip: {
+            type: 'string',
+            defaultsTo: ''
+        }
 
-  }
+    }
 };
 

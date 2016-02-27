@@ -18,7 +18,8 @@ module.exports = {
 
         media:{
             unique: true,
-            model: 'media'
+            model: 'media',
+            defaultsTo: null
         },
 
         count:{

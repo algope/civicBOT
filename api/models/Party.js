@@ -16,7 +16,8 @@ module.exports = {
         },
 
         party: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
 
     }

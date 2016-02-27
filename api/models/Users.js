@@ -16,17 +16,21 @@ module.exports = {
             unique: true
         },
         first_name: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         last_name: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         username: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         messages: {
             collection: 'messages',
-            via: 'from'
+            via: 'from',
+            defaultsTo: null
         }
     }
 };

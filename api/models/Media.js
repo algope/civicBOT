@@ -16,7 +16,8 @@ module.exports = {
         },
 
         media: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
 
     }

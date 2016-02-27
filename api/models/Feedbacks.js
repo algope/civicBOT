@@ -21,7 +21,8 @@ module.exports = {
             unique: true
         },
         text: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
 
     }

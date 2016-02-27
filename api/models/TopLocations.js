@@ -18,7 +18,8 @@ module.exports = {
 
         location:{
             unique: true,
-            model: 'location'
+            model: 'location',
+            defaultsTo: null
         },
 
         count:{

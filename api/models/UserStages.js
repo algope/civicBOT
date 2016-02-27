@@ -21,10 +21,12 @@ module.exports = {
             unique: true
         },
         stage: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         data_type_selected: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
     }
 };

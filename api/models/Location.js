@@ -16,19 +16,24 @@ module.exports = {
         },
 
         name: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         plainName:{
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         cp: {
-            type: 'integer'
+            type: 'integer',
+            defaultsTo: 0
         },
         lat: {
-            type: 'double'
+            type: 'double',
+            defaultsTo: 0.0
         },
         lon: {
-            type: 'double'
+            type: 'double',
+            defaultsTo: 0.0
         }
 
     }

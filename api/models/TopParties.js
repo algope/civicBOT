@@ -18,7 +18,8 @@ module.exports = {
 
         party:{
             unique: true,
-            model: 'party'
+            model: 'party',
+            defaultsTo: null
         },
 
         count:{

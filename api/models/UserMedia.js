@@ -21,10 +21,12 @@ module.exports = {
             unique: true
         },
         photo: {
-            type: 'array'
+            type: 'array',
+            defaultsTo: null
         },
         text: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
 
     }

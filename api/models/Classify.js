@@ -15,34 +15,44 @@ module.exports = {
             autoIncrement: true
         },
         photo: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         text:{
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         type:{
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         label: {
-            model: 'label'
+            model: 'label',
+            defaultsTo: null
         },
         message: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         party: {
-            model: 'party'
+            model: 'party',
+            defaultsTo: null
         },
         location: {
-            model: 'location'
+            model: 'location',
+            defaultsTo: null
         },
         media: {
-            model: 'media'
+            model: 'media',
+            defaultsTo: null
         },
         edited:{
-            type: 'boolean'
+            type: 'boolean',
+            defaultsTo: false
         },
         published:{
-            type: 'boolean'
+            type: 'boolean',
+            defaultsTo: false
         }
 
     }

@@ -15,10 +15,12 @@ module.exports = {
             autoIncrement: true
         },
         label:{
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         name:{
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
 
     }

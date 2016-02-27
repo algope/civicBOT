@@ -16,23 +16,29 @@ module.exports = {
             unique: true
         },
         type: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         title: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         username: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         first_name: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         last_name: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         messages: {
             collection: 'messages',
-            via: 'chat'
+            via: 'chat',
+            defaultsTo: null
         }
 
     }

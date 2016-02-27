@@ -16,25 +16,32 @@ module.exports = {
             unique: true
         },
         from: {
-            model: 'users'
+            model: 'users',
+            defaultsTo: null
         },
         date: {
-            type: 'integer'
+            type: 'integer',
+            defaultsTo: 0
         },
         chat: {
-            model: 'chats'
+            model: 'chats',
+            defaultsTo: null
         },
         text: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         photo: {
-            type: 'array'
+            type: 'array',
+            defaultsTo: null
         },
         caption: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         update: {
-            model: 'updates'
+            model: 'updates',
+            defaultsTo: null
         }
 
     }

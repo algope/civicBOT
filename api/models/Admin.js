@@ -26,11 +26,22 @@ module.exports = {
             unique: true // Yes unique one
         },
 
-        encryptedPassword: {type: 'string'},
+        encryptedPassword: {
+            type: 'string'
+        },
 
-        isLogged: {type: 'boolean'},
-        status: {type: 'boolean'},
-        deleted: {type: 'boolean'},
+        isLogged: {
+            type: 'boolean',
+            defaultsTo: false
+        },
+        status: {
+            type: 'boolean',
+            defaultsTo: false
+        },
+        deleted: {
+            type: 'boolean',
+            defaultsTo: false
+        },
 
         // We don't wan't to send back encrypted password either
         toJSON: function () {

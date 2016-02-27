@@ -15,7 +15,8 @@ module.exports = {
             unique: true
         },
         message: {
-            model: 'messages'
+            model: 'messages',
+            defaultsTo: ''
         }
     }
 };
