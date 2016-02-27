@@ -9,7 +9,7 @@
  */
 
 var Mixpanel = require('mixpanel');
-var mixpanel = Mixpanel.init(sails.config.mixpanel.token);
+var mixpanel = Mixpanel.init('2ac0d6d54c481e7dea88d065874c806f');
 
 module.exports = {
 
@@ -27,9 +27,13 @@ module.exports = {
         /**
          * Creates a new entry into Updates table
          */
-        Updates.create(req.body, function (ko, ok) {
+        update.message.chat.chat_id = update.message.chat.id;
+        update.message.from.user_id = update.message.from.id;
+        delete update.message.chat.id;
+        delete update.message.from.id;
+        Updates.create(update, function (ko, ok) {
             if (ko) {
-                sails.log.error("[DB] - Updates.create error: ", err);
+                sails.log.error("[DB] - Updates.create error: ", ko);
             }
             if (ok) {
                 mixpanel.track("Update", {
@@ -41,7 +45,6 @@ module.exports = {
                 });
             }
         });
-
 
         /**
          * Let's look for a previous user, otherwise we create a new one
@@ -56,8 +59,6 @@ module.exports = {
                     "stage": user.stage,
                     "contributions": 0
                 });
-
-
                 /**
                  * STAGE 1 > First stage, no commands executed.
                  */
@@ -103,9 +104,10 @@ module.exports = {
 
 
                     /**
-                     * STAGE 4 > Forth stage, the bot had recieved the media
+                     * STAGE 4 > Fourth stage, the bot had recieved the media
                      */
                 } else if (user.stage == 4) { //Data recieved, not labeled
+
                     sails.log.debug("commandID: ", command.commandId);
                     if (update.message.photo || command.commandId == 0 || !command) {
                         answers.answeringError(userId, update, userAlias, user);

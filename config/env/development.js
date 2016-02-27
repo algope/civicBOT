@@ -17,25 +17,63 @@ module.exports = {
      * environment (see config/connections.js and config/models.js )           *
      ***************************************************************************/
 
+    connections: {
+        'defaults': 'mongodb',
+        //devMySQL: {
+          //  adapter: 'sails-mysql',
+            //host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
+            //user: 'test',
+            //password: 'testing1357',
+            //database: 'devCivicBOT'
+        //},
+
+        mongodb: {
+            adapter: 'sails-mongo',
+            host: process.env.DB_URL,
+            port: 27017,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
+        }
+    },
+
     models: {
-        connection: 'testingMySQL',
-        migrate: 'drop'
+        connection: 'mongodb',
+        migrate: 'safe'
+
     },
 
     mixpanel: {
-        token: '3386fca1c2c5187f9bb742afc6344129'
+        token: process.env.MIXPANEL_TOKEN
     },
 
     telegram: {
-        token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
+        token: process.env.TELEGRAM_TOKEN
     },
 
-    port: 80,
+    s3:{
+        accessKeyId: process.env.S3_AK,
+        secretAccessKey: process.env.S3_SECRET,
+        bucket: 'civicbotcdn',
+        cloudFrontUrl: 'http://d3bjzxyw6dh8fr.cloudfront.net/'
+    },
+
+    port: 8080,
 
     orm: {
-        _hookTimeout: 30000
+        _hookTimeout: 200000
     },
     pubsub: {
-        _hookTimeout: 30000
+        _hookTimeout: 200000
+    },
+
+    globals:{
+        authentication: {
+            secret: process.env.AUTH_SECRET
+        }
+    },
+
+    log: {
+        level: "verbose"
     }
 };

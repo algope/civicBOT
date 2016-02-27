@@ -10,21 +10,17 @@
 module.exports = {
 
     attributes: {
-        id: {
-            type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
-        },
         user_id: {
             type: 'integer',
             unique: true
         },
         stage: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         },
         data_type_selected: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
     }
 };

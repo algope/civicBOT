@@ -10,18 +10,13 @@
 module.exports = {
 
     attributes: {
-        id: {
-            type: 'integer',
-            unique: true,
-            primaryKey: true,
-            autoIncrement: true
-        },
         user_id: {
             type: 'integer',
             unique: true
         },
         text: {
-            type: 'string'
+            type: 'string',
+            defaultsTo: ''
         }
 
     }

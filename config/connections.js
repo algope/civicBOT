@@ -40,12 +40,12 @@ module.exports.connections = {
      * Run: npm install sails-mysql                                             *
      *                                                                          *
      ***************************************************************************/
-    testingMySQL: {
+    prodMySQL: {
         adapter: 'sails-mysql',
-        host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
-        user: 'test',
-        password: 'testing123',
-        database: 'devCivicBOT'
+        host: '',
+        user: '',
+        password: '', //TODO: Before production
+        database: ''
     },
 
 
@@ -65,6 +65,23 @@ module.exports.connections = {
         database: 'civicBOT'
     },
 
+
+    /***************************************************************************
+     *                                                                          *
+     * MySQL is the world's most popular relational database.                   *
+     * http://en.wikipedia.org/wiki/MySQL                                       *
+     *                                                                          *
+     * Run: npm install sails-mysql                                             *
+     *                                                                          *
+     ***************************************************************************/
+    devMySQL: {
+        adapter: 'sails-mysql',
+        host: '',
+        user: '',
+        password: '',
+        database: ''
+    },
+
     /***************************************************************************
      *                                                                          *
      * MongoDB is the leading NoSQL database.                                   *
@@ -73,13 +90,13 @@ module.exports.connections = {
      * Run: npm install sails-mongo                                             *
      *                                                                          *
      ***************************************************************************/
-    someMongodbServer: {
+    mongodb: {
         adapter: 'sails-mongo',
-        host: 'localhost',
-        port: 27017,
-        user: 'username',
-        password: 'password',
-        database: 'your_mongo_db_name_here'
+        host: '',
+        port: '',
+        user: '',
+        password: '',
+        database: ''
     },
 
     /***************************************************************************

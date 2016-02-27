@@ -8,7 +8,7 @@
  */
 
 var Mixpanel = require('mixpanel');
-var mixpanel = Mixpanel.init(sails.config.mixpanel.token);
+var mixpanel = Mixpanel.init('2ac0d6d54c481e7dea88d065874c806f');
 
 module.exports.answeringCommandsS1 = function (command, userId, userName) {
     switch (command.commandId) {
@@ -398,28 +398,28 @@ module.exports.answeringCommandsS10 = function (command, userId, userName) {
             );
             break;
         case 7: //resultados
-            statistics.getStatistics('A').then(
+            statistics.getStatistics(1).then(
                 function(sumA){
                     var statA=sumA;
-                    statistics.getStatistics('B').then(
+                    statistics.getStatistics(2).then(
                         function(sumB){
                             var statB=sumB;
-                            statistics.getStatistics('C').then(
+                            statistics.getStatistics(3).then(
                                 function(sumC){
                                     var statC=sumC;
-                                    statisctics.getStatistics('D').then(
+                                    statisctics.getStatistics(4).then(
                                         function(sumD){
                                             var statD=sumD;
-                                            statistics.getStatistics('E').then(
+                                            statistics.getStatistics(5).then(
                                                 function(sumE){
                                                     var statE=sumE;
-                                                    statistics.getStatistics('F').then(
+                                                    statistics.getStatistics(6).then(
                                                         function(sumF){
                                                             var statF=sumF;
-                                                            statistics.getStatistics('G').then(
+                                                            statistics.getStatistics(7).then(
                                                                 function(sumG){
                                                                     var statG=sumG;
-                                                                    statistics.getStatistics('H').then(
+                                                                    statistics.getStatistics(8).then(
                                                                         function(sumH){
                                                                             var statH=sumH;
                                                                             telegram.sendMessage(userId, strings.getProvStatistics(statA,statB,statC,statD,statE,statF,statG,statH), "", true, null, {hide_keyboard: true});
@@ -495,7 +495,7 @@ module.exports.answeringLabelingS3 = function (type, update, userId) {
                         photo: update.message.photo
                     }, function (err, newUpdate) {
                         if (newUpdate) {
-                            sails.log.error("USERMEDIA CREATED!!!!");
+                            sails.log.verbose("USERMEDIA CREATED!!!!");
                             stages.updateStage({user_id: userId}, {stage: 4});
                         }
 
@@ -525,57 +525,89 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
             UserMedia.findOne({user_id: userId}, function (err, found) {
                 if (found) {
                     if (found.photo) {
-                        PhotoLabel.create({
-                            photo: found.photo,
-                            label: command.commandId,
-                            message: update.message.message_id
-                        }, function (err, ok) {
-                            if (ok) {
-                                stages.updateStage({user_id: userId}, {stage: 1}).then(
-                                    function (response) {
-                                        UserMedia.destroy({user_id: userId}, function (ko, ok) {
+                        var max_size_node = util.getMax(found.photo, 'file_size');
+                        var photo_id = max_size_node.file_id;
+
+                        telegram.getFile(photo_id).then(function(response){
+                            var path = response.result.file_path;
+                            telegram.pushToS3(path).then(function(response){
+                                var photoUrl = sails.config.s3.cloudFrontUrl + response;
+                                sails.log.debug("PHOTO URL ::::: "+photoUrl);
+
+                                Label.findOne({label: command.commandId}).exec(function(ko, labelFound){
+                                    if(ko){
+                                        sails.log.error("DB ERROR Label : : : "+ko);
+                                    }else if(labelFound){
+                                        Classify.create({
+                                            photo: photoUrl,
+                                            type: 1,
+                                            edited: 0,
+                                            published: 0,
+                                            label: labelFound.id,
+                                            message: update.message.message_id
+                                        }, function (err, ok) {
                                             if (ok) {
-                                                mixpanel.people.increment(userId, "contributions");
-                                                mixpanel.track("Contribution", {
-                                                    distinct_id: update.update_id,
-                                                    from: userId,
-                                                    photo: update.message.photo
-                                                });
+                                                stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                                    function (response) {
+                                                        UserMedia.destroy({user_id: userId}, function (ko, ok) {
+                                                            if (ok) {
+                                                                mixpanel.people.increment(userId, "contributions");
+                                                                mixpanel.track("Contribution", {
+                                                                    distinct_id: update.update_id,
+                                                                    from: userId,
+                                                                    photo: update.message.photo
+                                                                });
 
+                                                            }
+                                                        });
+                                                    }
+                                                );
                                             }
-                                        });
-                                    }
-                                );
-                            }
-                        })
+                                        })
 
+                                    }
+                                })
+                            })
+                        })
                     } else if (found.text) {
-                        TextLabel.create({
-                            text: found.text,
-                            label: command.commandId,
-                            message: update.message.message_id
-                        }, function (err, ok) {
-                            if (err) {
-                                sails.log.error("ERROR labeling image");
-                            }
-                            if (ok) {
-                                stages.updateStage({user_id: userId}, {stage: 1}).then(
-                                    function (response) {
-                                        UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                            if (ok) {
-                                                mixpanel.people.increment(userId, "contributions");
-                                                mixpanel.track("Contribution", {
-                                                    distinct_id: update.update_id,
-                                                    from: userId,
-                                                    text: update.message.text
-                                                });
-
-                                            }
-                                        });
+                        Label.findOne({label: command.commandId}).exec(function (ko, labelFound){
+                            if(ko){
+                                sails.log.error("DB ERROR Label : : : "+ko);
+                            }else if(labelFound){
+                                Classify.create({
+                                    text: found.text,
+                                    type: 2,
+                                    edited: 0,
+                                    published: 0,
+                                    label: labelFound.id,
+                                    message: update.message.message_id
+                                }, function (err, ok) {
+                                    if (err) {
+                                        sails.log.error("ERROR labeling image");
                                     }
-                                );
+                                    if (ok) {
+                                        stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                            function (response) {
+                                                UserMedia.destroy({user_id: userId}, function (ko, ok) {
+                                                    if (ok) {
+                                                        mixpanel.people.increment(userId, "contributions");
+                                                        mixpanel.track("Contribution", {
+                                                            distinct_id: update.update_id,
+                                                            from: userId,
+                                                            text: update.message.text
+                                                        });
+
+                                                    }
+                                                });
+                                            }
+                                        );
+                                    }
+                                })
+
                             }
+
                         })
+
 
                     }
                 }
