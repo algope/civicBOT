@@ -10,7 +10,7 @@
 module.exports = {
 
     attributes: {
-        id: {
+        umedia_id: {
             type: 'integer',
             unique: true,
             autoIncrement: true

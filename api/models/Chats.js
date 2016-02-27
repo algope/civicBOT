@@ -10,7 +10,7 @@
 module.exports = {
 
     attributes: {
-        id: {
+        chat_id: {
             type: 'integer',
             primaryKey: true,
             unique: true

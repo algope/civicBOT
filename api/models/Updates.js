@@ -9,13 +9,10 @@
 module.exports = {
 
     attributes: {
-        id: {
+        update_id: {
             type: 'integer',
             primaryKey: true,
             unique: true
-        },
-        update_id: {
-            type: 'integer'
         },
         message: {
             model: 'messages'

@@ -18,32 +18,41 @@ module.exports = {
      ***************************************************************************/
 
     connections: {
-        'defaults': 'devMySQL',
-        devMySQL: {
-            adapter: 'sails-mysql',
-            host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
-            user: 'test',
-            password: 'testing1357',
-            database: 'devCivicBOT'
+        'defaults': 'mongodb',
+        //devMySQL: {
+          //  adapter: 'sails-mysql',
+            //host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
+            //user: 'test',
+            //password: 'testing1357',
+            //database: 'devCivicBOT'
+        //},
+
+        mongodb: {
+            adapter: 'sails-mongo',
+            host: process.env.DB_URL,
+            port: 27017,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: 'civicbot'
         }
     },
 
     models: {
-        connection: 'devMySQL',
-        migrate: 'safe'
+        connection: 'mongodb',
+        migrate: 'drop'
     },
 
     mixpanel: {
-        token: '3386fca1c2c5187f9bb742afc6344129'
+        token: process.env.MIXPANEL_TOKEN
     },
 
     telegram: {
-        token: '169302702:AAEN11zzvrPKMfT8dWY5PVESzng0HcctoQs'
+        token: process.env.TELEGRAM_TOKEN
     },
 
     s3:{
-        accessKeyId: 'AKIAJTAPDHL2Y45ISW7A',
-        secretAccessKey: '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',
+        accessKeyId: process.env.S3_AK,
+        secretAccessKey: process.env.S3_SECRET,
         bucket: 'civicbotcdn',
         cloudFrontUrl: 'http://d3bjzxyw6dh8fr.cloudfront.net/'
     },
@@ -59,7 +68,7 @@ module.exports = {
 
     globals:{
         authentication: {
-            secret: 'kjhasdfkayufgkausgyf78w43ralkfgakuygu7r3akfyg'
+            secret: process.env.AUTH_SECRET
         }
     },
 

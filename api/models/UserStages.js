@@ -10,7 +10,7 @@
 module.exports = {
 
     attributes: {
-        id: {
+        ustages_id: {
             type: 'integer',
             primaryKey: true,
             unique: true,

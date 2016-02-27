@@ -9,7 +9,7 @@ module.exports = {
 
     attributes: {
 
-        id: {
+        top_id: {
             type: 'integer',
             primaryKey: true,
             unique: true,

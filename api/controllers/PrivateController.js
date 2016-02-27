@@ -250,7 +250,7 @@ module.exports = {
         }
         else {
 
-            Classify.update({id: id}, {party: party, edited: 1}).exec(function (ko, ok) {
+            Classify.update({classify_id: id}, {party: party, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
                 } else if (ok) {
@@ -275,7 +275,7 @@ module.exports = {
         }
         else {
             if (mediaId) {
-                Classify.update({id: id}, {media: mediaId, edited: 1}).exec(function (ko, ok) {
+                Classify.update({classify_id: id}, {media: mediaId, edited: 1}).exec(function (ko, ok) {
                     if (ko) {
                         res.serverError(ko);
                     } else if (ok) {
@@ -288,7 +288,7 @@ module.exports = {
                     if (ko) {
                         res.serverError(ko);
                     } else if (ok) {
-                        Classify.update({id: id}, {media: ok.id, edited: 1}).exec(function (ko, ok) {
+                        Classify.update({classify_id: id}, {media: ok.id, edited: 1}).exec(function (ko, ok) {
                             if (ko) {
                                 res.serverError(ko);
                             } else if (ok) {
@@ -314,7 +314,7 @@ module.exports = {
         }
         else {
 
-            Classify.update({id: id}, {location: location, edited: 1}).exec(function (ko, ok) {
+            Classify.update({classify_id: id}, {location: location, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
                 } else if (ok) {
@@ -336,7 +336,7 @@ module.exports = {
         }
         else {
 
-            Classify.update({id: id}, {label: label, edited: 1}).exec(function (ko, ok) {
+            Classify.update({classify_id: id}, {label: label, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
                 } else if (ok) {
@@ -359,7 +359,7 @@ module.exports = {
         }
         else {
             if (publish == 1) {
-                Classify.find({id: id}).exec(function (ko, ok) {
+                Classify.find({classify_id: id}).exec(function (ko, ok) {
                     if (ko) {
                         res.serverError(ko);
                     } else if (ok) {
@@ -368,7 +368,7 @@ module.exports = {
                             res.badRequest("Element Already Published");
                         }
                         else {
-                            Classify.update({id: id}, {
+                            Classify.update({classify_id: id}, {
                                 published: 1,
                                 edited: 0
                             }).exec(function (ko, contribution) {
@@ -410,7 +410,7 @@ module.exports = {
                 })
             }
             else if (publish == 0) {
-                Classify.update({id: id}, {published: 0, edited: 0}).exec(function (ko, contribution) {
+                Classify.update({classify_id: id}, {published: 0, edited: 0}).exec(function (ko, contribution) {
                     if (ko) {
                         res.serverError(contribution);
                     } else if (contribution) {
