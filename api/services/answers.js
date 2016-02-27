@@ -530,10 +530,9 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
 
                         telegram.getFile(photo_id).then(function(response){
                             var path = response.result.file_path;
-                            sails.log.debug("getFILE ::::: "+path);
                             telegram.pushToS3(path).then(function(response){
                                 var photoUrl = sails.config.s3.cloudFrontUrl + response;
-                                sails.log.verbose("PHOTO URL::::: "+photoUrl);
+                                sails.log.debug("PHOTO URL ::::: "+photoUrl);
                                 Classify.create({
                                     photo: photoUrl,
                                     type: 1,

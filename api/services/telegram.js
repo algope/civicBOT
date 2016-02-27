@@ -96,6 +96,8 @@ module.exports.pushToS3 = function(path){
             request = require('request');
         var rStream = request.get(url);
         sails.log.debug("INTO pushToS3");
+        sails.log.debug("accessKeyId: "+ sails.config.s3.accessKeyId);
+        sails.log.debug("secretAccessKey: "+sails.config.s3.secretAccessKey);
 
         var uploader = new StreamingS3(rStream, {accessKeyId: sails.config.s3.accessKeyId, secretAccessKey: sails.config.s3.secretAccessKey},
             {
