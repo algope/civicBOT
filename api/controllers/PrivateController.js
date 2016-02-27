@@ -26,7 +26,7 @@ module.exports = {
             }
             // If user created successfuly we return user and token as response
             if (user) {
-                var generatedToken = jwToken.issue({user_id: user.id});
+                var generatedToken = jwToken.issue({id: user.id});
                 Token.create({
                     token: generatedToken,
                     user_id: user.id,
