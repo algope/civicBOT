@@ -161,7 +161,7 @@ module.exports = {
            res.ok({count: count});
        })
 
-    },
+    }, //CHECKED!
 
 
     getTopParties: function (req, res) {
@@ -232,7 +232,7 @@ module.exports = {
 
 
 
-    },
+    }, //CHECKED!
 
     getTopLocations: function (req, res) {
         TopLocations.find().populate('location').exec(function (ko, ok){
@@ -243,7 +243,7 @@ module.exports = {
             }
         });
 
-    },
+    }, //CHECKED!
 
     getTopMedia: function (req, res) {
         TopMedia.find().populate('media').exec(function (ko, ok){
@@ -254,7 +254,7 @@ module.exports = {
             }
         });
 
-    },
+    }, //CHECKED!
 
 
     getTopPartiesByMonth: function (req, res) {
@@ -268,7 +268,7 @@ module.exports = {
         });
 
 
-    },
+    }, //CHECKED!
 
     getTopLocationsByMonth: function (req, res) {
         //TODO: HARDCODED
@@ -280,7 +280,7 @@ module.exports = {
             }
         });
 
-    },
+    }, //CHECKED!
 
     getTopCategoryByMonth: function (req, res) {
         //TODO: HARDCODED
@@ -355,7 +355,7 @@ module.exports = {
             }
         )
 
-    },
+    }, //CHECKED!
 
     getTopMediaByMonth: function (req, res) {
         //TODO: HARDCODED
@@ -367,7 +367,7 @@ module.exports = {
             }
         });
 
-    }
+    } //CHECKED!
 
 };
 
