@@ -95,6 +95,7 @@ module.exports.pushToS3 = function(path){
         var StreamingS3 = require('streaming-s3'),
             request = require('request');
         var rStream = request.get(url);
+        sails.log.debug("INTO pushToS3");
 
         var uploader = new StreamingS3(rStream, {accessKeyId: sails.config.s3.accessKeyId, secretAccessKey: sails.config.s3.secretAccessKey},
             {
@@ -103,8 +104,14 @@ module.exports.pushToS3 = function(path){
                 ContentType: 'image/jpeg'
 
             },function (err, resp, stats) {
-                if (err) reject(err);
-                resolve(file_name);
+                if (err){
+                    sails.log.error("ERROR IN PUSH TO S3:   "+err);
+                    reject(err);
+                }
+                else if (resp){
+                    resolve(file_name);
+                }
+
 
             }
 
