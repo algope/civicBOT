@@ -26,6 +26,7 @@ module.exports = {
             }
             // If user created successfuly we return user and token as response
             if (user) {
+                sails.log.debug("ADMIN CREATED : : : "+user);
                 var generatedToken = jwToken.issue({user_id: user.user_id});
                 Token.create({
                     token: generatedToken,
