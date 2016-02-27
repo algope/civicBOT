@@ -26,7 +26,6 @@ module.exports = {
             }
             // If user created successfuly we return user and token as response
             if (user) {
-                sails.log.debug("ADMIN CREATED : : : "+user.id);
                 var generatedToken = jwToken.issue({user_id: user.id});
                 Token.create({
                     token: generatedToken,
@@ -76,7 +75,7 @@ module.exports = {
                     return res.badRequest("Invalid Email or Password");
                 } else {
 
-                    Token.findOne({user_id: user.user_id, isValid: true}, function (err, tokenFound) {
+                    Token.findOne({user_id: user.id, isValid: true}, function (err, tokenFound) {
                         if (err) {
                             sails.log.error("Error getting Token from DB: " + err);
                         }
@@ -92,7 +91,7 @@ module.exports = {
                                     var generatedToken = jwToken.issue({id: user.user_id});
                                     Token.create({
                                         token: generatedToken,
-                                        user_id: user.user_id,
+                                        user_id: user.id,
                                         isValid: true,
                                         os: agent.os.toString(),
                                         agent: agent.toAgent(),
@@ -120,7 +119,7 @@ module.exports = {
                             var generatedToken = jwToken.issue({id: user.user_id});
                             Token.create({
                                 token: generatedToken,
-                                user_id: user.user_id,
+                                user_id: user.id,
                                 isValid: true,
                                 os: agent.os.toString(),
                                 agent: agent.toAgent(),
@@ -133,8 +132,8 @@ module.exports = {
                                 }
                                 if (success) {
 
-                                    sails.log.verbose("Token for User ID " + user.user_id + " Generated");
-                                    sails.log.verbose("Issued token for user: " + user.user_id);
+                                    sails.log.verbose("Token for User ID " + user.id + " Generated");
+                                    sails.log.verbose("Issued token for user: " + user.id);
 
                                     res.json(200, {
                                         session: success
