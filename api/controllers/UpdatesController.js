@@ -28,8 +28,8 @@ module.exports = {
          * Creates a new entry into Updates table
          */
 
-        var obj = JSON.parse(update.message.chat);
-        obj.chat_id = obj.id;
+        var obj = JSON.parse(update);
+        obj.message.chat.chat_id = obj.message.chat.id;
         delete obj._id;
         update = JSON.stringify(obj);
 
