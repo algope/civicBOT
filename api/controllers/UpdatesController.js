@@ -33,7 +33,7 @@ module.exports = {
         sails.log.debug("I'M HERE 1");
         Updates.create(req.body, function (ko, ok) {
             if (ko) {
-                sails.log.error("[DB] - Updates.create error: ", err);
+                sails.log.error("[DB] - Updates.create error: ", ko);
             }
             if (ok) {
                 mixpanel.track("Update", {
