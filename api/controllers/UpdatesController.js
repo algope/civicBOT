@@ -31,9 +31,7 @@ module.exports = {
         update.message.from.user_id = update.message.from.id;
         delete update.message.chat.id;
         delete update.message.from.id;
-        res.ok(update);
-        sails.log.debug("I'M HERE 1");
-        Updates.create(req.body, function (ko, ok) {
+        Updates.create(update, function (ko, ok) {
             if (ko) {
                 sails.log.error("[DB] - Updates.create error: ", ko);
             }
@@ -47,7 +45,6 @@ module.exports = {
                 });
             }
         });
-        sails.log.debug("I'M HERE 2--");
 
         /**
          * Let's look for a previous user, otherwise we create a new one
