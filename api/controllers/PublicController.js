@@ -128,7 +128,7 @@ module.exports = {
 
         })
 
-    },
+    }, //CHECKED!
 
     getTotalReceivedImg: function (req, res) {
         Classify.count({type: 1}).exec(function (ko, count){
@@ -139,7 +139,7 @@ module.exports = {
 
         })
 
-    },
+    }, //CHECKED!
 
     getTodayContribNum: function (req, res) {
         var now = moment();
@@ -284,21 +284,21 @@ module.exports = {
 
     getTopCategoryByMonth: function (req, res) {
         //TODO: HARDCODED
-        statistics.getStatistics(1).then(
+        statistics.getStatistics("A").then(
             function(sumA){
-                statistics.getStatistics(2).then(
+                statistics.getStatistics("B").then(
                     function(sumB){
-                        statistics.getStatistics(3).then(
+                        statistics.getStatistics("C").then(
                             function(sumC){
-                                statistics.getStatistics(4).then(
+                                statistics.getStatistics("D").then(
                                     function(sumD){
-                                        statistics.getStatistics(5).then(
+                                        statistics.getStatistics("E").then(
                                             function(sumE){
-                                                statistics.getStatistics(6).then(
+                                                statistics.getStatistics("F").then(
                                                     function(sumF){
-                                                        statistics.getStatistics(7).then(
+                                                        statistics.getStatistics("G").then(
                                                             function(sumG){
-                                                                statistics.getStatistics(8).then(
+                                                                statistics.getStatistics("H").then(
                                                                     function(sumH){
                                                                         var response = {
                                                                             A: {
