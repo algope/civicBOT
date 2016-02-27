@@ -151,6 +151,10 @@ module.exports = {
     logout: function (req, res) {
         var token = req.headers.authorization;
         var user_id_token = jwToken.getUserId(token);
+
+        sails.log.debug("TOKEN: "+token);
+        sails.log.debug("USER_ID_TOKEN: "+user_id_token);
+
         Token.findOne({user_id: user_id_token, token: jwToken.getToken(token)}, function (err, tokenFound) {
             if (err) {
                 sails.log.verbose("Error invalidating Token, Token not found, clean DB to prevent this again");
