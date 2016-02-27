@@ -80,9 +80,8 @@ module.exports = {
                         if (err) {
                             sails.log.error("Error getting Token from DB: " + err);
                         }
+                        sails.log.debug("TOKEN FOUND: "+JSON.stringify(tokenFound));
                         if (tokenFound) {
-                            sails.log.debug("TOKEN FOUND: "+JSON.stringify(tokenFound));
-
                             sails.log.verbose("Found Token with ID: " + tokenFound.id);
                             Token.update({token: tokenFound.token}, {isValid: false}, function (err, updated) {
                                 if (err) {
