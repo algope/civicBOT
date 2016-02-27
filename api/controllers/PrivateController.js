@@ -61,7 +61,7 @@ module.exports = {
         if (!email || !password) {
             return res.badRequest("Email and Password required");
         }
-        Admin.findOne({email: email}).exec(function (err, user) {
+        Admin.find({email: email}).exec(function (err, user) {
 
             if (!user) {
                 return res.badRequest("Invalid Email or Password");
@@ -76,7 +76,7 @@ module.exports = {
                 } else {
                     sails.log.debug("USER ID FOR RELOGIN: "+user.id);
 
-                    Token.findOne({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
+                    Token.find({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
                         if (err) {
                             sails.log.error("Error getting Token from DB: " + err);
                         }
@@ -156,7 +156,7 @@ module.exports = {
         sails.log.debug("TOKEN: "+token);
         sails.log.debug("USER_ID_TOKEN: "+user_id_token);
 
-        Token.findOne({user_id: user_id_token, token: jwToken.getToken(token)}).exec( function (err, tokenFound) {
+        Token.find({user_id: user_id_token, token: jwToken.getToken(token)}).exec( function (err, tokenFound) {
             if (err) {
                 sails.log.verbose("Error invalidating Token, Token not found, clean DB to prevent this again");
                 res.json(200, {msg: "Bye!"});
