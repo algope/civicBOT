@@ -9,13 +9,22 @@
 
 module.exports.getStatistics = function(cat){
     return new Promise(function (resolve, reject) {
-        Classify.count({label: cat}).exec(function (error, sum) {
-            if (error){
-                sails.log.error("DB: Error generating statistics -> ", error);
+        Label.findOne({label: cat}).exec(function(ko, label){
+            if(ko){
+                sails.log.error("DB: Error looking for a label");
+            }else if(label){
+                Classify.count({label: label.id}).exec(function (error, sum) {
+                    if (error){
+                        sails.log.error("DB: Error generating statistics -> ", error);
+                    }
+                    resolve(sum);
+
+                })
+
             }
-            resolve(sum);
 
         })
+
 
     });
 };

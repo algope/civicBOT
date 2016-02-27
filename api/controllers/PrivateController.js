@@ -355,7 +355,7 @@ module.exports = {
 
         }
 
-    },
+    }, //CHECKED!
 
     setToPublish: function (req, res) {
         var id = req.body.contribId;
@@ -367,7 +367,7 @@ module.exports = {
         }
         else {
             if (publish == 1) {
-                Classify.find({classify_id: id}).exec(function (ko, ok) {
+                Classify.find({id: id}).exec(function (ko, ok) {
                     if (ko) {
                         res.serverError(ko);
                     } else if (ok) {
@@ -376,7 +376,7 @@ module.exports = {
                             res.badRequest("Element Already Published");
                         }
                         else {
-                            Classify.update({classify_id: id}, {
+                            Classify.update({id: id}, {
                                 published: 1,
                                 edited: 0
                             }).exec(function (ko, contribution) {
@@ -418,7 +418,7 @@ module.exports = {
                 })
             }
             else if (publish == 0) {
-                Classify.update({classify_id: id}, {published: 0, edited: 0}).exec(function (ko, contribution) {
+                Classify.update({id: id}, {published: 0, edited: 0}).exec(function (ko, contribution) {
                     if (ko) {
                         res.serverError(contribution);
                     } else if (contribution) {
@@ -454,7 +454,7 @@ module.exports = {
                 });
             }
         }
-    }
+    } //CHECKED!
 
     /*
      resetPassword: function (req, res) {

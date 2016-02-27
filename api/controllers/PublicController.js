@@ -20,7 +20,7 @@ module.exports = {
 
         });
 
-    },
+    }, //CHECKED!
 
     getTotalContributions: function (req, res) {
         Classify.count({published: true}).exec(function(ko, count){
@@ -31,7 +31,7 @@ module.exports = {
 
         })
 
-    },
+    }, //CHECKED!
 
     getTotalActiveUsers: function (req, res) {
         Users.count().exec(function(ko, count){
@@ -42,24 +42,24 @@ module.exports = {
 
         })
 
-    },
+    }, //CHECKED!
 
     getContribByCategory: function (req, res) {
-        statistics.getStatistics(1).then(
+        statistics.getStatistics("A").then(
             function(sumA){
-                statistics.getStatistics(2).then(
+                statistics.getStatistics("B").then(
                     function(sumB){
-                        statistics.getStatistics(3).then(
+                        statistics.getStatistics("C").then(
                             function(sumC){
-                                statistics.getStatistics(4).then(
+                                statistics.getStatistics("D").then(
                                     function(sumD){
-                                        statistics.getStatistics(5).then(
+                                        statistics.getStatistics("E").then(
                                             function(sumE){
-                                                statistics.getStatistics(6).then(
+                                                statistics.getStatistics("F").then(
                                                     function(sumF){
-                                                        statistics.getStatistics(7).then(
+                                                        statistics.getStatistics("G").then(
                                                             function(sumG){
-                                                                statistics.getStatistics(8).then(
+                                                                statistics.getStatistics("H").then(
                                                                     function(sumH){
                                                                         var response = {
                                                                             A: {
@@ -116,13 +116,14 @@ module.exports = {
             }
         )
 
-    },
+    }, //CHECKED!
 
     getTotalReceivedMsg: function (req, res) {
-        Classify.count({type:2}).exec(function (ko, count){
+        Classify.count({type: 2}).exec(function (ko, count){
             if(ko){
                 res.serverError(ko);
             }
+            sails.log.info("COUNT: "+JSON.stringify(count));
             res.ok({count: count});
 
         })

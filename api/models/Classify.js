@@ -17,8 +17,8 @@ module.exports = {
             defaultsTo: ''
         },
         type:{
-            type: 'string',
-            defaultsTo: ''
+            type: 'integer',
+            defaultsTo: 0
         },
         label: {
             model: 'label',
