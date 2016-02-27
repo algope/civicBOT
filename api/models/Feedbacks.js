@@ -10,12 +10,6 @@
 module.exports = {
 
     attributes: {
-        feedback_id: {
-            type: 'integer',
-            unique: true,
-            primaryKey: true,
-            autoIncrement: true
-        },
         user_id: {
             type: 'integer',
             unique: true

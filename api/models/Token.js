@@ -8,14 +8,6 @@
 module.exports = {
 
     attributes: {
-
-        token_id: {
-            type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
-        },
-
         user_id: {
             type: 'integer',
             required: true

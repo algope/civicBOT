@@ -12,14 +12,6 @@ var bcrypt = require('bcrypt');
 module.exports = {
 
     attributes: {
-
-        user_id: {
-            type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
-        },
-
         email: {
             type: 'email',
             required: true,

@@ -10,9 +10,7 @@ module.exports = {
     attributes: {
         party_id: {
             type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
+            unique: true
         },
 
         party: {

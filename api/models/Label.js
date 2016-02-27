@@ -10,9 +10,7 @@ module.exports = {
     attributes: {
         label_id: {
             type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
+            unique: true
         },
         label:{
             type: 'string',

@@ -8,14 +8,6 @@
 module.exports = {
 
     attributes: {
-
-        top_id: {
-            type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
-        },
-
         party:{
             unique: true,
             model: 'party',

@@ -8,12 +8,6 @@
 module.exports = {
 
     attributes: {
-        classify_id: {
-            type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
-        },
         photo: {
             type: 'string',
             defaultsTo: ''

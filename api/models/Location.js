@@ -10,11 +10,8 @@ module.exports = {
     attributes: {
         location_id: {
             type: 'integer',
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true
+            unique: true
         },
-
         name: {
             type: 'string',
             defaultsTo: ''
