@@ -28,7 +28,12 @@ module.exports = {
          * Creates a new entry into Updates table
          */
 
-        sails.log.debug("UPDATE: : : : : "+update.message.chat.id);
+        var obj = JSON.parse(update.message.chat);
+        obj.chat_id = obj.id;
+        delete obj._id;
+        update = JSON.stringify(obj);
+
+        sails.log.debug("UPDATE: : : : : "+update.message.chat);
         Updates.create(req.body, function (ko, ok) {
             if (ko) {
                 sails.log.error("[DB] - Updates.create error: ", err);
