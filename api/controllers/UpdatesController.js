@@ -27,39 +27,39 @@ module.exports = {
         /**
          * Creates a new entry into Updates table
          */
-        //update.message.chat.chat_id = update.message.chat.id;
-        //delete update.message.chat.id;
-        //res.ok(update);
-        //Updates.create(req.body, function (ko, ok) {
-        //    if (ko) {
-        //        sails.log.error("[DB] - Updates.create error: ", err);
-        //    }
-        //    if (ok) {
-        //        mixpanel.track("Update", {
-        //            distinct_id: update.update_id,
-        //            from: userId,
-        //            user_id: userAlias,
-        //            text: update.message.text,
-        //            photo: update.message.photo
-        //        });
-        //    }
-        //});
+        update.message.chat.chat_id = update.message.chat.id;
+        delete update.message.chat.id;
+        res.ok(update);
+        sails.log.debug("I'M HERE 1");
+        Updates.create(req.body, function (ko, ok) {
+            if (ko) {
+                sails.log.error("[DB] - Updates.create error: ", err);
+            }
+            if (ok) {
+                mixpanel.track("Update", {
+                    distinct_id: update.update_id,
+                    from: userId,
+                    user_id: userAlias,
+                    text: update.message.text,
+                    photo: update.message.photo
+                });
+            }
+        });
+        sails.log.debug("I'M HERE 2");
 
         /**
          * Let's look for a previous user, otherwise we create a new one
          */
         stages.findOrCreateEntry({user_id: userId}, {user_id: userId, stage: 1}).then(
             function (user) {
-                //mixpanel.people.set(userId, {
-                //    "$first_name": userName,
-                //    "$last_name": userLast,
-                //    "user_name": userAlias,
-                //    "$created": user.createdAt,
-                //    "stage": user.stage,
-                //    "contributions": 0
-                //});
-
-                sails.log.debug("I'M HERE 1");
+                mixpanel.people.set(userId, {
+                    "$first_name": userName,
+                    "$last_name": userLast,
+                    "user_name": userAlias,
+                    "$created": user.createdAt,
+                    "stage": user.stage,
+                    "contributions": 0
+                });
                 /**
                  * STAGE 1 > First stage, no commands executed.
                  */
