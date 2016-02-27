@@ -1,0 +1,3 @@
+user_id,email,encryptedPassword,isLogged,status,deleted,createdAt,updatedAt
+1,alejandro@hubcivico.org,$2a$10$stEDmNXCjt0SSWYNmki8MOuRAv12IojbAF8SGBZfGtDBc2CyHrnm2,,,,2016-02-20 23:06:13,2016-02-20 23:06:13
+2,molina@molina.com,$2a$10$fyEOja/iT2gO0.QLUP0b/OIkw1xTSyGbt6HfnzbTJdO3bi2ZKeQ/O,,,,2016-02-24 10:00:33,2016-02-24 10:00:33

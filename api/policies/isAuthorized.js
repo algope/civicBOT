@@ -38,7 +38,7 @@ module.exports = function (req, res, next) {
             }
             if (find) {
                 if (!find.isValid) {
-                    return res.ok('Token expired, log in again');
+                    return res.badRequest('Token expired, log in again');
                 }
             }
         });
