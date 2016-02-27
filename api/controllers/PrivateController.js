@@ -30,7 +30,7 @@ module.exports = {
                 var generatedToken = jwToken.issue({user_id: user.id});
                 Token.create({
                     token: generatedToken,
-                    user_id: user.user_id,
+                    user_id: user.id,
                     isValid: true,
                     os: agent.os.toString(),
                     agent: agent.toAgent(),
