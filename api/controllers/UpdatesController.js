@@ -27,9 +27,9 @@ module.exports = {
         /**
          * Creates a new entry into Updates table
          */
-        update.message.chat.chat_id = update.message.chat.id;
-        delete update.message.chat.id;
-        res.ok(update);
+        //update.message.chat.chat_id = update.message.chat.id;
+        //delete update.message.chat.id;
+        //res.ok(update);
         Updates.create(req.body, function (ko, ok) {
             if (ko) {
                 sails.log.error("[DB] - Updates.create error: ", err);
