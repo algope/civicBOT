@@ -131,7 +131,7 @@ module.exports = {
     },
 
     getTotalReceivedImg: function (req, res) {
-        Classify.count({type:1}).exec(function (ko, count){
+        Classify.count({type: 1}).exec(function (ko, count){
             if(ko){
                 res.serverError(ko);
             }
