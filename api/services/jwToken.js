@@ -35,7 +35,9 @@ module.exports.verify = function (token, callback) {
 // Gets the User ID from the Token
 module.exports.getUserId = function (token) {
     var token_clean = token.split(' ')[1];
+    sails.log.debug("TOKEN CLEAN: "+ token_clean);
     var verified = jwt.verify(token_clean, sails.config.globals.authentication.secret);
+    sails.log.debug("VERIFIED: "+verified);
     return verified.id;
 };
 
