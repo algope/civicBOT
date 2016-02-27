@@ -27,7 +27,7 @@ module.exports = {
         /**
          * Creates a new entry into Updates table
          */
-
+        sails.log.debug("UPDATE BODY: : : "+update);
         var obj = JSON.parse(update);
         obj.message.chat.chat_id = obj.message.chat.id;
         delete obj._id;
