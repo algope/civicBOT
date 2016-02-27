@@ -522,16 +522,15 @@ module.exports.answeringLabelingS3 = function (type, update, userId) {
 module.exports.answeringThanksS4 = function (userId, command, update) {
     telegram.sendMessage(userId, strings.getThanks, "", true, null, {hide_keyboard: true}).then(
         function (response) {
-            sails.log.debug("function RESPONSE ____");
             UserMedia.findOne({user_id: userId}, function (err, found) {
                 if (found) {
-                    sails.log.debug("FOUND!!!! ____"+found.photo);
                     if (found.photo) {
                         var max_size_node = util.getMax(found.photo, 'file_size');
                         var photo_id = max_size_node.file_id;
-                        sails.log.debug("PHOTO ID::::: "+photo_id);
+
                         telegram.getFile(photo_id).then(function(response){
                             var path = response.result.file_path;
+                            sails.log.debug("getFILE ::::: "+path);
                             telegram.pushToS3(path).then(function(response){
                                 var photoUrl = sails.config.s3.cloudFrontUrl + response;
                                 sails.log.verbose("PHOTO URL::::: "+photoUrl);
