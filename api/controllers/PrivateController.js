@@ -74,13 +74,15 @@ module.exports = {
                 if (!valid) {
                     return res.badRequest("Invalid Email or Password");
                 } else {
+                    sails.log.debug("USER ID FOR RELOGIN: "+user.id);
 
                     Token.findOne({user_id: user.id, isValid: true}, function (err, tokenFound) {
                         if (err) {
                             sails.log.error("Error getting Token from DB: " + err);
                         }
-
                         if (tokenFound) {
+                            sails.log.debug("TOKEN FOUND: "+JSON.stringify(tokenFound));
+
                             sails.log.verbose("Found Token with ID: " + tokenFound.id);
                             Token.update({token: tokenFound.token}, {isValid: false}, function (err, updated) {
                                 if (err) {
