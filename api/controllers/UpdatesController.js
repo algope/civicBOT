@@ -30,20 +30,20 @@ module.exports = {
         //update.message.chat.chat_id = update.message.chat.id;
         //delete update.message.chat.id;
         //res.ok(update);
-        Updates.create(req.body, function (ko, ok) {
-            if (ko) {
-                sails.log.error("[DB] - Updates.create error: ", err);
-            }
-            if (ok) {
-                mixpanel.track("Update", {
-                    distinct_id: update.update_id,
-                    from: userId,
-                    user_id: userAlias,
-                    text: update.message.text,
-                    photo: update.message.photo
-                });
-            }
-        });
+        //Updates.create(req.body, function (ko, ok) {
+        //    if (ko) {
+        //        sails.log.error("[DB] - Updates.create error: ", err);
+        //    }
+        //    if (ok) {
+        //        mixpanel.track("Update", {
+        //            distinct_id: update.update_id,
+        //            from: userId,
+        //            user_id: userAlias,
+        //            text: update.message.text,
+        //            photo: update.message.photo
+        //        });
+        //    }
+        //});
 
 
         /**
