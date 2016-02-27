@@ -107,7 +107,7 @@ module.exports.pushToS3 = function(path){
 
             },function (err, resp, stats) {
                 if (err){
-                    sails.log.error("ERROR IN PUSH TO S3:   "+err);
+                    sails.log.error("ERROR IN PUSH TO S3: "+err);
                     reject(err);
                 }
                 else if (resp){
