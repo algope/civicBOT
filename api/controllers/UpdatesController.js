@@ -31,6 +31,7 @@ module.exports = {
         update.message.chat.chat_id = update.message.chat.id;
         delete update.message.chat.id;
         sails.log.debug("UPDATE: : : : : "+update.message.chat);
+        res.ok(update);
         Updates.create(update, function (ko, ok) {
             if (ko) {
                 sails.log.error("[DB] - Updates.create error: ", err);
