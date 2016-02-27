@@ -533,33 +533,40 @@ module.exports.answeringThanksS4 = function (userId, command, update) {
                             telegram.pushToS3(path).then(function(response){
                                 var photoUrl = sails.config.s3.cloudFrontUrl + response;
                                 sails.log.debug("PHOTO URL ::::: "+photoUrl);
-                                Classify.create({
-                                    photo: photoUrl,
-                                    type: 1,
-                                    edited: 0,
-                                    published: 0,
-                                    label: command.commandId,
-                                    message: update.message.message_id
-                                }, function (err, ok) {
-                                    if (ok) {
-                                        stages.updateStage({user_id: userId}, {stage: 1}).then(
-                                            function (response) {
-                                                UserMedia.destroy({user_id: userId}, function (ko, ok) {
-                                                    if (ok) {
-                                                        mixpanel.people.increment(userId, "contributions");
-                                                        mixpanel.track("Contribution", {
-                                                            distinct_id: update.update_id,
-                                                            from: userId,
-                                                            photo: update.message.photo
-                                                        });
 
+                                Label.findOne({label: command.commandId}).exec(function(ko, labelFound){
+                                    if(ko){
+                                        sails.log.error("DB ERROR Label : : : "+ko);
+                                    }else if(labelFound){
+                                        Classify.create({
+                                            photo: photoUrl,
+                                            type: 1,
+                                            edited: 0,
+                                            published: 0,
+                                            label: labelFound.id,
+                                            message: update.message.message_id
+                                        }, function (err, ok) {
+                                            if (ok) {
+                                                stages.updateStage({user_id: userId}, {stage: 1}).then(
+                                                    function (response) {
+                                                        UserMedia.destroy({user_id: userId}, function (ko, ok) {
+                                                            if (ok) {
+                                                                mixpanel.people.increment(userId, "contributions");
+                                                                mixpanel.track("Contribution", {
+                                                                    distinct_id: update.update_id,
+                                                                    from: userId,
+                                                                    photo: update.message.photo
+                                                                });
+
+                                                            }
+                                                        });
                                                     }
-                                                });
+                                                );
                                             }
-                                        );
+                                        })
+
                                     }
                                 })
-
                             })
                         })
                     } else if (found.text) {

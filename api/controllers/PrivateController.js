@@ -42,15 +42,15 @@ module.exports = {
                     }
                     if (success) {
 
-                        sails.log.verbose("Token for User ID: " + user.user_id + " Generated");
-                        sails.log.verbose("Issued token for user: " + user.user_id);
+                        sails.log.verbose("Token for User ID: " + user.id + " Generated");
+                        sails.log.verbose("Issued token for user: " + user.id);
 
                         res.json(200, {user: user, token: generatedToken});
                     }
                 });
             }
         });
-    },
+    }, //CHECKED!
 
     login: function (req, res) {
         var agent = useragent.lookup(req.headers['user-agent']);
@@ -61,7 +61,7 @@ module.exports = {
         if (!email || !password) {
             return res.badRequest("Email and Password required");
         }
-        Admin.find({email: email}).exec(function (err, user) {
+        Admin.findOne({email: email}).exec(function (err, user) {
 
             if (!user) {
                 return res.badRequest("Invalid Email or Password");
@@ -74,15 +74,12 @@ module.exports = {
                 if (!valid) {
                     return res.badRequest("Invalid Email or Password");
                 } else {
-                    sails.log.debug("USER ID FOR RELOGIN: "+user.id);
 
-                    Token.find({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
+                    Token.findOne({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
                         if (err) {
                             sails.log.error("Error getting Token from DB: " + err);
                         }
-                        sails.log.debug("TOKEN FOUND: "+JSON.stringify(tokenFound));
                         if (tokenFound) {
-                            sails.log.verbose("Found Token with ID: " + tokenFound.id);
                             Token.update({token: tokenFound.token}, {isValid: false}).exec(function (err, updated) {
                                 if (err) {
                                     sails.log.error("Error updating Token DB entry " + err);
@@ -105,8 +102,8 @@ module.exports = {
                                         }
                                         if (success) {
 
-                                            sails.log.verbose("Token for User ID: " + user.user_id + " Generated");
-                                            sails.log.verbose("Issued token for user: " + user.user_id);
+                                            sails.log.verbose("Token for User ID: " + user.id + " Generated");
+                                            sails.log.verbose("Issued token for user: " + user.id);
 
                                             res.json(200, {
                                                 session: success
@@ -147,7 +144,7 @@ module.exports = {
                 }
             });
         })
-    },
+    }, //CHECKED!
 
     logout: function (req, res) {
         var token = req.headers.authorization;
@@ -156,12 +153,12 @@ module.exports = {
         sails.log.debug("TOKEN: "+token);
         sails.log.debug("USER_ID_TOKEN: "+user_id_token);
 
-        Token.find({user_id: user_id_token, token: jwToken.getToken(token)}).exec( function (err, tokenFound) {
+        Token.findOne({user_id: user_id_token, token: jwToken.getToken(token)}).exec( function (err, tokenFound) {
             if (err) {
                 sails.log.verbose("Error invalidating Token, Token not found, clean DB to prevent this again");
                 res.json(200, {msg: "Bye!"});
             }
-
+            sails.log.debug("TOKENFOUND: : : : : "+JSON.stringify(tokenFound));
             if (tokenFound) {
 
                 Token.update({token: tokenFound.token}, {isValid: false}).exec( function (err, updated) {
@@ -178,7 +175,10 @@ module.exports = {
             }
         });
 
-    },
+    }, //CHECKED!
+
+
+
 
     getPartyList: function (req, res) {
         Party.find().exec(function (ko, parties) {
@@ -191,7 +191,7 @@ module.exports = {
 
         });
 
-    },
+    },  //CHECKED!
 
     getLocationList: function (req, res) {
         Location.find().exec(function (ko, locations) {
@@ -205,7 +205,7 @@ module.exports = {
         });
 
 
-    },
+    }, //CHECKED!
 
     getMediaList: function (req, res) {
         Media.find().exec(function (ko, media) {
@@ -218,7 +218,7 @@ module.exports = {
 
         });
 
-    },
+    }, //CHECKED!
 
     getContributionList: function (req, res) {
         Classify.find().populate(['label', 'party', 'location', 'media']).exec(function (ko, contributions) {
@@ -231,7 +231,7 @@ module.exports = {
 
         });
 
-    },
+    }, //CHECKED!
 
     getLabelList: function (req, res) {
         Label.find().exec(function (ko, label) {
@@ -244,7 +244,10 @@ module.exports = {
 
         });
 
-    },
+    }, //CHECKED!
+
+
+
 
     setParty: function (req, res) {
         var id = req.body.contribId;
@@ -255,7 +258,7 @@ module.exports = {
         }
         else {
 
-            Classify.update({classify_id: id}, {party: party, edited: 1}).exec(function (ko, ok) {
+            Classify.update({id: id}, {party: party, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
                 } else if (ok) {
@@ -266,7 +269,7 @@ module.exports = {
 
         }
 
-    },
+    }, //CHECKED!
 
     setMedia: function (req, res) {
         var id = req.body.contribId;
@@ -280,7 +283,7 @@ module.exports = {
         }
         else {
             if (mediaId) {
-                Classify.update({classify_id: id}, {media: mediaId, edited: 1}).exec(function (ko, ok) {
+                Classify.update({id: id}, {media: mediaId, edited: 1}).exec(function (ko, ok) {
                     if (ko) {
                         res.serverError(ko);
                     } else if (ok) {
@@ -293,7 +296,7 @@ module.exports = {
                     if (ko) {
                         res.serverError(ko);
                     } else if (ok) {
-                        Classify.update({classify_id: id}, {media: ok.id, edited: 1}).exec(function (ko, ok) {
+                        Classify.update({id: id}, {media: ok.id, edited: 1}).exec(function (ko, ok) {
                             if (ko) {
                                 res.serverError(ko);
                             } else if (ok) {
@@ -308,7 +311,7 @@ module.exports = {
 
         }
 
-    },
+    }, //CHECKED!
 
     setLocation: function (req, res) {
         var id = req.body.contribId;
@@ -319,7 +322,7 @@ module.exports = {
         }
         else {
 
-            Classify.update({classify_id: id}, {location: location, edited: 1}).exec(function (ko, ok) {
+            Classify.update({id: id}, {location: location, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
                 } else if (ok) {
@@ -330,7 +333,7 @@ module.exports = {
 
         }
 
-    },
+    }, //CHECKED!
 
     setLabel: function (req, res) {
         var id = req.body.contribId;
@@ -341,7 +344,7 @@ module.exports = {
         }
         else {
 
-            Classify.update({classify_id: id}, {label: label, edited: 1}).exec(function (ko, ok) {
+            Classify.update({id: id}, {label: label, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
                     res.serverError(ko);
                 } else if (ok) {
