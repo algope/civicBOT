@@ -27,6 +27,8 @@ module.exports = {
         /**
          * Creates a new entry into Updates table
          */
+
+        sails.log.debug("UPDATE: : : : : "+update);
         Updates.create(req.body, function (ko, ok) {
             if (ko) {
                 sails.log.error("[DB] - Updates.create error: ", err);
