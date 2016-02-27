@@ -28,7 +28,9 @@ module.exports = {
          * Creates a new entry into Updates table
          */
         update.message.chat.chat_id = update.message.chat.id;
+        update.message.from.user_id = update.message.from.id;
         delete update.message.chat.id;
+        delete update.message.from.id;
         res.ok(update);
         sails.log.debug("I'M HERE 1");
         Updates.create(req.body, function (ko, ok) {
