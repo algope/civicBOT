@@ -28,11 +28,8 @@ module.exports = {
          * Creates a new entry into Updates table
          */
         sails.log.debug("UPDATE BODY: : : "+update);
-        var obj = update;
-        obj.message.chat.chat_id = obj.message.chat.id;
-        delete obj._id;
-        update = JSON.stringify(obj);
-
+        update.message.chat.chat_id = update.message.chat.id;
+        delete update.message.chat.id;
         sails.log.debug("UPDATE: : : : : "+update.message.chat);
         Updates.create(req.body, function (ko, ok) {
             if (ko) {
