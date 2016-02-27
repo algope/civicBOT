@@ -36,7 +36,7 @@ module.exports = {
                     device: agent.device.toString(),
                     ip: requestIp.getClientIp(req)
 
-                }, function (err, success) {
+                }).exec( function (err, success) {
                     if (err) {
                         sails.log.error("Error updating Token DB entry " + err);
                     }
@@ -61,7 +61,7 @@ module.exports = {
         if (!email || !password) {
             return res.badRequest("Email and Password required");
         }
-        Admin.findOne({email: email}, function (err, user) {
+        Admin.findOne({email: email}).exec(function (err, user) {
 
             if (!user) {
                 return res.badRequest("Invalid Email or Password");
@@ -76,14 +76,14 @@ module.exports = {
                 } else {
                     sails.log.debug("USER ID FOR RELOGIN: "+user.id);
 
-                    Token.findOne({user_id: user.id, isValid: true}, function (err, tokenFound) {
+                    Token.findOne({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
                         if (err) {
                             sails.log.error("Error getting Token from DB: " + err);
                         }
                         sails.log.debug("TOKEN FOUND: "+JSON.stringify(tokenFound));
                         if (tokenFound) {
                             sails.log.verbose("Found Token with ID: " + tokenFound.id);
-                            Token.update({token: tokenFound.token}, {isValid: false}, function (err, updated) {
+                            Token.update({token: tokenFound.token}, {isValid: false}).exec(function (err, updated) {
                                 if (err) {
                                     sails.log.error("Error updating Token DB entry " + err);
                                 }
@@ -99,7 +99,7 @@ module.exports = {
                                         device: agent.device.toString(),
                                         ip: ip
 
-                                    }, function (err, success) {
+                                    }).exec( function (err, success) {
                                         if (err) {
                                             sails.log.error("Error updating Token DB entry " + err);
                                         }
@@ -127,7 +127,7 @@ module.exports = {
                                 device: agent.device.toString(),
                                 ip: requestIp.getClientIp(req)
 
-                            }, function (err, success) {
+                            }).exec( function (err, success) {
                                 if (err) {
                                     sails.log.error("Error updating Token DB entry " + err);
                                 }
@@ -156,7 +156,7 @@ module.exports = {
         sails.log.debug("TOKEN: "+token);
         sails.log.debug("USER_ID_TOKEN: "+user_id_token);
 
-        Token.findOne({user_id: user_id_token, token: jwToken.getToken(token)}, function (err, tokenFound) {
+        Token.findOne({user_id: user_id_token, token: jwToken.getToken(token)}).exec( function (err, tokenFound) {
             if (err) {
                 sails.log.verbose("Error invalidating Token, Token not found, clean DB to prevent this again");
                 res.json(200, {msg: "Bye!"});
@@ -164,7 +164,7 @@ module.exports = {
 
             if (tokenFound) {
 
-                Token.update({token: tokenFound.token}, {isValid: false}, function (err, updated) {
+                Token.update({token: tokenFound.token}, {isValid: false}).exec( function (err, updated) {
                     if (err) {
                         sails.log.error("Error updating Token DB entry");
                     }
