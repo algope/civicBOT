@@ -16,15 +16,13 @@ module.exports.bootstrap = function (cb) {
     var username = process.env.ADMIN_USER;
     var password = ADMIN_PASSWORD;
 
-    Admin.create({email: username, password: password, confirmPassword: password}).exec(function (err, user) {
+    Admin.findOrCreate({email: username, password: password, confirmPassword: password}).exec(function (err, user) {
         if(err){
-            sails.log.debug("ERROR CREATING ADMIN!");
+            sails.log.info("ERROR CREATING ADMIN!");
             cb();
         }else if(user){
             sails.log.info("ADMIN USER CREATED SUCCESSFULLY");
             cb();
-
         }
-
     });
 };
