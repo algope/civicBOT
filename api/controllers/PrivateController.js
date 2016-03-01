@@ -86,7 +86,7 @@ module.exports = {
                                 }
                                 if (updated) {
                                     sails.log.verbose("Token id: " + tokenFound.id + " Invalidated");
-                                    var generatedToken = jwToken.issue({id: user.user_id});
+                                    var generatedToken = jwToken.issue({id: user.id});
                                     Token.create({
                                         token: generatedToken,
                                         user_id: user.id,
@@ -114,7 +114,7 @@ module.exports = {
                             });
 
                         } else {
-                            var generatedToken = jwToken.issue({id: user.user_id});
+                            var generatedToken = jwToken.issue({id: user.id});
                             Token.create({
                                 token: generatedToken,
                                 user_id: user.id,
