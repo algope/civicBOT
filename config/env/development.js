@@ -41,6 +41,7 @@ module.exports = {
         connection: 'mongodb',
         migrate: 'safe'
 
+
     },
 
     mixpanel: {
