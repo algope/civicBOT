@@ -30,7 +30,7 @@ module.exports.policies = {
     '*': 'isAuthorized', // Everything resctricted here
     'PrivateController': {
         'login': true, // We dont need authorization here, allowing public access
-        'create': true
+        'create': true //TODO: LIMIT FOR PRODUCTION!
     },
 
     'PublicController':{

@@ -177,9 +177,6 @@ module.exports = {
 
     }, //CHECKED!
 
-
-
-
     getPartyList: function (req, res) {
         Party.find().exec(function (ko, parties) {
             if (ko) {
@@ -245,8 +242,6 @@ module.exports = {
         });
 
     }, //CHECKED!
-
-
 
 
     setParty: function (req, res) {
