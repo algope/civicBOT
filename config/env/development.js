@@ -39,7 +39,7 @@ module.exports = {
 
     models: {
         connection: 'mongodb',
-        migrate: 'alter'
+        migrate: 'safe'
 
 
     },
