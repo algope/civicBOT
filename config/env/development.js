@@ -30,7 +30,7 @@ module.exports = {
         mongodb: {
             adapter: 'sails-mongo',
             host: process.env.DB_URL,
-            port: 27017,
+            port: process.env.DB_PORT,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME
@@ -39,7 +39,7 @@ module.exports = {
 
     models: {
         connection: 'mongodb',
-        migrate: 'safe'
+        migrate: 'alter'
 
 
     },
