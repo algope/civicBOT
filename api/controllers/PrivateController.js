@@ -65,84 +65,81 @@ module.exports = {
 
             if (!user) {
                 return res.badRequest("Invalid Email or Password");
+            }else {
+                Admin.comparePassword(password, user, function (err, valid) {
+                    if (err) {
+                        return res.forbidden();
+                    }else if (!valid) {
+                        return res.badRequest("Invalid Email or Password");
+                    } else {
+
+                        Token.findOne({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
+                            if (err) {
+                                sails.log.error("Error getting Token from DB: " + err);
+                            }else if (tokenFound) {
+                                Token.update({token: tokenFound.token}, {isValid: false}).exec(function (err, updated) {
+                                    if (err) {
+                                        sails.log.error("Error updating Token DB entry " + err);
+                                    }else if (updated) {
+                                        sails.log.verbose("Token id: " + tokenFound.id + " Invalidated");
+                                        var generatedToken = jwToken.issue({id: user.id});
+                                        Token.create({
+                                            token: generatedToken,
+                                            user_id: user.id,
+                                            isValid: true,
+                                            os: agent.os.toString(),
+                                            agent: agent.toAgent(),
+                                            device: agent.device.toString(),
+                                            ip: ip
+
+                                        }).exec( function (err, success) {
+                                            if (err) {
+                                                sails.log.error("Error updating Token DB entry " + err);
+                                            }else if (success) {
+
+                                                sails.log.verbose("Token for User ID: " + user.id + " Generated");
+                                                sails.log.verbose("Issued token for user: " + user.id);
+
+                                                return res.ok({
+                                                    session: success
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                            } else {
+                                var generatedToken = jwToken.issue({id: user.id});
+                                Token.create({
+                                    token: generatedToken,
+                                    user_id: user.id,
+                                    isValid: true,
+                                    os: agent.os.toString(),
+                                    agent: agent.toAgent(),
+                                    device: agent.device.toString(),
+                                    ip: requestIp.getClientIp(req)
+
+                                }).exec( function (err, success) {
+                                    if (err) {
+                                        sails.log.error("Error updating Token DB entry " + err);
+                                    }else if (success) {
+
+                                        sails.log.verbose("Token for User ID " + user.id + " Generated");
+                                        sails.log.verbose("Issued token for user: " + user.id);
+
+                                        return res.ok({
+                                            session: success
+                                        });
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                });
+
             }
-            Admin.comparePassword(password, user, function (err, valid) {
-                if (err) {
-                    return res.forbidden();
-                }
 
-                if (!valid) {
-                    return res.badRequest("Invalid Email or Password");
-                } else {
-
-                    Token.findOne({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
-                        if (err) {
-                            sails.log.error("Error getting Token from DB: " + err);
-                        }
-                        if (tokenFound) {
-                            Token.update({token: tokenFound.token}, {isValid: false}).exec(function (err, updated) {
-                                if (err) {
-                                    sails.log.error("Error updating Token DB entry " + err);
-                                }
-                                if (updated) {
-                                    sails.log.verbose("Token id: " + tokenFound.id + " Invalidated");
-                                    var generatedToken = jwToken.issue({id: user.id});
-                                    Token.create({
-                                        token: generatedToken,
-                                        user_id: user.id,
-                                        isValid: true,
-                                        os: agent.os.toString(),
-                                        agent: agent.toAgent(),
-                                        device: agent.device.toString(),
-                                        ip: ip
-
-                                    }).exec( function (err, success) {
-                                        if (err) {
-                                            sails.log.error("Error updating Token DB entry " + err);
-                                        }
-                                        if (success) {
-
-                                            sails.log.verbose("Token for User ID: " + user.id + " Generated");
-                                            sails.log.verbose("Issued token for user: " + user.id);
-
-                                            return res.ok({
-                                                session: success
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-
-                        } else {
-                            var generatedToken = jwToken.issue({id: user.id});
-                            Token.create({
-                                token: generatedToken,
-                                user_id: user.id,
-                                isValid: true,
-                                os: agent.os.toString(),
-                                agent: agent.toAgent(),
-                                device: agent.device.toString(),
-                                ip: requestIp.getClientIp(req)
-
-                            }).exec( function (err, success) {
-                                if (err) {
-                                    sails.log.error("Error updating Token DB entry " + err);
-                                }
-                                if (success) {
-
-                                    sails.log.verbose("Token for User ID " + user.id + " Generated");
-                                    sails.log.verbose("Issued token for user: " + user.id);
-
-                                    return res.ok({
-                                        session: success
-                                    });
-                                }
-                            });
-
-                        }
-                    });
-                }
-            });
         })
     }, //CHECKED!
 
@@ -157,16 +154,12 @@ module.exports = {
             if (err) {
                 sails.log.verbose("Error invalidating Token, Token not found, clean DB to prevent this again");
                 return res.ok({msg: "Bye!"});
-            }
-            sails.log.debug("TOKENFOUND: : : : : "+JSON.stringify(tokenFound));
-            if (tokenFound) {
+            }else if (tokenFound) {
 
                 Token.update({token: tokenFound.token}, {isValid: false}).exec( function (err, updated) {
                     if (err) {
                         sails.log.error("Error updating Token DB entry");
-                    }
-
-                    if (updated) {
+                    }else if (updated) {
                         sails.log.verbose("Token from User ID " + user_id_token + " Invalidated");
                         return res.ok({msg: "Bye!"});
                     }
