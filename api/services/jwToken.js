@@ -38,7 +38,7 @@ module.exports.getUserId = function (token) {
     sails.log.debug("TOKEN CLEAN: "+ token_clean);
     sails.log.debug("Verified: : : : : : : "+sails.config.globals.authentication.secret);
     var verified = jwt.verify(token_clean, sails.config.globals.authentication.secret);
-    sails.log.debug("VERIFIED: "+ verified.id);
+    sails.log.debug("VERIFIED: "+ JSON.stringify(verified));
     return verified.id;
 };
 
