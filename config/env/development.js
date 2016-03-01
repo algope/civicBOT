@@ -39,7 +39,7 @@ module.exports = {
 
     models: {
         connection: 'mongodb',
-        migrate: 'drop'
+        migrate: process.env.MIGRATION_TYPE
 
 
     },
