@@ -14,7 +14,7 @@ module.exports.bootstrap = function (cb) {
     // It's very important to trigger this callback method when you are finished
     // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
     var username = process.env.ADMIN_USER;
-    var password = ADMIN_PASSWORD;
+    var password = process.env.ADMIN_PASSWORD;
 
     Admin.findOrCreate({email: username, password: password, confirmPassword: password}).exec(function (err, user) {
         if(err){
