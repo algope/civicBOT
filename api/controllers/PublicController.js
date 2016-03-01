@@ -12,10 +12,10 @@ module.exports = {
     getContributionList: function (req, res) {
         Classify.find({published: true}).populate(['label', 'party', 'location', 'media']).exec(function(ko, contributions){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }
             else if(contributions){
-                res.ok(contributions);
+                return res.ok(contributions);
             }
 
         });
@@ -25,9 +25,9 @@ module.exports = {
     getTotalContributions: function (req, res) {
         Classify.count({published: true}).exec(function(ko, count){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }
-            res.ok({count: count});
+            return res.ok({count: count});
 
         })
 
@@ -36,9 +36,9 @@ module.exports = {
     getTotalActiveUsers: function (req, res) {
         Users.count().exec(function(ko, count){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }
-            res.ok({count: count});
+            return res.ok({count: count});
 
         })
 
@@ -96,7 +96,7 @@ module.exports = {
                                                                             }
                                                                         };
 
-                                                                        res.ok(response);
+                                                                        return res.ok(response);
 
                                                                     }
 
@@ -121,10 +121,10 @@ module.exports = {
     getTotalReceivedMsg: function (req, res) {
         Classify.count({type: 2}).exec(function (ko, count){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }
             sails.log.info("COUNT: "+JSON.stringify(count));
-            res.ok({count: count});
+            return res.ok({count: count});
 
         })
 
@@ -133,9 +133,9 @@ module.exports = {
     getTotalReceivedImg: function (req, res) {
         Classify.count({type: 1}).exec(function (ko, count){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }
-            res.ok({count: count});
+            return res.ok({count: count});
 
         })
 
@@ -155,10 +155,10 @@ module.exports = {
 
        Classify.count({createdAt:{'>=': today, '<': tomorrow } }).exec(function(ko, count){
            if(ko){
-               res.serverError(ko);
+               return res.serverError(ko);
            }
 
-           res.ok({count: count});
+           return res.ok({count: count});
        })
 
     }, //CHECKED!
@@ -167,9 +167,9 @@ module.exports = {
     getTopParties: function (req, res) {
         TopParties.find().populate('party').exec(function (ko, ok){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }else if(ok){
-                res.ok(ok);
+                return res.ok(ok);
             }
         });
 
@@ -237,9 +237,9 @@ module.exports = {
     getTopLocations: function (req, res) {
         TopLocations.find().populate('location').exec(function (ko, ok){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }else if(ok){
-                res.ok(ok);
+                return res.ok(ok);
             }
         });
 
@@ -248,9 +248,9 @@ module.exports = {
     getTopMedia: function (req, res) {
         TopMedia.find().populate('media').exec(function (ko, ok){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }else if(ok){
-                res.ok(ok);
+                return res.ok(ok);
             }
         });
 
@@ -261,9 +261,9 @@ module.exports = {
         //TODO: HARDCODED
         TopParties.find().populate('party').exec(function (ko, ok){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }else if(ok){
-                res.ok(ok);
+                return res.ok(ok);
             }
         });
 
@@ -274,9 +274,9 @@ module.exports = {
         //TODO: HARDCODED
         TopLocations.find().populate('location').exec(function (ko, ok){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }else if(ok){
-                res.ok(ok);
+                return res.ok(ok);
             }
         });
 
@@ -335,7 +335,7 @@ module.exports = {
                                                                             }
                                                                         };
 
-                                                                        res.ok(response);
+                                                                        return res.ok(response);
 
                                                                     }
 
@@ -361,9 +361,9 @@ module.exports = {
         //TODO: HARDCODED
         TopMedia.find().populate('media').exec(function (ko, ok){
             if(ko){
-                res.serverError(ko);
+                return res.serverError(ko);
             }else if(ok){
-                res.ok(ok);
+                return res.ok(ok);
             }
         });
 
