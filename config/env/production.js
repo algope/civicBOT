@@ -70,6 +70,6 @@ module.exports = {
     },
 
     log: {
-        level: silent
+        level: 'silent'
     }
 };
