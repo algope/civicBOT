@@ -414,19 +414,25 @@ module.exports = {
                             if (ko) {
                                 return res.serverError(ko);
                             } else if (topLocation) {
-                                topLocation.count--;
+                                if(topLocation.count>0){
+                                    topLocation.count--;
+                                }
                                 topLocation.save(function () {
                                     TopMedia.findOrCreate({media: contribution[0].media}, {media: contribution[0].media}).exec(function (ko, topMedia) {
                                         if (ko) {
                                             return res.serverError(ko);
                                         } else if (topMedia) {
-                                            topMedia.count--;
+                                            if(topMedia.count>0){
+                                                topMedia.count--;
+                                            }
                                             topMedia.save(function () {
                                                 TopParties.findOrCreate({party: contribution[0].party}, {party: contribution[0].party}).exec(function (ko, topParty) {
                                                     if (ko) {
                                                         return res.serverError(ko);
                                                     } else if (topParty) {
-                                                        topParty.count--;
+                                                        if(topParty.count>0){
+                                                            topParty.count--;
+                                                        }
                                                         topParty.save(function () {
                                                             return res.ok(contribution);
                                                         });
