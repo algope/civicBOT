@@ -136,7 +136,7 @@ module.exports = {
                 }
             }
         );
-        res.ok();
+        return res.ok();
     }
 };
 

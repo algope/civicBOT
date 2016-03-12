@@ -18,11 +18,11 @@ module.exports = {
     create: function (req, res) {
         var agent = useragent.lookup(req.headers['user-agent']);
         if (req.body.password !== req.body.confirmPassword) {
-            return res.json(401, {err: 'Password doesn\'t match, What a shame!'});
+            return res.badRequest({err: 'Password doesn\'t match, What a shame!'});
         }
         Admin.create(req.body).exec(function (err, user) {
             if (err) {
-                return res.json(err.status, {err: err});
+                return res.serverError(err);
             }
             // If user created successfuly we return user and token as response
             if (user) {
@@ -45,7 +45,7 @@ module.exports = {
                         sails.log.verbose("Token for User ID: " + user.id + " Generated");
                         sails.log.verbose("Issued token for user: " + user.id);
 
-                        res.json(200, {user: user, token: generatedToken});
+                        return res.ok({user: user, token: generatedToken});
                     }
                 });
             }
@@ -65,84 +65,81 @@ module.exports = {
 
             if (!user) {
                 return res.badRequest("Invalid Email or Password");
+            }else {
+                Admin.comparePassword(password, user, function (err, valid) {
+                    if (err) {
+                        return res.forbidden();
+                    }else if (!valid) {
+                        return res.badRequest("Invalid Email or Password");
+                    } else {
+
+                        Token.findOne({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
+                            if (err) {
+                                sails.log.error("Error getting Token from DB: " + err);
+                            }else if (tokenFound) {
+                                Token.update({token: tokenFound.token}, {isValid: false}).exec(function (err, updated) {
+                                    if (err) {
+                                        sails.log.error("Error updating Token DB entry " + err);
+                                    }else if (updated) {
+                                        sails.log.verbose("Token id: " + tokenFound.id + " Invalidated");
+                                        var generatedToken = jwToken.issue({id: user.id});
+                                        Token.create({
+                                            token: generatedToken,
+                                            user_id: user.id,
+                                            isValid: true,
+                                            os: agent.os.toString(),
+                                            agent: agent.toAgent(),
+                                            device: agent.device.toString(),
+                                            ip: ip
+
+                                        }).exec( function (err, success) {
+                                            if (err) {
+                                                sails.log.error("Error updating Token DB entry " + err);
+                                            }else if (success) {
+
+                                                sails.log.verbose("Token for User ID: " + user.id + " Generated");
+                                                sails.log.verbose("Issued token for user: " + user.id);
+
+                                                return res.ok({
+                                                    session: success
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                            } else {
+                                var generatedToken = jwToken.issue({id: user.id});
+                                Token.create({
+                                    token: generatedToken,
+                                    user_id: user.id,
+                                    isValid: true,
+                                    os: agent.os.toString(),
+                                    agent: agent.toAgent(),
+                                    device: agent.device.toString(),
+                                    ip: requestIp.getClientIp(req)
+
+                                }).exec( function (err, success) {
+                                    if (err) {
+                                        sails.log.error("Error updating Token DB entry " + err);
+                                    }else if (success) {
+
+                                        sails.log.verbose("Token for User ID " + user.id + " Generated");
+                                        sails.log.verbose("Issued token for user: " + user.id);
+
+                                        return res.ok({
+                                            session: success
+                                        });
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                });
+
             }
-            Admin.comparePassword(password, user, function (err, valid) {
-                if (err) {
-                    return res.forbidden();
-                }
 
-                if (!valid) {
-                    return res.badRequest("Invalid Email or Password");
-                } else {
-
-                    Token.findOne({user_id: user.id, isValid: true}).exec(function (err, tokenFound) {
-                        if (err) {
-                            sails.log.error("Error getting Token from DB: " + err);
-                        }
-                        if (tokenFound) {
-                            Token.update({token: tokenFound.token}, {isValid: false}).exec(function (err, updated) {
-                                if (err) {
-                                    sails.log.error("Error updating Token DB entry " + err);
-                                }
-                                if (updated) {
-                                    sails.log.verbose("Token id: " + tokenFound.id + " Invalidated");
-                                    var generatedToken = jwToken.issue({id: user.user_id});
-                                    Token.create({
-                                        token: generatedToken,
-                                        user_id: user.id,
-                                        isValid: true,
-                                        os: agent.os.toString(),
-                                        agent: agent.toAgent(),
-                                        device: agent.device.toString(),
-                                        ip: ip
-
-                                    }).exec( function (err, success) {
-                                        if (err) {
-                                            sails.log.error("Error updating Token DB entry " + err);
-                                        }
-                                        if (success) {
-
-                                            sails.log.verbose("Token for User ID: " + user.id + " Generated");
-                                            sails.log.verbose("Issued token for user: " + user.id);
-
-                                            res.json(200, {
-                                                session: success
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-
-                        } else {
-                            var generatedToken = jwToken.issue({id: user.user_id});
-                            Token.create({
-                                token: generatedToken,
-                                user_id: user.id,
-                                isValid: true,
-                                os: agent.os.toString(),
-                                agent: agent.toAgent(),
-                                device: agent.device.toString(),
-                                ip: requestIp.getClientIp(req)
-
-                            }).exec( function (err, success) {
-                                if (err) {
-                                    sails.log.error("Error updating Token DB entry " + err);
-                                }
-                                if (success) {
-
-                                    sails.log.verbose("Token for User ID " + user.id + " Generated");
-                                    sails.log.verbose("Issued token for user: " + user.id);
-
-                                    res.json(200, {
-                                        session: success
-                                    });
-                                }
-                            });
-
-                        }
-                    });
-                }
-            });
         })
     }, //CHECKED!
 
@@ -156,19 +153,15 @@ module.exports = {
         Token.findOne({user_id: user_id_token, token: jwToken.getToken(token)}).exec( function (err, tokenFound) {
             if (err) {
                 sails.log.verbose("Error invalidating Token, Token not found, clean DB to prevent this again");
-                res.json(200, {msg: "Bye!"});
-            }
-            sails.log.debug("TOKENFOUND: : : : : "+JSON.stringify(tokenFound));
-            if (tokenFound) {
+                return res.ok({msg: "Bye!"});
+            }else if (tokenFound) {
 
                 Token.update({token: tokenFound.token}, {isValid: false}).exec( function (err, updated) {
                     if (err) {
                         sails.log.error("Error updating Token DB entry");
-                    }
-
-                    if (updated) {
+                    }else if (updated) {
                         sails.log.verbose("Token from User ID " + user_id_token + " Invalidated");
-                        res.json(200, {msg: "Bye!"});
+                        return res.ok({msg: "Bye!"});
                     }
 
                 })
@@ -177,16 +170,13 @@ module.exports = {
 
     }, //CHECKED!
 
-
-
-
     getPartyList: function (req, res) {
         Party.find().exec(function (ko, parties) {
             if (ko) {
-                res.serverError(ko);
+               return res.serverError(ko);
             }
             else if (parties) {
-                res.ok(parties);
+                return res.ok(parties);
             }
 
         });
@@ -196,10 +186,10 @@ module.exports = {
     getLocationList: function (req, res) {
         Location.find().exec(function (ko, locations) {
             if (ko) {
-                res.serverError(ko);
+                return res.serverError(ko);
             }
             else if (locations) {
-                res.ok(locations);
+                return res.ok(locations);
             }
 
         });
@@ -210,10 +200,10 @@ module.exports = {
     getMediaList: function (req, res) {
         Media.find().exec(function (ko, media) {
             if (ko) {
-                res.serverError(ko);
+                return res.serverError(ko);
             }
             else if (media) {
-                res.ok(media);
+                return res.ok(media);
             }
 
         });
@@ -223,10 +213,10 @@ module.exports = {
     getContributionList: function (req, res) {
         Classify.find().populate(['label', 'party', 'location', 'media']).exec(function (ko, contributions) {
             if (ko) {
-                res.serverError(ko);
+                return res.serverError(ko);
             }
             else if (contributions) {
-                res.ok(contributions);
+               return res.ok(contributions);
             }
 
         });
@@ -236,17 +226,15 @@ module.exports = {
     getLabelList: function (req, res) {
         Label.find().exec(function (ko, label) {
             if (ko) {
-                res.serverError(ko);
+                return res.serverError(ko);
             }
             else if (label) {
-                res.ok(label);
+                return res.ok(label);
             }
 
         });
 
     }, //CHECKED!
-
-
 
 
     setParty: function (req, res) {
@@ -260,9 +248,9 @@ module.exports = {
 
             Classify.update({id: id}, {party: party, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
-                    res.serverError(ko);
+                    return res.serverError(ko);
                 } else if (ok) {
-                    res.ok(ok);
+                    return res.ok(ok);
                 }
 
             });
@@ -285,22 +273,22 @@ module.exports = {
             if (mediaId) {
                 Classify.update({id: id}, {media: mediaId, edited: 1}).exec(function (ko, ok) {
                     if (ko) {
-                        res.serverError(ko);
+                        return res.serverError(ko);
                     } else if (ok) {
-                        res.ok(ok);
+                        return res.ok(ok);
                     }
 
                 });
             } else if (media) {
                 Media.create({media: media}).exec(function (ko, ok) {
                     if (ko) {
-                        res.serverError(ko);
+                        return res.serverError(ko);
                     } else if (ok) {
                         Classify.update({id: id}, {media: ok.id, edited: 1}).exec(function (ko, ok) {
                             if (ko) {
-                                res.serverError(ko);
+                                return res.serverError(ko);
                             } else if (ok) {
-                                res.ok(ok);
+                                return res.ok(ok);
                             }
 
                         });
@@ -324,9 +312,9 @@ module.exports = {
 
             Classify.update({id: id}, {location: location, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
-                    res.serverError(ko);
+                    return res.serverError(ko);
                 } else if (ok) {
-                    res.ok(ok);
+                    return res.ok(ok);
                 }
 
             });
@@ -346,9 +334,9 @@ module.exports = {
 
             Classify.update({id: id}, {label: label, edited: 1}).exec(function (ko, ok) {
                 if (ko) {
-                    res.serverError(ko);
+                    return res.serverError(ko);
                 } else if (ok) {
-                    res.ok(ok);
+                    return res.ok(ok);
                 }
 
             });
@@ -369,11 +357,11 @@ module.exports = {
             if (publish == 1) {
                 Classify.find({id: id}).exec(function (ko, ok) {
                     if (ko) {
-                        res.serverError(ko);
+                        return res.serverError(ko);
                     } else if (ok) {
                         var isPublished = ok[0].published;
                         if (isPublished == publish) {
-                            res.badRequest("Element Already Published");
+                            return res.badRequest("Element Already Published");
                         }
                         else {
                             Classify.update({id: id}, {
@@ -381,27 +369,27 @@ module.exports = {
                                 edited: 0
                             }).exec(function (ko, contribution) {
                                 if (ko) {
-                                    res.serverError(contribution);
+                                    return res.serverError(contribution);
                                 } else if (contribution) {
                                     TopLocations.findOrCreate({location: contribution[0].location}, {location: contribution[0].location}).exec(function (ko, topLocation) {
                                         if (ko) {
-                                            res.serverError(ko);
+                                            return res.serverError(ko);
                                         } else if (topLocation) {
                                             topLocation.count++;
                                             topLocation.save(function () {
                                                 TopMedia.findOrCreate({media: contribution[0].media}, {media: contribution[0].media}).exec(function (ko, topMedia) {
                                                     if (ko) {
-                                                        res.serverError(ko);
+                                                        return res.serverError(ko);
                                                     } else if (topMedia) {
                                                         topMedia.count++;
                                                         topMedia.save(function () {
                                                             TopParties.findOrCreate({party: contribution[0].party}, {party: contribution[0].party}).exec(function (ko, topParty) {
                                                                 if (ko) {
-                                                                    res.serverError(ko);
+                                                                    return res.serverError(ko);
                                                                 } else if (topParty) {
                                                                     topParty.count++;
                                                                     topParty.save(function () {
-                                                                        res.ok(contribution);
+                                                                        return res.ok(contribution);
                                                                     });
                                                                 }
                                                             });
@@ -420,27 +408,33 @@ module.exports = {
             else if (publish == 0) {
                 Classify.update({id: id}, {published: 0, edited: 0}).exec(function (ko, contribution) {
                     if (ko) {
-                        res.serverError(contribution);
+                        return res.serverError(contribution);
                     } else if (contribution) {
                         TopLocations.findOrCreate({location: contribution[0].location}, {location: contribution[0].location}).exec(function (ko, topLocation) {
                             if (ko) {
-                                res.serverError(ko);
+                                return res.serverError(ko);
                             } else if (topLocation) {
-                                topLocation.count--;
+                                if(topLocation.count>0){
+                                    topLocation.count--;
+                                }
                                 topLocation.save(function () {
                                     TopMedia.findOrCreate({media: contribution[0].media}, {media: contribution[0].media}).exec(function (ko, topMedia) {
                                         if (ko) {
-                                            res.serverError(ko);
+                                            return res.serverError(ko);
                                         } else if (topMedia) {
-                                            topMedia.count--;
+                                            if(topMedia.count>0){
+                                                topMedia.count--;
+                                            }
                                             topMedia.save(function () {
                                                 TopParties.findOrCreate({party: contribution[0].party}, {party: contribution[0].party}).exec(function (ko, topParty) {
                                                     if (ko) {
-                                                        res.serverError(ko);
+                                                        return res.serverError(ko);
                                                     } else if (topParty) {
-                                                        topParty.count--;
+                                                        if(topParty.count>0){
+                                                            topParty.count--;
+                                                        }
                                                         topParty.save(function () {
-                                                            res.ok(contribution);
+                                                            return res.ok(contribution);
                                                         });
                                                     }
                                                 });

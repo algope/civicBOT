@@ -35,14 +35,15 @@ module.exports = function (req, res, next) {
         Token.findOne({token: tokenToFind}, function (err, find) {
             if (err) {
                 sails.log.error("Error trying to find a Token in the Token DB, clean DB to prevent this happen again: ", err);
-            }
-            if (find) {
+                return res.serverError(err);
+            }else if (find) {
                 if (!find.isValid) {
                     return res.badRequest('Token expired, log in again');
+                }else{
+                    next();
                 }
             }
         });
-        next();
     });
 };
 

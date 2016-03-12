@@ -12,27 +12,60 @@
 
 module.exports = {
 
-    /***************************************************************************
-     * Set the default database connection for models in the production        *
-     * environment (see config/connections.js and config/models.js )           *
-     ***************************************************************************/
+    connections: {
+        'defaults': 'mongodb',
+        //devMySQL: {
+        //  adapter: 'sails-mysql',
+        //host: 'civicbot.csprfbquesxu.us-east-1.rds.amazonaws.com',
+        //user: 'test',
+        //password: 'testing1357',
+        //database: 'devCivicBOT'
+        //},
 
-    models: {
-        connection: 'prodMySQL',
-        migrate: 'safe'
+        mongodb: {
+            adapter: 'sails-mongo',
+            url: process.env.MONGO_URL
+        }
     },
 
-    /***************************************************************************
-     * Set the port in the production environment to 80                        *
-     ***************************************************************************/
+    models: {
+        connection: 'mongodb',
+        migrate: process.env.MIGRATION_TYPE
+
+
+    },
+
+    mixpanel: {
+        token: process.env.MIXPANEL_TOKEN
+    },
+
+    telegram: {
+        token: process.env.TELEGRAM_TOKEN
+    },
+
+    s3:{
+        accessKeyId: process.env.S3_AK,
+        secretAccessKey: process.env.S3_SECRET,
+        bucket: process.env.S3_BUCKET,
+        cloudFrontUrl: process.env.CLOUD_FRONT_URL
+    },
 
     port: 80,
 
-    /***************************************************************************
-     * Set the log level in production environment to "silent"                 *
-     ***************************************************************************/
+    orm: {
+        _hookTimeout: 200000
+    },
+    pubsub: {
+        _hookTimeout: 200000
+    },
+
+    globals:{
+        authentication: {
+            secret: process.env.AUTH_SECRET
+        }
+    },
 
     log: {
-        level: "silent"
+        level: 'silent'
     }
 };
