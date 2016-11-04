@@ -66,6 +66,6 @@ module.exports = {
     },
 
     log: {
-        level: 'silent'
+        level: process.env.LOG_LEVEL
     }
 };
