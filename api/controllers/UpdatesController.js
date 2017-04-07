@@ -14,23 +14,26 @@ var mixpanel = Mixpanel.init('2ac0d6d54c481e7dea88d065874c806f');
 module.exports = {
 
     update: function (req, res) {
-        var update = req.body;
-        var userId = update.message.from.id;
-        var userName = update.message.from.first_name;
-        var userLast = update.message.from.last_name;
-        var userAlias = update.message.from.username;
-        if (update.message.text) {
-            var text = update.message.text;
-            var command = commands.processIt(text);
-        } else command = false;
+        if(update.hasOwnProperty('message')){
+            var userId = update.message.from.id;
+            var userName = update.message.from.first_name;
+            var userLast = update.message.from.last_name;
+            var userAlias = update.message.from.username;
+
+            if (update.message.hasOwnProperty('text')) {
+                var text = update.message.text;
+                var command = commands.processIt(text);
+            } else command = false;
+
+            update.message.chat.chat_id = update.message.chat.id;
+            update.message.from.user_id = update.message.from.id;
+            delete update.message.chat.id;
+            delete update.message.from.id;
+        }else return res.ok();
 
         /**
          * Creates a new entry into Updates table
          */
-        update.message.chat.chat_id = update.message.chat.id;
-        update.message.from.user_id = update.message.from.id;
-        delete update.message.chat.id;
-        delete update.message.from.id;
         Updates.create(update, function (ko, ok) {
             if (ko) {
                 sails.log.error("[DB] - Updates.create error: ", ko);
